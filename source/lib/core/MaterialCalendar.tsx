@@ -6,8 +6,10 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
 import CalendarViewController from './CalendarViewController';
 import { DateChangeAction } from './components/actions/DateChangeAction';
+import { CalendarState } from './components/calendarState/CalendarState';
+import useCalendarState from './components/calendarState/useCalendarState';
 import CalendarEvent from './components/eventStorage/CalendarEvent';
-import CalendarEventStorage, { EventStorage } from './components/eventStorage/CalendarEventStorage';
+import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
 import CalendarControlBar from './components/navigationBar/CalendarControlBar';
 
 interface MaterialCalendarProps {
@@ -25,6 +27,12 @@ interface MaterialCalendarProps {
      * @default true
      */
     lazyLoading: boolean;
+
+    /**
+     * List of views that will be used by the calendar.
+     * If none are provided, It will use the default views.
+     */
+    views?: [];
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -35,11 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MaterialCalendar(props: MaterialCalendarProps): ReactElement {
-    // The date on which user has his view focused on.
-    const [focusedDate, setFocusedDate] = useState(new Date(Date.now()));
-
-    // Storage of events loaded into the calendar
-    const [eventStorage, setEventStorage] = useState<EventStorage>({});
+    const calendarState: CalendarState = useCalendarState();
 
     // Currently displayed view
     const [selectedView, setSelectedView] = useState(null as null | ReactElement);
@@ -50,21 +54,23 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
     const classes = useStyles();
 
     const calendarEventStorage = new CalendarEventStorage(
-        focusedDate,
-        setEventStorage,
+        calendarState.getHighlightDate(),
+        calendarState.setEventStorage,
         props.onDataRequest,
         selectedViewOption.toString(),
     );
 
     useEffect(() => {
-        calendarEventStorage.setFocusedDate(focusedDate);
-    }, [focusedDate]);
+        calendarEventStorage.setFocusedDate(calendarState.getHighlightDate());
+    }, [calendarState.getHighlightDate()]);
 
     /**
      * Changes the currently focused date of the calendar based on provided DataChangeAction parameter.
      * @param dateChangeAction
      */
     function handleDateChange(dateChangeAction: DateChangeAction) {
+        const highlightDate: Date = calendarState.getHighlightDate();
+
         let changeAmountBy = 1;
 
         if (dateChangeAction === DateChangeAction.BACKWARD) {
@@ -77,8 +83,8 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
             // Prevent from setting same day once again,
             // which will trigger unnecessary re-render
             // of selected view
-            if (!isSameDay(todayDate, focusedDate)) {
-                setFocusedDate(todayDate);
+            if (!isSameDay(todayDate, calendarState.getHighlightDate())) {
+                calendarState.setHighlightDate(todayDate);
             }
 
             return;
@@ -86,16 +92,16 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
 
         switch (selectedViewOption) {
             case 'day':
-                setFocusedDate(addDays(focusedDate, changeAmountBy));
+                calendarState.setHighlightDate(addDays(highlightDate, changeAmountBy));
                 break;
             case 'week':
-                setFocusedDate(addWeeks(focusedDate, changeAmountBy));
+                calendarState.setHighlightDate(addWeeks(highlightDate, changeAmountBy));
                 break;
             case 'month':
-                setFocusedDate(addMonths(focusedDate, changeAmountBy));
+                calendarState.setHighlightDate(addMonths(highlightDate, changeAmountBy));
                 break;
             case 'schedule':
-                setFocusedDate(addMonths(focusedDate, changeAmountBy));
+                calendarState.setHighlightDate(addMonths(highlightDate, changeAmountBy));
                 break;
         }
     }
@@ -103,17 +109,17 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
     return (
         <div className={classes.root}>
             <CalendarControlBar
-                date={focusedDate}
+                date={calendarState.getHighlightDate()}
                 onDateChange={handleDateChange}
                 onInputChange={setSelectedViewOption}
             />
             <CalendarViewController
-                focusedDate={focusedDate}
+                focusedDate={calendarState.getHighlightDate()}
                 selectedView={selectedView}
                 selectedViewOption={selectedViewOption}
                 setSelectedView={setSelectedView}
                 onDateChange={handleDateChange}
-                eventStorage={eventStorage}
+                eventStorage={calendarState.getEventStorage()}
             />
         </div>
     );
