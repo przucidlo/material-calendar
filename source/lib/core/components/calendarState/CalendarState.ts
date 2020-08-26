@@ -1,5 +1,5 @@
 import { CalendarView } from '../../../common/api/CalendarView';
-import CalendarEventStorage from '../eventStorage/CalendarEventStorage';
+import { EventStorage } from '../eventStorage/CalendarEventStorage';
 
 /**
  * Interface that represents getters and setters
@@ -9,8 +9,8 @@ export interface CalendarState {
     setHighlightDate: (highlightDate: Date) => void;
     getHighlightDate: () => Date;
 
-    setEventStorage: (eventStorage: CalendarEventStorage) => void;
-    getEventStorage: () => CalendarEventStorage | null;
+    setEventStorage: (eventStorage: EventStorage) => void;
+    getEventStorage: () => EventStorage | null;
 
     setCurrentView: (currentView: CalendarView) => void;
     getCurrentView: () => CalendarView | null;

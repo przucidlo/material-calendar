@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { CalendarView } from '../../../common/api/CalendarView';
-import CalendarEventStorage from '../eventStorage/CalendarEventStorage';
+import { EventStorage } from '../eventStorage/CalendarEventStorage';
 import { CalendarState } from './CalendarState';
 
 /**
  * Hook that stores state of the calendar and returns instance of CalendarState interface.
  */
-export default function useCalendarState() {
+export default function useCalendarState(): CalendarState {
     const [highlightDate, setHighlightDate] = useState<Date>(new Date());
-    const [eventStorage, setEventStorage] = useState<CalendarEventStorage | null>(null);
+    const [eventStorage, setEventStorage] = useState<EventStorage | null>(null);
     const [currentView, setCurrentView] = useState<CalendarView | null>(null);
 
     /*
@@ -23,7 +23,7 @@ export default function useCalendarState() {
             return highlightDate;
         }
 
-        public setEventStorage(eventStorage: CalendarEventStorage) {
+        public setEventStorage(eventStorage: EventStorage) {
             setEventStorage(eventStorage);
         }
 
