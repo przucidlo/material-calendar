@@ -3,10 +3,11 @@ import { addDays, addMonths, addWeeks } from 'date-fns';
 import { isSameDay } from 'date-fns/esm';
 import 'fontsource-roboto';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { CalendarView } from '../common/api/CalendarView';
 import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
 import CalendarViewController from './CalendarViewController';
 import { DateChangeAction } from './components/actions/DateChangeAction';
-import { CalendarState } from './components/calendarState/CalendarState';
+import CalendarState from './components/calendarState/CalendarState';
 import useCalendarState from './components/calendarState/useCalendarState';
 import CalendarEvent from './components/eventStorage/CalendarEvent';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
@@ -32,7 +33,7 @@ interface MaterialCalendarProps {
      * List of views that will be used by the calendar.
      * If none are provided, It will use the default views.
      */
-    views?: [];
+    views?: CalendarView[];
 }
 
 const useStyles = makeStyles((theme) => ({
