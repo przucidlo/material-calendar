@@ -1,31 +1,36 @@
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import React, { ReactElement } from 'react';
+import CalendarViewProps from '../../common/api/CalendarViewProps';
+import CalendarState from '../../core/components/calendarState/CalendarState';
 import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
-import { EventStorage } from '../../core/components/eventStorage/CalendarEventStorage';
 import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
 import DayGrid from '../day/DayGrid';
 import DayHead from '../day/DayHead';
 
-interface Props {
-    focusedDate: Date;
-    eventStorage: EventStorage;
-}
+interface WeekViewProps extends CalendarViewProps {}
 
-function WeekView(props: Props): ReactElement {
-    const daysBetween = eachDayOfInterval({ start: startOfWeek(props.focusedDate), end: endOfWeek(props.focusedDate) });
+function WeekView(props: WeekViewProps): ReactElement {
+    const calendarState: CalendarState = props.calendarState;
+
+    const daysBetween = eachDayOfInterval({
+        start: startOfWeek(calendarState.getHighlightDate()),
+        end: endOfWeek(calendarState.getHighlightDate()),
+    });
 
     function displayWeekHeadSection() {
         return daysBetween.map((day, index) => {
             return (
                 <div key={index} style={{ flexGrow: 1, flexBasis: 0 }}>
-                    <DayHead center focusedDate={day} intendHoursGap={index === 0} />
+                    <DayHead center highlightDate={day} intendHoursGap={index === 0} />
                 </div>
             );
         });
     }
 
     function getDayEvents(dayDate: Date): CalendarEvent[] {
-        const dayEvents = props.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
+        const dayEvents = calendarState.getEventStorage()?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[
+            dayDate.getDate()
+        ];
 
         return dayEvents ? dayEvents : [];
     }
