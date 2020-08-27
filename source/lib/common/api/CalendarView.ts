@@ -1,1 +1,22 @@
-export interface CalendarView {}
+import { ReactElement } from 'react';
+import { DateChangeAction } from '../../core/components/actions/DateChangeAction';
+import CalendarViewProps from './CalendarViewProps';
+
+export interface CalendarView {
+    /**
+     * Name of the view.
+     */
+    name: {
+        [localName: string]: string;
+    };
+
+    /**
+     * Component that represents this view.
+     */
+    component: (calendarViewProps: CalendarViewProps) => ReactElement<CalendarViewProps>;
+
+    /**
+     * Change the date highlighted by the calendar depending on user input.
+     */
+    onDateChange?: (dateChangeAction: DateChangeAction.BACKWARD | DateChangeAction.FORWARD) => Date;
+}
