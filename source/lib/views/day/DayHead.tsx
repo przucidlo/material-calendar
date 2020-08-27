@@ -3,7 +3,7 @@ import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 
 interface Props {
-    focusedDate: Date;
+    highlightDate: Date;
     center?: boolean;
     intendHoursGap?: boolean;
 }
@@ -43,16 +43,16 @@ function DayHead(props: Props): ReactElement {
                         }}
                     >
                         <Typography color="primary" variant="body1">
-                            {days[props.focusedDate.getDay()].toLocaleUpperCase()}
+                            {days[props.highlightDate.getDay()].toLocaleUpperCase()}
                         </Typography>
                         <Avatar
                             style={{
-                                backgroundColor: isToday(props.focusedDate)
+                                backgroundColor: isToday(props.highlightDate)
                                     ? theme.palette.primary.main
                                     : theme.palette.grey[500],
                             }}
                         >
-                            {props.focusedDate.getDate()}
+                            {props.highlightDate.getDate()}
                         </Avatar>
                     </div>
                 </div>

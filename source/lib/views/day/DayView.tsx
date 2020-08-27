@@ -1,14 +1,11 @@
 import React from 'react';
+import CalendarViewProps from '../../common/api/CalendarViewProps';
 import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
-import { EventStorage } from '../../core/components/eventStorage/CalendarEventStorage';
 import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
 import DayGrid from './DayGrid';
 import DayHead from './DayHead';
 
-export interface DayViewProps {
-    focusedDate: Date;
-    eventStorage: EventStorage;
-}
+export interface DayViewProps extends CalendarViewProps {}
 
 export default function DayView(props: DayViewProps) {
     /**
@@ -18,15 +15,17 @@ export default function DayView(props: DayViewProps) {
      * return empty array.
      */
     function getDayEvents(): CalendarEvent[] {
-        const dayDate: Date = props.focusedDate;
-        const dayEvents = props.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
+        const dayDate: Date = props.calendarState.getHighlightDate();
+        const dayEvents = props.calendarState.getEventStorage()?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[
+            dayDate.getDate()
+        ];
 
         return dayEvents ? dayEvents : [];
     }
 
     return (
         <div>
-            <DayHead {...props} />
+            <DayHead highlightDate={props.calendarState.getHighlightDate()} />
             <div
                 style={{
                     overflowY: 'scroll',
