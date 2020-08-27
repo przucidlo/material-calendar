@@ -1,5 +1,5 @@
 import CalendarEvent from '../../../common/api/CalendarEvent';
-import { EventStorage } from './CalendarEventStorage';
+import { EventStorage } from '../../../common/api/EventStorage';
 
 export default class CalendarEventUtils {
     public static getDayEvents(eventStorage: EventStorage, date: Date): CalendarEvent[] {
@@ -14,7 +14,7 @@ export default class CalendarEventUtils {
 
         if (monthEvents) {
             for (let day of Object.values(monthEvents)) {
-                calendarEvents.push(day);
+                calendarEvents.push(...day);
             }
 
             return calendarEvents;

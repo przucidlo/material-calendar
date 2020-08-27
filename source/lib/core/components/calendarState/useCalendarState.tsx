@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CalendarView } from '../../../common/api/CalendarView';
-import { EventStorage } from '../eventStorage/CalendarEventStorage';
+import { EventStorage } from '../../../common/api/EventStorage';
 import CalendarState from './CalendarState';
 
 /**

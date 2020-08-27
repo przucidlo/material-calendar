@@ -1,17 +1,6 @@
 import { addDays, endOfMonth, startOfMonth, subDays } from 'date-fns';
 import CalendarEvent from '../../../common/api/CalendarEvent';
-
-export interface EventStorageMonth {
-    [day: number]: CalendarEvent[];
-}
-
-export interface EventStorageYear {
-    [month: number]: EventStorageMonth;
-}
-
-export interface EventStorage {
-    [year: number]: EventStorageYear;
-}
+import { EventStorage } from '../../../common/api/EventStorage';
 
 // TODO: Convert CalendarEvent[] to EventStorage
 export default class CalendarEventStorage {

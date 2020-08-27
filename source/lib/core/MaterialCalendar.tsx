@@ -6,7 +6,7 @@ import CalendarEvent from '../common/api/CalendarEvent';
 import { CalendarView } from '../common/api/CalendarView';
 import { DateChangeAction } from '../common/api/DateChangeAction';
 import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
-import CalendarViewController from './CalendarViewController';
+import ViewController from './CalendarViewController';
 import CalendarState from './components/calendarState/CalendarState';
 import useCalendarState from './components/calendarState/useCalendarState';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
@@ -96,7 +96,7 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
                 onDateChange={handleDateChange}
                 onInputChange={setSelectedViewOption}
             />
-            <CalendarViewController calendarState={calendarState} />
+            <ViewController calendarState={calendarState} />
         </div>
     );
 }

@@ -2,11 +2,11 @@ import { Fade } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import CalendarState from './components/calendarState/CalendarState';
 
-export interface CalendarViewControllerProps {
+export interface ViewControllerProps {
     calendarState: CalendarState;
 }
 
-export default function CalendarViewController(props: CalendarViewControllerProps) {
+export default function ViewController(props: ViewControllerProps) {
     const calendarState: CalendarState = props.calendarState;
 
     // State of Fade animation, if set to false then children component will Fade out

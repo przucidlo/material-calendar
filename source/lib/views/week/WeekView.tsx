@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
 import CalendarState from '../../core/components/calendarState/CalendarState';
-import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
+import TimeGrid from '../../core/components/timeGrid/TimeGrid';
 import DayGrid from '../day/DayGrid';
 import DayHead from '../day/DayHead';
 
@@ -52,7 +52,7 @@ function WeekView(props: WeekViewProps): ReactElement {
             </div>
             <div style={{ overflowY: 'scroll', height: `calc(100vh - 64px - 97px)` }}>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <CalendarTimeGrid gridElementHeight={48} width={48} />
+                    <TimeGrid gridElementHeight={48} width={48} />
                     {displayWeekGridSection()}
                 </div>
             </div>

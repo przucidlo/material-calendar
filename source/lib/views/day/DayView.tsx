@@ -1,7 +1,7 @@
 import React from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
-import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
+import TimeGrid from '../../core/components/timeGrid/TimeGrid';
 import DayGrid from './DayGrid';
 import DayHead from './DayHead';
 
@@ -34,7 +34,7 @@ export default function DayView(props: DayViewProps) {
                     position: 'relative',
                 }}
             >
-                <CalendarTimeGrid gridElementHeight={48} width={48} />
+                <TimeGrid gridElementHeight={48} width={48} />
                 <div style={{ height: '100%', flexGrow: 1 }}>
                     <DayGrid dayEvents={getDayEvents()} />
                 </div>

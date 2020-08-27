@@ -1,5 +1,5 @@
 import { CalendarView } from '../../../common/api/CalendarView';
-import { EventStorage } from '../eventStorage/CalendarEventStorage';
+import { EventStorage } from '../../../common/api/EventStorage';
 
 /**
  * Interface that represents getters and setters
