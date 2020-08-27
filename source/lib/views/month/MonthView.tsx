@@ -1,16 +1,16 @@
 import React, { ReactElement } from 'react';
-import { EventStorage } from '../../core/components/eventStorage/CalendarEventStorage';
+import CalendarViewProps from '../../common/api/CalendarViewProps';
 import MonthGrid from './grid/MonthGrid';
 
-interface Props {
-    focusedDate: Date;
-    eventStorage: EventStorage;
-}
+interface MonthViewProps extends CalendarViewProps {}
 
-function MonthView(props: Props): ReactElement {
+function MonthView(props: MonthViewProps): ReactElement {
     return (
         <div>
-            <MonthGrid date={props.focusedDate} eventStorage={props.eventStorage} />
+            <MonthGrid
+                date={props.calendarState.getHighlightDate()}
+                eventStorage={props.calendarState.getEventStorage()}
+            />
         </div>
     );
 }
