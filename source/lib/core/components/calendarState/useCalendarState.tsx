@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CalendarView } from '../../../common/api/CalendarView';
 import { EventStorage } from '../eventStorage/CalendarEventStorage';
-import { CalendarState } from './CalendarState';
+import CalendarState from './CalendarState';
 
 /**
  * Hook that stores state of the calendar and returns instance of CalendarState interface.

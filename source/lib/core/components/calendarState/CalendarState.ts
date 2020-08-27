@@ -5,7 +5,7 @@ import { EventStorage } from '../eventStorage/CalendarEventStorage';
  * Interface that represents getters and setters
  * for state fields of the calendar.
  */
-export interface CalendarState {
+export default interface CalendarState {
     setHighlightDate: (highlightDate: Date) => void;
     getHighlightDate: () => Date;
 
