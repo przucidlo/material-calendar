@@ -1,37 +1,16 @@
 import { Fade } from '@material-ui/core';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
-import CALENDAR_VIEWS from './CalendarViews';
-import { DateChangeAction } from './components/actions/DateChangeAction';
-import { EventStorage } from './components/eventStorage/CalendarEventStorage';
-import useScrollLock, { ScrollEvent } from './components/scrollLock/useScrollLock';
+import React, { useEffect, useState } from 'react';
+import CalendarState from './components/calendarState/CalendarState';
 
 export interface CalendarViewControllerProps {
-    focusedDate: Date;
-    selectedView: null | ReactElement;
-    selectedViewOption: SelectInputValueType;
-    eventStorage: EventStorage;
-
-    setSelectedView: (view: ReactElement) => void;
-    onDateChange: (dateChangeAction: DateChangeAction) => void;
+    calendarState: CalendarState;
 }
 
 export default function CalendarViewController(props: CalendarViewControllerProps) {
+    const calendarState: CalendarState = props.calendarState;
+
     // State of Fade animation, if set to false then children component will Fade out
     const [viewTransition, setViewTransition] = useState(false);
-
-    // ScrollLock hook use to handle change of date in month view by usage of scrollwheel
-    // FIXME: lookup handleDateChangeByWheel function for more details.
-    const scrollLock = useScrollLock({
-        lockDuration: 500,
-        onScrollEvent: handleDateChangeByWheel,
-    });
-
-    // Currently displayed view selected by user.
-    // By default set to Day.
-    const SelectedView = CALENDAR_VIEWS[props.selectedViewOption as string]
-        ? CALENDAR_VIEWS[props.selectedViewOption as string]
-        : CALENDAR_VIEWS['Day'];
 
     /**
      *  Fade animation chain.
@@ -40,7 +19,7 @@ export default function CalendarViewController(props: CalendarViewControllerProp
     useEffect(() => {
         // Fade out currently displayed view.
         // setViewTransition(false);
-    }, [props.selectedViewOption, props.focusedDate]);
+    }, [calendarState.getHighlightDate()]);
 
     useEffect(() => {
         if (!viewTransition) {
@@ -51,24 +30,6 @@ export default function CalendarViewController(props: CalendarViewControllerProp
         }
     }, [viewTransition]);
 
-    /**
-     * When selectedView is set to month, we allow user to change
-     * displayed month by usage of scrollwheel.
-     *
-     * FIXME: onWheel event causes re-render everytime it occurs,
-     *        which degrades the perfomance
-     *        08.06.2020 - preventDefault doesn't work, future research is required
-     */
-    function handleDateChangeByWheel(scrollEvent: ScrollEvent) {
-        if (props.selectedViewOption === 'Month') {
-            if (scrollEvent === ScrollEvent.UP) {
-                props.onDateChange(DateChangeAction.BACKWARD);
-            } else {
-                props.onDateChange(DateChangeAction.FORWARD);
-            }
-        }
-    }
-
     return (
         <Fade in={viewTransition} timeout={{ exit: 250, enter: 250 }}>
             <div>
@@ -77,8 +38,33 @@ export default function CalendarViewController(props: CalendarViewControllerProp
                     Otherwise SelectedView will be re-rendered 3 times during the transition.
                     Which can cause some performance issues if views will get more "heavy".
                 */}
-                {viewTransition ? <SelectedView {...props} /> : <div></div>}
+                {viewTransition ? calendarState.getCurrentView().component({ calendarState }) : <div></div>}
             </div>
         </Fade>
     );
 }
+
+// /**
+//  * When selectedView is set to month, we allow user to change
+//  * displayed month by usage of scrollwheel.
+//  *
+//  * FIXME: onWheel event causes re-render everytime it occurs,
+//  *        which degrades the perfomance
+//  *        08.06.2020 - preventDefault doesn't work, future research is required
+//  */
+// function handleDateChangeByWheel(scrollEvent: ScrollEvent) {
+//     if (props.selectedViewOption === 'Month') {
+//         if (scrollEvent === ScrollEvent.UP) {
+//             props.onDateChange(DateChangeAction.BACKWARD);
+//         } else {
+//             props.onDateChange(DateChangeAction.FORWARD);
+//         }
+//     }
+// }
+
+// // ScrollLock hook use to handle change of date in month view by usage of scrollwheel
+// // FIXME: lookup handleDateChangeByWheel function for more details.
+// const scrollLock = useScrollLock({
+//     lockDuration: 500,
+//     onScrollEvent: handleDateChangeByWheel,
+// });
