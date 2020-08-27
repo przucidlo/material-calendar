@@ -18,5 +18,8 @@ export interface CalendarView {
     /**
      * Change the date highlighted by the calendar depending on user input.
      */
-    onDateChange?: (dateChangeAction: DateChangeAction.BACKWARD | DateChangeAction.FORWARD) => Date;
+    onDateChange?: (
+        dateChangeAction: DateChangeAction.BACKWARD | DateChangeAction.FORWARD,
+        highlightDate: Date,
+    ) => Date;
 }

@@ -83,7 +83,9 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
         const currentView = calendarState.getCurrentView();
 
         if (currentView && currentView.onDateChange) {
-            calendarState.setHighlightDate(currentView.onDateChange(dateChangeAction));
+            calendarState.setHighlightDate(
+                currentView.onDateChange(dateChangeAction, calendarState.getHighlightDate()),
+            );
         }
     }
 
