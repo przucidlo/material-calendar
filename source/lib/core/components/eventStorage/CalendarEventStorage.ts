@@ -1,5 +1,5 @@
 import { addDays, endOfMonth, startOfMonth, subDays } from 'date-fns';
-import CalendarEvent from './CalendarEvent';
+import CalendarEvent from '../../../common/api/CalendarEvent';
 
 export interface EventStorageMonth {
     [day: number]: CalendarEvent[];

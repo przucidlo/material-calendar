@@ -1,6 +1,6 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React, { ReactNode } from 'react';
-import CalendarEvent from '../../../core/components/eventStorage/CalendarEvent';
+import CalendarEvent from '../../../common/api/CalendarEvent';
 import ScheduleViewEvent from '../event/ScheduleViewEvent';
 
 export interface ScheduleGridElementProps {

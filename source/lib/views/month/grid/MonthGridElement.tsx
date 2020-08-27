@@ -1,8 +1,8 @@
 import { Avatar, makeStyles, Typography, useTheme } from '@material-ui/core';
 import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
+import CalendarEvent from '../../../common/api/CalendarEvent';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
-import CalendarEvent from '../../../core/components/eventStorage/CalendarEvent';
 import { daysNamesShort } from '../../../language/DaysNames';
 import { monthsNameShort } from '../../../language/MonthsNames';
 import MonthEvent from '../event/MonthEvent';

@@ -1,10 +1,10 @@
 import { Box, makeStyles, Popover, Typography } from '@material-ui/core';
 import { format } from 'date-fns';
 import React from 'react';
+import CalendarEvent from '../../../common/api/CalendarEvent';
 import bindPopover from '../../../common/hooks/popover/bindPopover';
 import togglePopover from '../../../common/hooks/popover/togglePopover';
 import usePopover from '../../../common/hooks/popover/usePopover';
-import CalendarEvent from '../../../core/components/eventStorage/CalendarEvent';
 import MonthEventDot from './MonthEventDot';
 
 export interface MonthEventProps {

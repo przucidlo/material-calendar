@@ -1,6 +1,6 @@
 import { Grid } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
+import CalendarEvent from '../../common/api/CalendarEvent';
 import Day from './Day';
 import DayAppointmentGrid from './DayAppointmentGrid';
 

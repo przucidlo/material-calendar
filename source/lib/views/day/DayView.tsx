@@ -1,6 +1,6 @@
 import React from 'react';
+import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
-import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
 import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
 import DayGrid from './DayGrid';
 import DayHead from './DayHead';

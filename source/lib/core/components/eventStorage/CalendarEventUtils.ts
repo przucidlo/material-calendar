@@ -1,4 +1,4 @@
-import CalendarEvent from './CalendarEvent';
+import CalendarEvent from '../../../common/api/CalendarEvent';
 import { EventStorage } from './CalendarEventStorage';
 
 export default class CalendarEventUtils {

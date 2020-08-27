@@ -1,6 +1,6 @@
 import { differenceInMinutes } from 'date-fns/esm';
 import React, { ReactElement } from 'react';
-import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
+import CalendarEvent from '../../common/api/CalendarEvent';
 import DayAppointment from './DayAppointment';
 
 export interface DayAppointmentGridProps {

@@ -1,8 +1,8 @@
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import React, { ReactElement } from 'react';
+import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
 import CalendarState from '../../core/components/calendarState/CalendarState';
-import CalendarEvent from '../../core/components/eventStorage/CalendarEvent';
 import CalendarTimeGrid from '../../core/components/timeGrid/CalendarTimeGrid';
 import DayGrid from '../day/DayGrid';
 import DayHead from '../day/DayHead';
