@@ -9,7 +9,7 @@ import { SelectInputValueType } from '../common/components/selectInput/SelectInp
 import CalendarState from './components/calendarState/CalendarState';
 import useCalendarState from './components/calendarState/useCalendarState';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
-import CalendarControlBar from './components/navigationBar/CalendarControlBar';
+import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
 
 interface MaterialCalendarProps {
@@ -91,10 +91,10 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
 
     return (
         <div className={classes.root}>
-            <CalendarControlBar
-                date={calendarState.getHighlightDate()}
-                onDateChange={handleDateChange}
-                onInputChange={setSelectedViewOption}
+            <NavigationBar
+                highlightDate={calendarState.getHighlightDate()}
+                onDateChangeAction={handleDateChange}
+                onViewChange={setSelectedViewOption}
             />
             <ViewController calendarState={calendarState} />
         </div>

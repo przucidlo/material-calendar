@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
 import Typography from '@material-ui/core/Typography';
+import React, { ReactElement } from 'react';
 
-interface Props {
-    date: Date;
+interface NavigationBarDateTextProps {
+    highlightDate: Date;
 }
 
-export default function CalendarControlBarDate(props: Props): ReactElement {
+export default function NavigationBarDateText(props: NavigationBarDateTextProps): ReactElement {
     const months = [
         'Styczeń',
         'Luty',
@@ -23,7 +23,7 @@ export default function CalendarControlBarDate(props: Props): ReactElement {
 
     return (
         <Typography align="center" variant="h5" style={{ display: 'inline' }}>
-            {months[props.date.getMonth()] + ' ' + props.date.getFullYear()}
+            {months[props.highlightDate.getMonth()] + ' ' + props.highlightDate.getFullYear()}
         </Typography>
     );
 }

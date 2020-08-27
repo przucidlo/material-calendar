@@ -4,11 +4,11 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import React, { ReactElement } from 'react';
 import { DateChangeAction } from '../../../common/api/DateChangeAction';
 
-interface Props {
+interface NavigationBarControlArrowsProps {
     onChangeDate: (dateChangeAction: DateChangeAction) => void;
 }
 
-function CalendarNavigationArrows(props: Props): ReactElement {
+function NavigationBarControlArrows(props: NavigationBarControlArrowsProps): ReactElement {
     return (
         <div style={{ display: 'inline', marginLeft: '8px', marginRight: '8px' }}>
             <IconButton
@@ -31,4 +31,4 @@ function CalendarNavigationArrows(props: Props): ReactElement {
     );
 }
 
-export default CalendarNavigationArrows;
+export default NavigationBarControlArrows;
