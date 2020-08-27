@@ -1,6 +1,6 @@
 import { Fade } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import CalendarState from './components/calendarState/CalendarState';
+import CalendarState from '../calendarState/CalendarState';
 
 export interface ViewControllerProps {
     calendarState: CalendarState;

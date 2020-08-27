@@ -6,11 +6,11 @@ import CalendarEvent from '../common/api/CalendarEvent';
 import { CalendarView } from '../common/api/CalendarView';
 import { DateChangeAction } from '../common/api/DateChangeAction';
 import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
-import ViewController from './CalendarViewController';
 import CalendarState from './components/calendarState/CalendarState';
 import useCalendarState from './components/calendarState/useCalendarState';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
 import CalendarControlBar from './components/navigationBar/CalendarControlBar';
+import ViewController from './components/viewController/ViewController';
 
 interface MaterialCalendarProps {
     /**
@@ -30,7 +30,7 @@ interface MaterialCalendarProps {
 
     /**
      * List of views that will be used by the calendar.
-     * If none are provided, It will use the default views.
+     * If none are provided, It will use the default ones.
      */
     views?: CalendarView[];
 }
