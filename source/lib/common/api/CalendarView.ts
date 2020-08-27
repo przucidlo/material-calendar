@@ -11,7 +11,7 @@ export interface CalendarView {
     };
 
     /**
-     * Component that represents this view.
+     * Component that represents the view.
      */
     component: (calendarViewProps: CalendarViewProps) => ReactElement<CalendarViewProps>;
 
