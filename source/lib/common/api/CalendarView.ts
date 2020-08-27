@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { DateChangeAction } from '../../core/components/actions/DateChangeAction';
 import CalendarViewProps from './CalendarViewProps';
+import { DateChangeAction } from './DateChangeAction';
 
 export interface CalendarView {
     /**

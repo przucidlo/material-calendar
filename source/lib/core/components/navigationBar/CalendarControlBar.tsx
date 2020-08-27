@@ -1,7 +1,7 @@
 import { Button, createStyles, Grid, Theme, withStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
+import { DateChangeAction } from '../../../common/api/DateChangeAction';
 import SelectInput, { SelectInputValueType } from '../../../common/components/selectInput/SelectInput';
-import { DateChangeAction } from '../actions/DateChangeAction';
 import CalendarControlBarDate from './CalendarControlBarDate';
 import CalendarNavigationArrows from './CalendarNavigationArrows';
 

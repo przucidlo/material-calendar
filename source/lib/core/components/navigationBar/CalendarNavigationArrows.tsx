@@ -2,7 +2,7 @@ import { IconButton } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import React, { ReactElement } from 'react';
-import { DateChangeAction } from '../actions/DateChangeAction';
+import { DateChangeAction } from '../../../common/api/DateChangeAction';
 
 interface Props {
     onChangeDate: (dateChangeAction: DateChangeAction) => void;
