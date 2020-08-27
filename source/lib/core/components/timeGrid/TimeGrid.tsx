@@ -1,12 +1,12 @@
 import { useTheme } from '@material-ui/core';
 import React from 'react';
 
-export interface CalendarTimeGridProps {
+export interface TimeGridProps {
     gridElementHeight: number;
     width: number;
 }
 
-export default function CalendarTimeGrid(props: CalendarTimeGridProps) {
+export default function TimeGrid(props: TimeGridProps) {
     const elementsAmount = 24;
     const theme = useTheme();
 
