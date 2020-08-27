@@ -1,11 +1,10 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React, { ReactNode } from 'react';
-import { EventStorage } from '../../../core/components/eventStorage/CalendarEventStorage';
+import CalendarState from '../../../core/components/calendarState/CalendarState';
 import ScheduleGridElement from './ScheduleGridElement';
 
 export interface ScheduleGridProps {
-    eventStorage: EventStorage;
-    focusedDate: Date;
+    calendarState: CalendarState;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -16,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScheduleGrid(props: ScheduleGridProps) {
+    const calendarState = props.calendarState;
     const classes = useStyles();
 
     function displayScheduleElements(): ReactNode[] {
-        const date = props.focusedDate;
-        const monthEvents = props.eventStorage?.[date.getFullYear()]?.[date.getMonth()];
+        const date = calendarState.getHighlightDate();
+        const monthEvents = calendarState.getEventStorage()?.[date.getFullYear()]?.[date.getMonth()];
         let elements: ReactNode[] = [];
 
         if (monthEvents) {

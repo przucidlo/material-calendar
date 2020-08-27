@@ -1,11 +1,8 @@
 import React from 'react';
-import { EventStorage } from '../../core/components/eventStorage/CalendarEventStorage';
+import CalendarViewProps from '../../common/api/CalendarViewProps';
 import ScheduleGrid from './scheduleGrid/ScheduleGrid';
 
-export interface ScheduleViewProps {
-    focusedDate: Date;
-    eventStorage: EventStorage;
-}
+export interface ScheduleViewProps extends CalendarViewProps {}
 
 export default function ScheduleView(props: ScheduleViewProps) {
     return <ScheduleGrid {...props} />;
