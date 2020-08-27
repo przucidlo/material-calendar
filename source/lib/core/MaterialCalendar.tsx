@@ -65,6 +65,12 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
         calendarEventStorage.setFocusedDate(calendarState.getHighlightDate());
     }, [calendarState.getHighlightDate()]);
 
+    useEffect(() => {
+        if (props.views) {
+            calendarState.setCurrentView(props.views[0]);
+        }
+    });
+
     /**
      * Changes the currently focused date of the calendar based on provided DataChangeAction parameter.
      * @param dateChangeAction
@@ -114,14 +120,7 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
                 onDateChange={handleDateChange}
                 onInputChange={setSelectedViewOption}
             />
-            <CalendarViewController
-                focusedDate={calendarState.getHighlightDate()}
-                selectedView={selectedView}
-                selectedViewOption={selectedViewOption}
-                setSelectedView={setSelectedView}
-                onDateChange={handleDateChange}
-                eventStorage={calendarState.getEventStorage()}
-            />
+            <CalendarViewController calendarState={calendarState} />
         </div>
     );
 }
