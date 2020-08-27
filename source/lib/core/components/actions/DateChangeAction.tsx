@@ -1,5 +1,5 @@
 export enum DateChangeAction {
-    BACKWARD,
-    FORWARD,
-    TODAY,
+    BACKWARD = -1,
+    TODAY = 0,
+    FORWARD = 1,
 }
