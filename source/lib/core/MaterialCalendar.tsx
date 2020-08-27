@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { addDays, addMonths, addWeeks } from 'date-fns';
 import { isSameDay } from 'date-fns/esm';
 import 'fontsource-roboto';
 import React, { ReactElement, useEffect, useState } from 'react';
@@ -46,9 +45,6 @@ const useStyles = makeStyles((theme) => ({
 export default function MaterialCalendar(props: MaterialCalendarProps): ReactElement {
     const calendarState: CalendarState = useCalendarState();
 
-    // Currently displayed view
-    const [selectedView, setSelectedView] = useState(null as null | ReactElement);
-
     // Value of SelectInput responsible for changing view option
     const [selectedViewOption, setSelectedViewOption] = useState<SelectInputValueType>('day');
 
@@ -76,40 +72,18 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
      * @param dateChangeAction
      */
     function handleDateChange(dateChangeAction: DateChangeAction) {
-        const highlightDate: Date = calendarState.getHighlightDate();
-
-        let changeAmountBy = 1;
-
-        if (dateChangeAction === DateChangeAction.BACKWARD) {
-            changeAmountBy = -1;
-        }
-
         if (dateChangeAction === DateChangeAction.TODAY) {
-            const todayDate = new Date(Date.now());
-
-            // Prevent from setting same day once again,
-            // which will trigger unnecessary re-render
-            // of selected view
-            if (!isSameDay(todayDate, calendarState.getHighlightDate())) {
-                calendarState.setHighlightDate(todayDate);
+            // Prevent from setting same day once again, which will trigger unnecessary re-render.
+            if (!isSameDay(Date.now(), calendarState.getHighlightDate())) {
+                calendarState.setHighlightDate(new Date());
             }
 
             return;
         }
+        const currentView = calendarState.getCurrentView();
 
-        switch (selectedViewOption) {
-            case 'day':
-                calendarState.setHighlightDate(addDays(highlightDate, changeAmountBy));
-                break;
-            case 'week':
-                calendarState.setHighlightDate(addWeeks(highlightDate, changeAmountBy));
-                break;
-            case 'month':
-                calendarState.setHighlightDate(addMonths(highlightDate, changeAmountBy));
-                break;
-            case 'schedule':
-                calendarState.setHighlightDate(addMonths(highlightDate, changeAmountBy));
-                break;
+        if (currentView && currentView.onDateChange) {
+            calendarState.setHighlightDate(currentView.onDateChange(dateChangeAction));
         }
     }
 
