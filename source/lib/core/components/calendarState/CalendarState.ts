@@ -14,4 +14,7 @@ export default interface CalendarState {
 
     setCurrentView: (currentView: CalendarView) => void;
     getCurrentView: () => CalendarView | null;
+
+    setViews: (views: CalendarView[]) => void;
+    getViews: () => CalendarView[];
 }

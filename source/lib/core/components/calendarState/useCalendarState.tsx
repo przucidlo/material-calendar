@@ -10,6 +10,7 @@ export default function useCalendarState(): CalendarState {
     const [highlightDate, setHighlightDate] = useState<Date>(new Date());
     const [eventStorage, setEventStorage] = useState<EventStorage | null>(null);
     const [currentView, setCurrentView] = useState<CalendarView | null>(null);
+    const [views, setViews] = useState<CalendarView[]>([]);
 
     /*
      * Create and return instance of class that implements CalendarState.
@@ -37,6 +38,14 @@ export default function useCalendarState(): CalendarState {
 
         public getCurrentView() {
             return currentView;
+        }
+
+        public setViews(views: CalendarView[]) {
+            setViews(views);
+        }
+
+        public getViews() {
+            return views;
         }
     })();
 }
