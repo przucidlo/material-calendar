@@ -1,23 +1,35 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
-import SelectInput, { SelectInputValueType } from '../../../common/components/selectInput/SelectInput';
+import React, { useMemo } from 'react';
+import { CalendarView } from '../../../common/api/CalendarView';
+import SelectInput, { SelectOption } from '../../../common/components/selectInput/SelectInput';
 
 export interface NavigationBarViewSelect {
-    onViewChange?: (value: SelectInputValueType) => void;
+    views: CalendarView[];
+
+    onViewChange?: (value: CalendarView) => void;
 }
 
 export default function NavigationBarViewSelect(props: NavigationBarViewSelect) {
+    function getSelectInputOptions(): SelectOption<CalendarView>[] {
+        return props.views.map((view) => {
+            return { name: view.name['pl'], source: view };
+        });
+    }
+
     return (
         <React.Fragment>
             <Grid item>
                 <div style={{ display: 'inline' }}>
-                    <SelectInput
-                        onInputChange={props.onViewChange}
-                        variant="outlined"
-                        options={{ day: 'Dzień', week: 'Tydzień', month: 'Miesiąc', schedule: 'Harmonogram' }}
-                        style={{ width: 128 }}
-                        defaultFirstItem={true}
-                    />
+                    {useMemo(
+                        () => (
+                            <SelectInput
+                                onInputChange={props.onViewChange}
+                                variant="outlined"
+                                options={getSelectInputOptions()}
+                            />
+                        ),
+                        [props.views],
+                    )}
                 </div>
             </Grid>
         </React.Fragment>
