@@ -9,7 +9,7 @@ import CalendarState from './CalendarState';
 export default function useCalendarState(): CalendarState {
     const [highlightDate, setHighlightDate] = useState<Date>(new Date());
     const [eventStorage, setEventStorage] = useState<EventStorage | null>(null);
-    const [currentView, setCurrentView] = useState<CalendarView | null>(null);
+    const [view, setView] = useState<CalendarView | null>(null);
     const [views, setViews] = useState<CalendarView[]>([]);
 
     /*
@@ -33,11 +33,11 @@ export default function useCalendarState(): CalendarState {
         }
 
         public setCurrentView(currentView: CalendarView) {
-            setCurrentView(currentView);
+            setView(currentView);
         }
 
         public getCurrentView() {
-            return currentView;
+            return view;
         }
 
         public setViews(views: CalendarView[]) {
