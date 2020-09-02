@@ -1,10 +1,8 @@
 import { makeStyles } from '@material-ui/core';
-import { isSameDay } from 'date-fns/esm';
 import 'fontsource-roboto';
 import React, { ReactElement, useEffect, useState } from 'react';
 import CalendarEvent from '../common/api/CalendarEvent';
 import { CalendarView } from '../common/api/CalendarView';
-import { DateChangeAction } from '../common/api/DateChangeAction';
 import { SelectInputValue } from '../common/components/selectInput/SelectInput';
 import { CalendarContext } from '../common/contexts/CalendarContext';
 import { ViewContext } from '../common/contexts/ViewContext';
@@ -71,31 +69,11 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
         }
     }, []);
 
-    /**
-     * Changes the currently focused date of the calendar based on provided DataChangeAction parameter.
-     * @param dateChangeAction
-     */
-    function handleDateChange(dateChangeAction: DateChangeAction) {
-        if (dateChangeAction === DateChangeAction.TODAY) {
-            // Prevent from setting same day once again, which will trigger unnecessary re-render.
-            if (!isSameDay(Date.now(), viewContext.highlightDate)) {
-                viewContext.setHighlightDate(new Date());
-            }
-
-            return;
-        }
-        const view = viewContext.view;
-
-        if (view && view.onDateChange) {
-            viewContext.setHighlightDate(view.onDateChange(dateChangeAction, viewContext.highlightDate));
-        }
-    }
-
     return (
         <CalendarContext.Provider value={calendarContext}>
             <ViewContext.Provider value={viewContext}>
                 <div className={classes.root}>
-                    <NavigationBar onDateChangeAction={handleDateChange} />
+                    <NavigationBar />
                     <ViewController />
                 </div>
             </ViewContext.Provider>
