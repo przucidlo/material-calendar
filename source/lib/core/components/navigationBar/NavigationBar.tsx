@@ -1,14 +1,12 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import { DateChangeAction } from '../../../common/api/DateChangeAction';
-import { SelectInputValueType } from '../../../common/components/selectInput/SelectInput';
+import { CalendarContext } from '../../../common/contexts/CalendarContext';
+import { ViewContext } from '../../../common/contexts/ViewContext';
 import NavigationBarControls from './NavigationBarControls';
 import NavigationBarViewSelect from './NavigationBarViewSelect';
 
 interface NavigationBarProps {
-    highlightDate: Date;
-
-    onViewChange?: (value: SelectInputValueType) => void;
     onDateChangeAction: (dateChangeAction: DateChangeAction) => void;
 }
 
@@ -28,14 +26,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavigationBar(props: NavigationBarProps): ReactElement {
+    const calendarContext = useContext(CalendarContext);
+    const viewContext = useContext(ViewContext);
     const classes = useStyles();
 
     return (
         <div className={classes.navigationBar}>
             <Grid container direction="row" alignItems="center" justify="space-around" className={classes.gridStyle}>
-                <NavigationBarControls onDateChange={props.onDateChangeAction} highlightDate={props.highlightDate} />
+                <NavigationBarControls
+                    onDateChange={props.onDateChangeAction}
+                    highlightDate={viewContext.highlightDate}
+                />
 
-                <NavigationBarViewSelect onViewChange={props.onViewChange} />
+                <NavigationBarViewSelect views={calendarContext.views} onViewChange={viewContext.setView} />
             </Grid>
         </div>
     );

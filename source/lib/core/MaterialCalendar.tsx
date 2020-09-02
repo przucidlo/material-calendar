@@ -5,9 +5,11 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import CalendarEvent from '../common/api/CalendarEvent';
 import { CalendarView } from '../common/api/CalendarView';
 import { DateChangeAction } from '../common/api/DateChangeAction';
-import { SelectInputValueType } from '../common/components/selectInput/SelectInput';
-import CalendarState from './components/calendarState/CalendarState';
-import useCalendarState from './components/calendarState/useCalendarState';
+import { SelectInputValue } from '../common/components/selectInput/SelectInput';
+import { CalendarContext } from '../common/contexts/CalendarContext';
+import { ViewContext } from '../common/contexts/ViewContext';
+import useCalendarContext from '../common/hooks/context/useCalendarContext';
+import useViewContext from '../common/hooks/context/useViewContext';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
@@ -43,29 +45,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MaterialCalendar(props: MaterialCalendarProps): ReactElement {
-    const calendarState: CalendarState = useCalendarState();
+    const calendarContext = useCalendarContext();
+    const viewContext = useViewContext();
 
-    // Value of SelectInput responsible for changing view option
-    const [selectedViewOption, setSelectedViewOption] = useState<SelectInputValueType>('day');
+    const [selectedViewOption, setSelectedViewOption] = useState<SelectInputValue>('day');
 
     const classes = useStyles();
 
     const calendarEventStorage = new CalendarEventStorage(
-        calendarState.getHighlightDate(),
-        calendarState.setEventStorage,
+        viewContext.highlightDate,
+        calendarContext.setEventStorage,
         props.onDataRequest,
         selectedViewOption.toString(),
     );
 
     useEffect(() => {
-        calendarEventStorage.setFocusedDate(calendarState.getHighlightDate());
-    }, [calendarState.getHighlightDate()]);
+        calendarEventStorage.setFocusedDate(viewContext.highlightDate);
+    }, [viewContext.highlightDate]);
 
     useEffect(() => {
         if (props.views) {
-            calendarState.setCurrentView(props.views[0]);
+            calendarContext.setViews(props.views);
+
+            viewContext.setView(props.views[0]);
         }
-    });
+    }, []);
 
     /**
      * Changes the currently focused date of the calendar based on provided DataChangeAction parameter.
@@ -74,29 +78,27 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
     function handleDateChange(dateChangeAction: DateChangeAction) {
         if (dateChangeAction === DateChangeAction.TODAY) {
             // Prevent from setting same day once again, which will trigger unnecessary re-render.
-            if (!isSameDay(Date.now(), calendarState.getHighlightDate())) {
-                calendarState.setHighlightDate(new Date());
+            if (!isSameDay(Date.now(), viewContext.highlightDate)) {
+                viewContext.setHighlightDate(new Date());
             }
 
             return;
         }
-        const currentView = calendarState.getCurrentView();
+        const view = viewContext.view;
 
-        if (currentView && currentView.onDateChange) {
-            calendarState.setHighlightDate(
-                currentView.onDateChange(dateChangeAction, calendarState.getHighlightDate()),
-            );
+        if (view && view.onDateChange) {
+            viewContext.setHighlightDate(view.onDateChange(dateChangeAction, viewContext.highlightDate));
         }
     }
 
     return (
-        <div className={classes.root}>
-            <NavigationBar
-                highlightDate={calendarState.getHighlightDate()}
-                onDateChangeAction={handleDateChange}
-                onViewChange={setSelectedViewOption}
-            />
-            <ViewController calendarState={calendarState} />
-        </div>
+        <CalendarContext.Provider value={calendarContext}>
+            <ViewContext.Provider value={viewContext}>
+                <div className={classes.root}>
+                    <NavigationBar onDateChangeAction={handleDateChange} />
+                    <ViewController />
+                </div>
+            </ViewContext.Provider>
+        </CalendarContext.Provider>
     );
 }

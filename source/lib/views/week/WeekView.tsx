@@ -1,8 +1,9 @@
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
-import CalendarState from '../../core/components/calendarState/CalendarState';
+import { CalendarContext, CalendarContextStructure } from '../../common/contexts/CalendarContext';
+import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
 import DayGrid from '../day/DayGrid';
 import DayHead from '../day/DayHead';
@@ -10,11 +11,12 @@ import DayHead from '../day/DayHead';
 interface WeekViewProps extends CalendarViewProps {}
 
 function WeekView(props: WeekViewProps): ReactElement {
-    const calendarState: CalendarState = props.calendarState;
+    const calendarContext: CalendarContextStructure = useContext(CalendarContext);
+    const viewContext: ViewContextStructure = useContext(ViewContext);
 
     const daysBetween = eachDayOfInterval({
-        start: startOfWeek(calendarState.getHighlightDate()),
-        end: endOfWeek(calendarState.getHighlightDate()),
+        start: startOfWeek(viewContext.highlightDate),
+        end: endOfWeek(viewContext.highlightDate),
     });
 
     function displayWeekHeadSection() {
@@ -28,9 +30,8 @@ function WeekView(props: WeekViewProps): ReactElement {
     }
 
     function getDayEvents(dayDate: Date): CalendarEvent[] {
-        const dayEvents = calendarState.getEventStorage()?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[
-            dayDate.getDate()
-        ];
+        const dayEvents =
+            calendarContext.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
 
         return dayEvents ? dayEvents : [];
     }

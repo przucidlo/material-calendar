@@ -1,13 +1,11 @@
 import { Fade } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import CalendarState from '../calendarState/CalendarState';
+import React, { useContext, useEffect, useState } from 'react';
+import { ViewContext } from '../../../common/contexts/ViewContext';
 
-export interface ViewControllerProps {
-    calendarState: CalendarState;
-}
+export interface ViewControllerProps {}
 
 export default function ViewController(props: ViewControllerProps) {
-    const calendarState: CalendarState = props.calendarState;
+    const viewContext = useContext(ViewContext);
 
     // State of Fade animation, if set to false then children component will Fade out
     const [viewTransition, setViewTransition] = useState(false);
@@ -19,7 +17,7 @@ export default function ViewController(props: ViewControllerProps) {
     useEffect(() => {
         // Fade out currently displayed view.
         // setViewTransition(false);
-    }, [calendarState.getHighlightDate()]);
+    }, [viewContext.highlightDate]);
 
     useEffect(() => {
         if (!viewTransition) {
@@ -38,7 +36,7 @@ export default function ViewController(props: ViewControllerProps) {
                     Otherwise SelectedView will be re-rendered 3 times during the transition.
                     Which can cause some performance issues if views will get more "heavy".
                 */}
-                {viewTransition ? calendarState.getCurrentView().component({ calendarState }) : <div></div>}
+                {viewTransition ? viewContext.view.component({}) : <div></div>}
             </div>
         </Fade>
     );

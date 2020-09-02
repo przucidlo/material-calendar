@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
+import { CalendarContext } from '../../common/contexts/CalendarContext';
+import { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
 import DayGrid from './DayGrid';
 import DayHead from './DayHead';
@@ -8,6 +10,9 @@ import DayHead from './DayHead';
 export interface DayViewProps extends CalendarViewProps {}
 
 export default function DayView(props: DayViewProps) {
+    const calendarContext = useContext(CalendarContext);
+    const viewContext = useContext(ViewContext);
+
     /**
      * Fetches events of displayed day from eventStorage.
      *
@@ -15,17 +20,16 @@ export default function DayView(props: DayViewProps) {
      * return empty array.
      */
     function getDayEvents(): CalendarEvent[] {
-        const dayDate: Date = props.calendarState.getHighlightDate();
-        const dayEvents = props.calendarState.getEventStorage()?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[
-            dayDate.getDate()
-        ];
+        const dayDate: Date = viewContext.highlightDate;
+        const dayEvents =
+            calendarContext.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
 
         return dayEvents ? dayEvents : [];
     }
 
     return (
         <div>
-            <DayHead highlightDate={props.calendarState.getHighlightDate()} />
+            <DayHead highlightDate={viewContext.highlightDate} />
             <div
                 style={{
                     overflowY: 'scroll',

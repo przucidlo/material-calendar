@@ -5,5 +5,5 @@ import ScheduleGrid from './scheduleGrid/ScheduleGrid';
 export interface ScheduleViewProps extends CalendarViewProps {}
 
 export default function ScheduleView(props: ScheduleViewProps) {
-    return <ScheduleGrid {...props} />;
+    return <ScheduleGrid />;
 }
