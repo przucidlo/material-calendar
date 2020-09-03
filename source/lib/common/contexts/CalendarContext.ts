@@ -3,7 +3,7 @@ import { CalendarView } from '../api/CalendarView';
 import { EventStorage } from '../api/EventStorage';
 
 export interface CalendarContextStructure {
-    eventStorage: EventStorage | null;
+    eventStorage: EventStorage;
     views: CalendarView[];
 
     setEventStorage: (eventStorage: EventStorage) => void;
@@ -11,7 +11,7 @@ export interface CalendarContextStructure {
 }
 
 const DEFAULT_CONTEXT: CalendarContextStructure = {
-    eventStorage: null,
+    eventStorage: {},
     views: [],
 
     setEventStorage: () => {},
