@@ -7,6 +7,7 @@ import useCalendarContext from '../common/hooks/context/useCalendarContext';
 import useViewContext from '../common/hooks/context/useViewContext';
 import ContextWrapper from './components/contextWrapper/ContextWrapper';
 import CalendarEventStorage from './components/eventStorage/CalendarEventStorage';
+import useCalendarEventStorage from './components/eventStorage/useCalendarEventStorage';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
 
@@ -16,6 +17,13 @@ interface MaterialCalendarProps {
      * (There is no need to sort the data before passing it to the calendar.)
      */
     onDataRequest: (from: Date, till: Date) => Promise<CalendarEvent[]>;
+
+    /**
+     * Returns instance of CalendarEventStorage
+     *
+     * TODO: Write explanation why this useful.
+     */
+    getCalendarEventStorage?: (calendarEventStorage: CalendarEventStorage) => void;
 
     /**
      * If set to true calendar will only request data when It's needed,
@@ -45,11 +53,11 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
     const viewContext = useViewContext();
     const classes = useStyles();
 
-    const calendarEventStorage = new CalendarEventStorage(calendarContext, viewContext, props.onDataRequest);
-
-    useEffect(() => {
-        calendarEventStorage.setFocusedDate(viewContext.highlightDate);
-    }, [viewContext.highlightDate]);
+    const calendarEventStorage = useCalendarEventStorage({
+        onDataRequest: props.onDataRequest,
+        calendarContext,
+        viewContext,
+    });
 
     useEffect(() => {
         if (props.views) {
