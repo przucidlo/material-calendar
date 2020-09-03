@@ -1,4 +1,13 @@
-import { isSameDay, isSameMonth, isSameWeek, isSameYear } from 'date-fns';
+import {
+    eachDayOfInterval,
+    endOfWeek,
+    getDaysInMonth,
+    isSameDay,
+    isSameMonth,
+    isSameWeek,
+    isSameYear,
+    startOfWeek,
+} from 'date-fns';
 import { EventStorage } from '../../../common/api/EventStorage';
 
 enum DateRange {
@@ -18,9 +27,6 @@ const dateRangeCheckers: { [range: number]: (from: Date, till: Date) => boolean 
 };
 
 export default class EventStoragePresenceHelper {
-    // TEST CONSTUCTOR
-    constructor() {}
-
     public static isDataPresent(from: Date, till: Date, eventStorage: EventStorage) {
         let dateRange: DateRange = this.determineRange(from, till);
 
@@ -28,9 +34,9 @@ export default class EventStoragePresenceHelper {
             case DateRange.DAY:
                 return this.isDayPresent(from, eventStorage);
             case DateRange.WEEK:
-                return this.isWeekPresent(from);
+                return this.isWeekPresent(from, eventStorage);
             case DateRange.MONTH:
-                return this.isMonthPresent(from);
+                return this.isMonthPresent(from, eventStorage);
             case DateRange.YEAR:
                 return this.isYearPresent(from);
             default:
@@ -42,7 +48,8 @@ export default class EventStoragePresenceHelper {
         for (let range in DateRange) {
             if (!isNaN(Number(range))) {
                 if (dateRangeCheckers[range](from, till)) {
-                    return (range as unknown) as number;
+                    console.log(range);
+                    return Number(range);
                 }
             }
         }
@@ -60,15 +67,27 @@ export default class EventStoragePresenceHelper {
         return eventStorage[date.getFullYear()]?.[date.getMonth()]?.[date.getDay()] !== undefined;
     }
 
-    private static isWeekPresent(weekDay: Date): boolean {
-        return false;
+    private static isWeekPresent(weekDay: Date, eventStorage: EventStorage): boolean {
+        const weekDays: Date[] = eachDayOfInterval({ start: startOfWeek(weekDay), end: endOfWeek(weekDay) });
+
+        for (let day of weekDays) {
+            if (!this.isDayPresent(day, eventStorage)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    private static isMonthPresent(monthDay: Date): boolean {
-        return false;
+    private static isMonthPresent(monthDay: Date, eventStorage: EventStorage): boolean {
+        const daysInMonth: number = getDaysInMonth(monthDay);
+        const storageMonth = eventStorage[monthDay.getFullYear()]?.[monthDay.getMonth()];
+
+        return storageMonth && daysInMonth === Object.keys(storageMonth).length;
     }
 
+    // TODO: Implement it
     private static isYearPresent(yearDay: Date): boolean {
-        return false;
+        throw new Error('Not implemented');
     }
 }
