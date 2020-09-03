@@ -48,7 +48,6 @@ export default class EventStoragePresenceHelper {
         for (let range in DateRange) {
             if (!isNaN(Number(range))) {
                 if (dateRangeCheckers[range](from, till)) {
-                    console.log(range);
                     return Number(range);
                 }
             }
