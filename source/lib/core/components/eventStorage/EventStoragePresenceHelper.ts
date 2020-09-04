@@ -10,7 +10,7 @@ import {
 } from 'date-fns';
 import { EventStorage } from '../../../common/api/EventStorage';
 
-enum DateRange {
+export enum DateRange {
     DAY,
     WEEK,
     MONTH,
@@ -44,7 +44,7 @@ export default class EventStoragePresenceHelper {
         }
     }
 
-    private static determineRange(from: Date, till: Date): DateRange {
+    public static determineRange(from: Date, till: Date): DateRange {
         for (let range in DateRange) {
             if (!isNaN(Number(range))) {
                 if (dateRangeCheckers[range](from, till)) {
