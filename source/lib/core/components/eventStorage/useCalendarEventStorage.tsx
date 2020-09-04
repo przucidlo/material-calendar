@@ -3,6 +3,7 @@ import CalendarEvent from '../../../common/api/CalendarEvent';
 import { EventStorage } from '../../../common/api/EventStorage';
 import { CalendarContextStructure } from '../../../common/contexts/CalendarContext';
 import ViewContextStructure from '../../../common/contexts/ViewContext';
+import EventStorageFiller from './EventStorageFiller';
 import EventStoragePresenceHelper from './EventStoragePresenceHelper';
 
 export interface UseCalendarEventStorageProps {
@@ -26,10 +27,15 @@ export default function useCalendarEventStorage(props: UseCalendarEventStoragePr
 
             if (!isDataPresentInStorage(dateRange.from, dateRange.till)) {
                 const requestedData: CalendarEvent[] = await props.onDataRequest(dateRange.from, dateRange.till);
+                let eventStorageCopy: EventStorage = calendarContext.eventStorage;
 
-                calendarContext.setEventStorage(sortEvents(requestedData));
-            } else {
-                console.log('nothing new');
+                const preFilledStorage = EventStorageFiller.preFillStorage(
+                    dateRange.from,
+                    dateRange.till,
+                    eventStorageCopy,
+                );
+
+                calendarContext.setEventStorage(sortEvents(requestedData, preFilledStorage));
             }
         }
     }
@@ -38,9 +44,7 @@ export default function useCalendarEventStorage(props: UseCalendarEventStoragePr
         return EventStoragePresenceHelper.isDataPresent(from, till, calendarContext.eventStorage);
     }
 
-    function sortEvents(calendarEvents: CalendarEvent[]): EventStorage {
-        let eventStorage: EventStorage = calendarContext.eventStorage;
-
+    function sortEvents(calendarEvents: CalendarEvent[], eventStorage: EventStorage): EventStorage {
         for (let event of calendarEvents) {
             const year = event.startedAt.getFullYear();
             const month = event.startedAt.getMonth();
