@@ -36,7 +36,7 @@ export default function ViewController(props: ViewControllerProps) {
                     Otherwise SelectedView will be re-rendered 3 times during the transition.
                     Which can cause some performance issues if views will get more "heavy".
                 */}
-                {viewTransition ? viewContext.view.component({}) : <div></div>}
+                {viewTransition && viewContext.view ? viewContext.view.component({}) : <div></div>}
             </div>
         </Fade>
     );
