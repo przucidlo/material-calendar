@@ -1,10 +1,10 @@
 import { findIndex } from 'lodash';
 import { useEffect } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import CalendarEventStorage from '../../../common/api/CalendarEventStorage';
 import { EventStorage } from '../../../common/api/EventStorage';
 import { CalendarContextStructure } from '../../../common/contexts/CalendarContext';
 import ViewContextStructure from '../../../common/contexts/ViewContext';
-import CalendarEventStorage from './CalendarEventStorage';
 import EventStorageFiller from './EventStorageFiller';
 import EventStoragePresenceHelper from './EventStoragePresenceHelper';
 
