@@ -4,6 +4,7 @@ import CalendarEvent from '../../../common/api/CalendarEvent';
 import { EventStorage } from '../../../common/api/EventStorage';
 import { CalendarContextStructure } from '../../../common/contexts/CalendarContext';
 import ViewContextStructure from '../../../common/contexts/ViewContext';
+import CalendarEventStorage from './CalendarEventStorage';
 import EventStorageFiller from './EventStorageFiller';
 import EventStoragePresenceHelper from './EventStoragePresenceHelper';
 
@@ -39,36 +40,39 @@ export default function useCalendarEventStorage(props: UseCalendarEventStoragePr
      *  returned by this hook.
      */
     async function lazyLoadData(): Promise<void> {
-        if (viewContext.view) {
-            // Gets date range relative to highlightDate
-            const dateRange = viewContext.view.getDateRange(viewContext.highlightDate);
+        return new Promise(async (resolve) => {
+            if (viewContext.view) {
+                // Gets date range relative to highlightDate
+                const dateRange = viewContext.view.getDateRange(viewContext.highlightDate);
 
-            if (!isDataPresentInStorage(dateRange.from, dateRange.till)) {
-                const requestedData: CalendarEvent[] = await props.onDataRequest(dateRange.from, dateRange.till);
+                if (!isDataPresentInStorage(dateRange.from, dateRange.till)) {
+                    const requestedData: CalendarEvent[] = await props.onDataRequest(dateRange.from, dateRange.till);
 
-                /*
-                 *  If data wasn't loaded before, this function will
-                 *  begin loading by prefilling required range with
-                 *  empty arrays to indicate that this specific range
-                 *  was loaded before.
-                 */
-                const preFilledStorage = EventStorageFiller.preFillStorage(
-                    dateRange.from,
-                    dateRange.till,
-                    calendarContext.eventStorage,
-                );
+                    /*
+                     *  If data wasn't loaded before, this function will
+                     *  begin loading by prefilling required range with
+                     *  empty arrays to indicate that this specific range
+                     *  was loaded before.
+                     */
+                    const preFilledStorage = EventStorageFiller.preFillStorage(
+                        dateRange.from,
+                        dateRange.till,
+                        calendarContext.eventStorage,
+                    );
 
-                /*
-                 * After prefilling data with empty arrays, storage is
-                 * ready to be filled with data provided by user.
-                 *
-                 * Spread operator is used due to react-context
-                 * not noticing the change If we just pass modified
-                 * eventStorage
-                 */
-                calendarContext.setEventStorage({ ...fillStorageWithEvents(requestedData, preFilledStorage) });
+                    /*
+                     * After prefilling data with empty arrays, storage is
+                     * ready to be filled with data provided by user.
+                     *
+                     * Spread operator is used due to react-context
+                     * not noticing the change If we just pass modified
+                     * eventStorage
+                     */
+                    calendarContext.setEventStorage({ ...fillStorageWithEvents(requestedData, preFilledStorage) });
+                }
             }
-        }
+            resolve();
+        });
     }
 
     /**
@@ -138,7 +142,7 @@ export default function useCalendarEventStorage(props: UseCalendarEventStoragePr
         return EventStoragePresenceHelper.isDataPresent(from, till, calendarContext.eventStorage);
     }
 
-    return new (class {
+    return new (class implements CalendarEventStorage {
         /**
          * Forces EventStorage to request data once again.
          */
