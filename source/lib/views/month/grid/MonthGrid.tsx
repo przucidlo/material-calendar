@@ -1,7 +1,7 @@
 import { addDays, eachDayOfInterval, endOfMonth, startOfMonth, subDays } from 'date-fns';
 import React, { ReactElement } from 'react';
 import { EventStorage } from '../../../common/api/EventStorage';
-import CalendarEventUtils from '../../../core/components/eventStorage/CalendarEventUtils';
+import CalendarEventUtils from '../../../common/tools/CalendarEventUtils';
 import MonthGridElement from './MonthGridElement';
 
 interface MonthGridProps {

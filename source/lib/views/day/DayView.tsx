@@ -38,7 +38,7 @@ export default function DayView(props: DayViewProps) {
                     position: 'relative',
                 }}
             >
-                <TimeGrid gridElementHeight={48} width={48} />
+                <TimeGrid gridElementHeight={49} width={48} />
                 <div style={{ height: '100%', flexGrow: 1 }}>
                     <DayGrid dayEvents={getDayEvents()} />
                 </div>
