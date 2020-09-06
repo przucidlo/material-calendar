@@ -1,7 +1,9 @@
 import { LocalizationElements } from '../common/api/LocalizationElements';
 import localeList from './LocaleList';
 
-const localization: { [locale: string]: LocalizationElements } = {
+export type LocaleSource = { [locale: string]: LocalizationElements };
+
+const localization: LocaleSource = {
     [localeList.plPL]: {
         days: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
         daysShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
