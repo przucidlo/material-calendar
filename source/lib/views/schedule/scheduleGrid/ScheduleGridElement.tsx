@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import useLocale from '../../../common/hooks/locale/useLocale';
 import ScheduleViewEvent from '../event/ScheduleViewEvent';
 
 export interface ScheduleGridElementProps {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleGridElement(props: ScheduleGridElementProps) {
     const classes = useStyles();
+    const locale = useLocale();
     let date = props.date;
 
     // Date provided by ScheduleGrid will have the incorrect day set,
@@ -45,8 +47,8 @@ export default function ScheduleGridElement(props: ScheduleGridElementProps) {
                     {props.day}
                 </Typography>
                 <Typography variant="caption" display="inline" className={classes.monthAndDay}>
-                    {monthsNameShort[date.getMonth()].toLocaleUpperCase()},{' '}
-                    {daysNamesShort[date.getDay()].toLocaleUpperCase()}
+                    {locale.monthsShort[date.getMonth()].toLocaleUpperCase()},{' '}
+                    {locale.daysShort[date.getDay()].toLocaleUpperCase()}
                 </Typography>
             </Box>
             <Box display="flex" flexDirection="column" width="100%" justifyContent="center">
