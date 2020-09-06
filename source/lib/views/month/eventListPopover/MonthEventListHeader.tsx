@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-import { daysNamesShort } from '../../../language/DaysNames';
+import { daysNamesShort } from '../../../locale/DaysNames';
 
 export interface MonthEventListHeaderProps {
     date: Date;

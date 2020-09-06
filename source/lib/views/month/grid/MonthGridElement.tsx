@@ -3,8 +3,8 @@ import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
-import { daysNamesShort } from '../../../language/DaysNames';
-import { monthsNameShort } from '../../../language/MonthsNames';
+import { daysNamesShort } from '../../../locale/DaysNames';
+import { monthsNameShort } from '../../../locale/MonthsNames';
 import MonthEvent from '../event/MonthEvent';
 import MonthEventListPopover from '../eventListPopover/MonthEventListPopover';
 

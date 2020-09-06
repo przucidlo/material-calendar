@@ -1,5 +1,5 @@
 import React from 'react';
-import localeList from '../../language/LocaleList';
+import localeList from '../../locale/LocaleList';
 import { CalendarView } from '../api/CalendarView';
 import { EventStorage } from '../api/EventStorage';
 
