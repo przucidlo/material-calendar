@@ -5,8 +5,8 @@ import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext, CalendarContextStructure } from '../../common/contexts/CalendarContext';
 import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
+import DayGrid from '../day/components/dayGrid/DayGrid';
 import DayHeader from '../day/components/dayHeader/DayHeader';
-import DayGrid from '../day/DayGrid';
 
 interface WeekViewProps extends CalendarViewProps {}
 
