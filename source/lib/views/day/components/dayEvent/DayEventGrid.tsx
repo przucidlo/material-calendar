@@ -1,6 +1,6 @@
 import { differenceInMinutes } from 'date-fns/esm';
 import React, { ReactElement } from 'react';
-import CalendarEvent from '../../common/api/CalendarEvent';
+import CalendarEvent from '../../../../common/api/CalendarEvent';
 import DayEvent from './DayEvent';
 
 export interface DayEventGridProps {

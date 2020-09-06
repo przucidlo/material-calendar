@@ -1,8 +1,8 @@
 import { Grid } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
+import DayEventGrid from './components/dayEvent/DayEventGrid';
 import Day from './Day';
-import DayEventGrid from './DayEventGrid';
 
 interface DayGridProps {
     dayEvents: CalendarEvent[];
