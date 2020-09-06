@@ -5,11 +5,15 @@ import ViewContextStructure, { ViewContext } from '../../../common/contexts/View
 export interface ContextWrapperProps {
     /**
      * Instance of CalendarContextStructure interface.
+     *
+     * @see useCalendarContext hook for default implementation.
      */
     calendarContext: CalendarContextStructure;
 
     /**
      * Instance of ViewContextStructure interface.
+     *
+     * @see useViewContext hook for default implementation.
      */
     viewContext: ViewContextStructure;
 
@@ -19,7 +23,8 @@ export interface ContextWrapperProps {
 /**
  * Wraps context providers used by calendar to one
  * component and requires their values in props.
- * @param props
+ *
+ * @internal
  */
 export default function ContextWrapper(props: ContextWrapperProps) {
     return (
