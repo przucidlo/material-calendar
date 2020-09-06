@@ -6,6 +6,7 @@ interface Props {
     highlightDate: Date;
     center?: boolean;
     intendHoursGap?: boolean;
+    timeGridWidth?: number;
 }
 
 const useStyle = makeStyles((theme) => ({
@@ -20,8 +21,8 @@ const useStyle = makeStyles((theme) => ({
         flexDirection: 'row',
         alignContent: 'center',
         height: '100%',
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
     },
 }));
 
@@ -35,7 +36,7 @@ function DayHeader(props: Props): ReactElement {
     return (
         <div className={classes.root}>
             <div className={classes.headerContent} style={{ justifyContent: getContentJustification() }}>
-                <DayHeaderContent highlightDate={props.highlightDate} />
+                <DayHeaderContent highlightDate={props.highlightDate} timeGridWidth={props.timeGridWidth} />
             </div>
         </div>
     );

@@ -29,11 +29,11 @@ export default function DayView(props: DayViewProps) {
 
     return (
         <div>
-            <DayHeader highlightDate={viewContext.highlightDate} />
+            <DayHeader highlightDate={viewContext.highlightDate} timeGridWidth={56} />
             <div
                 style={{
                     overflowY: 'scroll',
-                    height: `calc(100vh - 64px - 105px)`,
+                    height: `calc(100vh - 64px - 89px)`,
                     display: 'flex',
                     position: 'relative',
                 }}

@@ -5,6 +5,7 @@ import useLocale from '../../../../common/hooks/locale/useLocale';
 
 export interface DayHeaderContentProps {
     highlightDate: Date;
+    timeGridWidth?: number;
 }
 
 const useStyle = makeStyles((theme) => ({
@@ -13,6 +14,7 @@ const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginLeft: (props: any) => props.marginLeftOffset,
     },
     dayNumberCommon: {
         width: theme.spacing(6),
@@ -29,7 +31,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function DayHeaderContent(props: DayHeaderContentProps): ReactElement {
-    const classes = useStyle();
+    const classes = useStyle({ marginLeftOffset: props.timeGridWidth ? props.timeGridWidth : 0 });
     const locale = useLocale();
 
     function getDayLabel(): ReactElement {
