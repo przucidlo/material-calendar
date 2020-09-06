@@ -3,8 +3,7 @@ import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
-import { daysNamesShort } from '../../../locale/DaysNames';
-import { monthsNameShort } from '../../../locale/MonthsNames';
+import useLocale from '../../../common/hooks/locale/useLocale';
 import MonthEvent from '../event/MonthEvent';
 import MonthEventListPopover from '../eventListPopover/MonthEventListPopover';
 
@@ -41,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MonthGridElement(props: MonthGridElementProps): ReactElement {
+    const locale = useLocale();
     const theme = useTheme();
     const classes = useStyles();
     const dayNumber = props.date.getDate();
@@ -59,7 +59,7 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         if (props.displayDayOfWeekIndication) {
             return (
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                    <Typography variant="subtitle2">{daysNamesShort[props.date.getDay()]}</Typography>
+                    <Typography variant="subtitle2">{locale.daysShort[props.date.getDay()]}</Typography>
                 </div>
             );
         }
@@ -96,7 +96,7 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
             return (
                 <div>
                     <Typography variant="body2" style={{ marginLeft: 2 }}>
-                        {monthsNameShort[props.date.getMonth()]}
+                        {locale.monthsShort[props.date.getMonth()]}
                     </Typography>
                 </div>
             );
