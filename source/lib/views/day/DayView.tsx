@@ -33,12 +33,12 @@ export default function DayView(props: DayViewProps) {
             <div
                 style={{
                     overflowY: 'scroll',
-                    height: `calc(100vh - 64px - 97px)`,
+                    height: `calc(100vh - 64px - 105px)`,
                     display: 'flex',
                     position: 'relative',
                 }}
             >
-                <TimeGrid gridElementHeight={49} width={48} />
+                <TimeGrid gridElementHeight={49} width={56} />
                 <div style={{ height: '100%', flexGrow: 1 }}>
                     <DayGrid dayEvents={getDayEvents()} />
                 </div>

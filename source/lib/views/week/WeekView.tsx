@@ -53,7 +53,7 @@ function WeekView(props: WeekViewProps): ReactElement {
             </div>
             <div style={{ overflowY: 'scroll', height: `calc(100vh - 64px - 97px)` }}>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <TimeGrid gridElementHeight={48} width={48} />
+                    <TimeGrid gridElementHeight={48} width={56} />
                     {displayWeekGridSection()}
                 </div>
             </div>
