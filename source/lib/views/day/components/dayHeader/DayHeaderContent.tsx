@@ -14,11 +14,17 @@ const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    dayNumber: {
-        backgroundColor: theme.palette.grey[500],
+    dayNumberCommon: {
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+        color: theme.palette.text.primary,
+    },
+    dayNumberPlain: {
+        backgroundColor: 'inherit',
     },
     dayNumberToday: {
         backgroundColor: theme.palette.primary.main,
+        color: theme.palette.getContrastText(theme.palette.primary.main),
     },
 }));
 
@@ -27,19 +33,29 @@ export default function DayHeaderContent(props: DayHeaderContentProps): ReactEle
     const locale = useLocale();
 
     function getDayLabel(): ReactElement {
+        const labelColor = getDayLabelColor();
+
         return (
-            <Typography color="primary" variant="body1">
+            <Typography color={labelColor} variant="body1">
                 {locale.daysShort[props.highlightDate.getDay()].toLocaleUpperCase()}
             </Typography>
         );
     }
 
+    function getDayLabelColor(): 'primary' | 'textSecondary' {
+        return isToday(props.highlightDate) ? 'primary' : 'textSecondary';
+    }
+
     function getDayNumber(): ReactElement {
         return (
-            <Avatar className={isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumber}>
+            <Avatar className={[classes.dayNumberCommon, getDayNumberBackground()].join(' ')}>
                 {props.highlightDate.getDate()}
             </Avatar>
         );
+    }
+
+    function getDayNumberBackground(): string {
+        return isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumberPlain;
     }
 
     return (
