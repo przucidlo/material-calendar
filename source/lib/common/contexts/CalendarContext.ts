@@ -17,8 +17,8 @@ export interface CalendarContextStructure {
     setViews: (views: CalendarView[]) => void;
 }
 
-const DEFAULT_CONTEXT: CalendarContextStructure = {
-    locale: localeList.enUS,
+export const DEFAULT_CALENDAR_CONTEXT: CalendarContextStructure = {
+    locale: localeList.plPL,
     localeSource: localization,
 
     eventStorage: {},
@@ -30,4 +30,4 @@ const DEFAULT_CONTEXT: CalendarContextStructure = {
     setViews: () => {},
 };
 
-export const CalendarContext = React.createContext<CalendarContextStructure>(DEFAULT_CONTEXT);
+export const CalendarContext = React.createContext<CalendarContextStructure>(DEFAULT_CALENDAR_CONTEXT);
