@@ -1,6 +1,7 @@
+import { LocalizationElements } from '../common/api/LocalizationElements';
 import localeList from './LocaleList';
 
-const localization = {
+const localization: { [locale: string]: LocalizationElements } = {
     [localeList.plPL]: {
         days: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
         daysShort: ['Niedz.', 'Pon.', 'Wt.', 'Śr.', 'Czw.', 'Pt.', 'Sob.'],
@@ -21,7 +22,6 @@ const localization = {
         monthsShort: ['sty', 'lut', 'mar', 'kwi', 'maj', 'cze', 'lip', 'sie', 'wrz', 'paź', 'lis', 'gru'],
         today: 'Dzisiaj',
     },
-    [localeList.enUS]: {},
 };
 
 export default localization;
