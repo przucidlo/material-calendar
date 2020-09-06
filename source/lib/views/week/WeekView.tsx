@@ -5,8 +5,8 @@ import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext, CalendarContextStructure } from '../../common/contexts/CalendarContext';
 import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
+import DayHeader from '../day/components/dayHeader/DayHeader';
 import DayGrid from '../day/DayGrid';
-import DayHead from '../day/DayHead';
 
 interface WeekViewProps extends CalendarViewProps {}
 
@@ -23,7 +23,7 @@ function WeekView(props: WeekViewProps): ReactElement {
         return daysBetween.map((day, index) => {
             return (
                 <div key={index} style={{ flexGrow: 1, flexBasis: 0 }}>
-                    <DayHead center highlightDate={day} intendHoursGap={index === 0} />
+                    <DayHeader center highlightDate={day} intendHoursGap={index === 0} />
                 </div>
             );
         });

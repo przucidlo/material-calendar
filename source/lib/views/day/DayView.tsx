@@ -4,8 +4,8 @@ import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext } from '../../common/contexts/CalendarContext';
 import { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
+import DayHeader from './components/dayHeader/DayHeader';
 import DayGrid from './DayGrid';
-import DayHead from './DayHead';
 
 export interface DayViewProps extends CalendarViewProps {}
 
@@ -29,7 +29,7 @@ export default function DayView(props: DayViewProps) {
 
     return (
         <div>
-            <DayHead highlightDate={viewContext.highlightDate} />
+            <DayHeader highlightDate={viewContext.highlightDate} />
             <div
                 style={{
                     overflowY: 'scroll',
