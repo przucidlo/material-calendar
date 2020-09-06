@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import Day from './Day';
-import DayAppointmentGrid from './DayAppointmentGrid';
+import DayEventGrid from './DayEventGrid';
 
 interface DayGridProps {
     dayEvents: CalendarEvent[];
@@ -28,7 +28,7 @@ function DayGrid(props: DayGridProps): ReactElement {
             <Grid container direction="column">
                 {renderGridElements()}
             </Grid>
-            <DayAppointmentGrid dayEvents={props.dayEvents} />
+            <DayEventGrid dayEvents={props.dayEvents} />
         </div>
     );
 }

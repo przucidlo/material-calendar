@@ -1,20 +1,20 @@
 import { differenceInMinutes } from 'date-fns/esm';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
-import DayAppointment from './DayAppointment';
+import DayEvent from './DayEvent';
 
-export interface DayAppointmentGridProps {
+export interface DayEventGridProps {
     dayEvents: CalendarEvent[];
 }
 
-export default function DayAppointmentGrid(props: DayAppointmentGridProps): ReactElement {
+export default function DayEventGrid(props: DayEventGridProps): ReactElement {
     const elementSize = 48;
     const rowHourRatio = elementSize / 60;
 
     function renderDayEvents(): ReactElement[] {
         return props.dayEvents.map((calendarEvent) => (
             <div key={calendarEvent.startedAt.toTimeString()}>
-                <DayAppointment
+                <DayEvent
                     calendarEvent={calendarEvent}
                     positionTop={calculateElementPosition(calendarEvent.startedAt)}
                     height={calculateElementHeight(calendarEvent.startedAt, calendarEvent.finishedAt)}

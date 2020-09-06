@@ -6,13 +6,13 @@ import bindPopover from '../../common/hooks/popover/bindPopover';
 import togglePopover from '../../common/hooks/popover/togglePopover';
 import usePopover from '../../common/hooks/popover/usePopover';
 
-export interface DayAppointmentProps {
+export interface DayEvent {
     height: number;
     positionTop: number;
     calendarEvent: CalendarEvent;
 }
 
-export default function DayAppointment(props: DayAppointmentProps) {
+export default function DayEvent(props: DayEvent) {
     const theme = useTheme();
     const popoverState = usePopover();
 
