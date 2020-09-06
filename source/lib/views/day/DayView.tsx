@@ -14,7 +14,7 @@ export default function DayView(props: DayViewProps) {
     const viewContext = useContext(ViewContext);
 
     /**
-     * Fetches events of displayed day from eventStorage.
+     * Loads events from EventStorage based on highlightDate.
      *
      * If there is no events for that day function will
      * return empty array.
