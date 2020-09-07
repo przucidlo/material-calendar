@@ -26,7 +26,27 @@ const dateRangeCheckers: { [range: number]: (from: Date, till: Date) => boolean 
     [DateRange.YEARS]: () => true,
 };
 
+/**
+ * Class used to check if closest DayRange to interval provided
+ * by user is filled with empty arrays.
+ *
+ * @privateRemarks
+ * The idea of strict DateRanges might not be the most flexible
+ * one, since it was made based on default views provided by calendar.
+ * Might need a little refractor in future if custom views will require it.
+ *
+ * @internal
+ */
 export default class EventStoragePresenceHelper {
+    /**
+     * Checks if each day in determined DateRange has array assigned to it.
+     *
+     * @param from
+     * @param till
+     * @param eventStorage
+     *
+     * @returns true if data is present.
+     */
     public static isDataPresent(from: Date, till: Date, eventStorage: EventStorage) {
         let dateRange: DateRange = this.determineRange(from, till);
 
@@ -44,6 +64,12 @@ export default class EventStoragePresenceHelper {
         }
     }
 
+    /**
+     * Returns first DateRange that given interval fits between.
+     *
+     * @param from
+     * @param till
+     */
     public static determineRange(from: Date, till: Date): DateRange {
         for (let range in DateRange) {
             if (!isNaN(Number(range))) {
