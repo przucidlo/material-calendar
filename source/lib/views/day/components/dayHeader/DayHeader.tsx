@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import DayHeaderContent from './DayHeaderContent';
+import DayHeaderLabel from './DayHeaderLabel';
+import DayHeaderNumber from './DayHeaderNumber';
 
 interface DayHeaderProps {
     /**
@@ -33,7 +34,7 @@ const useStyle = makeStyles((theme) => ({
         borderBottom: '1px solid',
         borderBottomColor: theme.palette.grey[300],
     },
-    headerContent: {
+    headerContentWrapper: {
         display: 'flex',
         flexDirection: 'row',
         alignContent: 'center',
@@ -41,10 +42,18 @@ const useStyle = makeStyles((theme) => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
     },
+    headerContent: {
+        marginLeft: (props: any) => props.marginLeftOffset,
+
+        width: 96,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 }));
 
 function DayHeader(props: DayHeaderProps): ReactElement {
-    const classes = useStyle();
+    const classes = useStyle({ marginLeftOffset: props.headerContentLeftOffset ? props.headerContentLeftOffset : 0 });
 
     function getContentJustification(): string {
         return props.center ? 'center' : 'normal';
@@ -52,8 +61,11 @@ function DayHeader(props: DayHeaderProps): ReactElement {
 
     return (
         <div className={classes.root}>
-            <div className={classes.headerContent} style={{ justifyContent: getContentJustification() }}>
-                <DayHeaderContent highlightDate={props.highlightDate} timeGridWidth={props.headerContentLeftOffset} />
+            <div className={classes.headerContentWrapper} style={{ justifyContent: getContentJustification() }}>
+                <div className={classes.headerContent}>
+                    <DayHeaderLabel highlightDate={props.highlightDate} />
+                    <DayHeaderNumber highlightDate={props.highlightDate} openDayViewOnClick={props.openChildView} />
+                </div>
             </div>
         </div>
     );
