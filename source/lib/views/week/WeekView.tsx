@@ -23,7 +23,7 @@ function WeekView(props: WeekViewProps): ReactElement {
         return daysBetween.map((day, index) => {
             return (
                 <div key={index} style={{ flexGrow: 1, flexBasis: 0 }}>
-                    <DayHeader center highlightDate={day} intendHoursGap={index === 0} />
+                    <DayHeader center highlightDate={day} />
                 </div>
             );
         });

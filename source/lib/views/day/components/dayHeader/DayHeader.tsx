@@ -5,7 +5,6 @@ import DayHeaderContent from './DayHeaderContent';
 interface Props {
     highlightDate: Date;
     center?: boolean;
-    intendHoursGap?: boolean;
     timeGridWidth?: number;
 }
 
