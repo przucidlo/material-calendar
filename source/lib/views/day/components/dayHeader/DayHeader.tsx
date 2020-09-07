@@ -2,10 +2,28 @@ import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import DayHeaderContent from './DayHeaderContent';
 
-interface Props {
+interface DayHeaderProps {
+    /**
+     * Date to which header is bound to.
+     */
     highlightDate: Date;
+
+    /**
+     * Opens DayView by clicking on trigger in DayHeaderContent.
+     *
+     * @default false
+     */
+    openChildView?: boolean;
+
+    /**
+     * Sets justifyContent to center.
+     */
     center?: boolean;
-    timeGridWidth?: number;
+
+    /**
+     * Offset from left margin that will be added to header content.
+     */
+    headerContentLeftOffset?: number;
 }
 
 const useStyle = makeStyles((theme) => ({
@@ -25,7 +43,7 @@ const useStyle = makeStyles((theme) => ({
     },
 }));
 
-function DayHeader(props: Props): ReactElement {
+function DayHeader(props: DayHeaderProps): ReactElement {
     const classes = useStyle();
 
     function getContentJustification(): string {
@@ -35,7 +53,7 @@ function DayHeader(props: Props): ReactElement {
     return (
         <div className={classes.root}>
             <div className={classes.headerContent} style={{ justifyContent: getContentJustification() }}>
-                <DayHeaderContent highlightDate={props.highlightDate} timeGridWidth={props.timeGridWidth} />
+                <DayHeaderContent highlightDate={props.highlightDate} timeGridWidth={props.headerContentLeftOffset} />
             </div>
         </div>
     );

@@ -28,7 +28,7 @@ export default function DayView(props: DayViewProps) {
 
     return (
         <div>
-            <DayHeader highlightDate={viewContext.highlightDate} timeGridWidth={56} />
+            <DayHeader highlightDate={viewContext.highlightDate} headerContentLeftOffset={56} />
             <DayContent events={getEvents()} />
         </div>
     );
