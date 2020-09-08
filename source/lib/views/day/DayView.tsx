@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
 import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext } from '../../common/contexts/CalendarContext';
@@ -8,7 +8,7 @@ import DayHeader from './components/dayHeader/DayHeader';
 
 export interface DayViewProps extends CalendarViewProps {}
 
-export default function DayView(props: DayViewProps) {
+export default function DayView(props: DayViewProps): ReactElement {
     const calendarContext = useContext(CalendarContext);
     const viewContext = useContext(ViewContext);
 

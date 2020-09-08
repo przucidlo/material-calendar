@@ -1,6 +1,8 @@
 import { Avatar, makeStyles } from '@material-ui/core';
 import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
+import useViewChange from '../../../../common/hooks/viewController/useViewChange';
+import DayView from '../../DayView';
 
 export interface DayHeaderNumberProps {
     highlightDate: Date;
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DayHeaderNumber(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles({ openDayView: props.openDayViewOnClick });
+    const viewChange = useViewChange();
 
     function getDayNumberBackground(): string {
         return isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumberPlain;
@@ -41,11 +44,12 @@ export default function DayHeaderNumber(props: DayHeaderNumberProps): ReactEleme
 
     function changeViewToDayView(): void {
         if (props.openDayViewOnClick) {
+            viewChange.changeView(DayView, props.highlightDate);
         }
     }
 
     return (
-        <Avatar className={[classes.dayNumberCommon, getDayNumberBackground()].join(' ')}>
+        <Avatar onClick={changeViewToDayView} className={[classes.dayNumberCommon, getDayNumberBackground()].join(' ')}>
             {props.highlightDate.getDate()}
         </Avatar>
     );
