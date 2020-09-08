@@ -1,5 +1,4 @@
-import { ReactElement } from 'react';
-import CalendarViewProps from './CalendarViewProps';
+import { ComponentClass, FunctionComponent } from 'react';
 import { DateChangeAction } from './DateChangeAction';
 
 export interface CalendarView {
@@ -13,7 +12,7 @@ export interface CalendarView {
     /**
      *  Component that represents the view.
      */
-    component: (calendarViewProps: CalendarViewProps) => ReactElement<CalendarViewProps>;
+    component: FunctionComponent<any> | ComponentClass<any, any>;
 
     /**
      *  Date range required by the view.

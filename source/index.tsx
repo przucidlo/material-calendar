@@ -48,26 +48,12 @@ function genenerateMockEvents(relativeToDate: Date) {
 }
 
 function createTestViews(): CalendarView[] {
-    let calendarView: CalendarView = {
-        name: {
-            pl: 'Miesiąc',
-        },
-        component: (calendarViewProps) => <MonthView {...calendarViewProps} />,
-        onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
-        getDateRange: (highlightDate) => {
-            return {
-                from: startOfMonth(highlightDate),
-                till: endOfMonth(highlightDate),
-            };
-        },
-    };
-
     return [
         {
             name: {
                 pl: 'Dzień',
             },
-            component: (calendarViewProps) => <DayView {...calendarViewProps} />,
+            component: DayView,
             onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
             getDateRange: (highlightDate) => {
                 return {
@@ -80,7 +66,7 @@ function createTestViews(): CalendarView[] {
             name: {
                 pl: 'Tydzień',
             },
-            component: (calendarViewProps) => <WeekView {...calendarViewProps} />,
+            component: WeekView,
             onDateChange: (dateChangeAction, highlightDate) => addWeeks(highlightDate, dateChangeAction),
             getDateRange: (highlightDate) => {
                 return {
@@ -89,7 +75,19 @@ function createTestViews(): CalendarView[] {
                 };
             },
         },
-        calendarView,
+        {
+            name: {
+                pl: 'Miesiąc',
+            },
+            component: MonthView,
+            onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
+            getDateRange: (highlightDate) => {
+                return {
+                    from: startOfMonth(highlightDate),
+                    till: endOfMonth(highlightDate),
+                };
+            },
+        },
     ];
 }
 
