@@ -47,7 +47,7 @@ export default function DayEvent(props: DayEvent) {
                         horizontal: 'center',
                     }}
                     transformOrigin={{
-                        vertical: 'left',
+                        vertical: 'center',
                         horizontal: 'center',
                     }}
                 >
