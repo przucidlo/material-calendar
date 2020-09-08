@@ -1,10 +1,9 @@
 import React, { ReactElement, useContext } from 'react';
-import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext } from '../../common/contexts/CalendarContext';
 import { ViewContext } from '../../common/contexts/ViewContext';
 import MonthGrid from './grid/MonthGrid';
 
-interface MonthViewProps extends CalendarViewProps {}
+interface MonthViewProps {}
 
 function MonthView(props: MonthViewProps): ReactElement {
     const calendarContext = useContext(CalendarContext);

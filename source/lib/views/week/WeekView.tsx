@@ -1,14 +1,13 @@
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
-import CalendarViewProps from '../../common/api/CalendarViewProps';
 import { CalendarContext, CalendarContextStructure } from '../../common/contexts/CalendarContext';
 import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import TimeGrid from '../../core/components/timeGrid/TimeGrid';
 import DayGrid from '../day/components/dayGrid/DayGrid';
 import DayHeader from '../day/components/dayHeader/DayHeader';
 
-interface WeekViewProps extends CalendarViewProps {}
+interface WeekViewProps {}
 
 function WeekView(props: WeekViewProps): ReactElement {
     const calendarContext: CalendarContextStructure = useContext(CalendarContext);
