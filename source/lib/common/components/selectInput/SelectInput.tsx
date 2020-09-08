@@ -15,6 +15,7 @@ export interface SelectOption<T> {
 interface SelectInputProps<T> {
     options: SelectOption<T>[];
     variant?: 'filled' | 'outlined' | 'standard';
+    overrideOption?: T;
 
     onInputChange?: (value: T) => void;
 }
@@ -23,12 +24,19 @@ function SelectInput<T>(props: SelectInputProps<T>) {
     const [options, setOptions] = useState<SelectOption<T>[]>([]);
     const [optionId, setOptionId] = useState(0);
 
-    /**
-     * If setDefaultAsFirstItem flag is set, then this method does exactly that.
-     */
     useEffect(() => {
         assignItemsId();
     }, [props.options]);
+
+    useEffect(() => {
+        if (props.overrideOption) {
+            const option = getOptionBySource(props.overrideOption);
+
+            if (option && option.id !== optionId) {
+                setOptionId(option.id);
+            }
+        }
+    }, [props.overrideOption]);
 
     function assignItemsId() {
         setOptions(
@@ -52,6 +60,15 @@ function SelectInput<T>(props: SelectInputProps<T>) {
                 props.onInputChange(selectInputValue.source);
             }
         }
+    }
+
+    function getOptionBySource<T>(source: T): SelectOption<T> | undefined {
+        const option = find(options, { source: source });
+
+        if (option) {
+            return (option as unknown) as SelectOption<T>;
+        }
+        return undefined;
     }
 
     function renderMenuOptions(): ReactElement[] {
