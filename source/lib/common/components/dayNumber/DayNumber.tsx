@@ -43,14 +43,14 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles({ openDayView: props.openDayViewOnClick, size: props.size });
     const viewChange = useViewChange();
 
-    function getDayNumberBackground(): string {
-        return isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumberPlain;
-    }
-
     function changeViewToDayView(): void {
         if (props.openDayViewOnClick) {
             viewChange.changeView(DayView, props.highlightDate);
         }
+    }
+
+    function getDayNumberBackground(): string {
+        return isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumberPlain;
     }
 
     function getTextVariant(): 'h6' | 'subtitle2' {

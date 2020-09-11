@@ -2,6 +2,7 @@ import { Avatar, makeStyles, Typography, useTheme } from '@material-ui/core';
 import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import DayNumber from '../../../common/components/dayNumber/DayNumber';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
 import useLocale from '../../../common/hooks/locale/useLocale';
 import MonthEvent from '../event/MonthEvent';
@@ -49,8 +50,7 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         return (
             <div className={classes.dayDate}>
                 {displayDayName()}
-                {displayDayNumber()}
-                {displayMonthName()}
+                <DayNumber highlightDate={props.date} size="small" openDayViewOnClick />
             </div>
         );
     }
@@ -88,28 +88,12 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         return <div>{dayNumber}</div>;
     }
 
-    /**
-     * Displays the short name of the month on every fist day of it.
-     */
-    function displayMonthName() {
-        if (dayNumber === 1) {
-            return (
-                <div>
-                    <Typography variant="body2" style={{ marginLeft: 2 }}>
-                        {locale.monthsShort[props.date.getMonth()]}
-                    </Typography>
-                </div>
-            );
-        }
-        return null;
-    }
-
     const monthEvents = props.dayEvents.map((dayEvent) => <MonthEvent event={dayEvent} key={dayEvent.id} />);
 
     return (
         <div
             style={{
-                backgroundColor: props.indicatePreviousMonth ? theme.palette.grey[100] : theme.palette.common.white,
+                backgroundColor: props.indicatePreviousMonth ? theme.palette.grey[50] : theme.palette.common.white,
             }}
             className={classes.root}
         >
