@@ -1,8 +1,8 @@
 import { Avatar, makeStyles, Typography } from '@material-ui/core';
 import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
-import useViewChange from '../../../../common/hooks/viewController/useViewChange';
-import DayView from '../../DayView';
+import DayView from '../../../views/day/DayView';
+import useViewChange from '../../hooks/viewController/useViewChange';
 
 export interface DayHeaderNumberProps {
     highlightDate: Date;
