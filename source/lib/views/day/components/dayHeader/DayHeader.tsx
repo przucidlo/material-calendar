@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import DayHeaderLabel from './DayHeaderLabel';
-import DayHeaderNumber from './DayHeaderNumber';
+import DayNumber from './DayHeaderNumber';
 
 interface DayHeaderProps {
     /**
@@ -64,7 +64,7 @@ function DayHeader(props: DayHeaderProps): ReactElement {
             <div className={classes.headerContentWrapper} style={{ justifyContent: getContentJustification() }}>
                 <div className={classes.headerContent}>
                     <DayHeaderLabel highlightDate={props.highlightDate} />
-                    <DayHeaderNumber highlightDate={props.highlightDate} openDayViewOnClick={props.openChildView} />
+                    <DayNumber highlightDate={props.highlightDate} openDayViewOnClick={props.openChildView} />
                 </div>
             </div>
         </div>
