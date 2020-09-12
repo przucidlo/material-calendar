@@ -16,15 +16,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import CalendarEvent from './lib/common/api/CalendarEvent';
 import { CalendarView } from './lib/common/api/CalendarView';
-import CalendarViewProps from './lib/common/api/CalendarViewProps';
 import MaterialCalendar from './lib/core/MaterialCalendar';
 import DayView from './lib/views/day/DayView';
 import MonthView from './lib/views/month/MonthView';
+import ScheduleView from './lib/views/schedule/ScheduleView';
 import WeekView from './lib/views/week/WeekView';
-
-function MockCalendarView(mockViewProps: CalendarViewProps) {
-    return <div>ab</div>;
-}
 
 function randomDate(start: Date, end: Date) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -85,6 +81,19 @@ function createTestViews(): CalendarView[] {
                 return {
                     from: startOfMonth(highlightDate),
                     till: endOfMonth(highlightDate),
+                };
+            },
+        },
+        {
+            name: {
+                pl: 'Harmonogram',
+            },
+            component: ScheduleView,
+            onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
+            getDateRange: (highlightDate) => {
+                return {
+                    from: startOfDay(highlightDate),
+                    till: endOfDay(highlightDate),
                 };
             },
         },

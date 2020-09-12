@@ -14,7 +14,6 @@ export interface ScheduleGridElementProps {
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(1),
-        width: '100%',
         borderBottom: '1px solid',
         borderBottomColor: theme.palette.grey[300],
 

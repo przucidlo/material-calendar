@@ -1,5 +1,4 @@
-import { Avatar, makeStyles, Typography, useTheme } from '@material-ui/core';
-import { isToday } from 'date-fns';
+import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
 import DayNumber from '../../../common/components/dayNumber/DayNumber';
@@ -41,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MonthGridElement(props: MonthGridElementProps): ReactElement {
+    const monthEvents = props.dayEvents.map((dayEvent) => <MonthEvent event={dayEvent} key={dayEvent.id} />);
     const locale = useLocale();
     const theme = useTheme();
     const classes = useStyles();
-    const dayNumber = props.date.getDate();
 
     function displayDayDate() {
         return (
@@ -65,30 +64,6 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         }
         return null;
     }
-
-    /**
-     * Displays day number and If displayed date is today,
-     * it wraps it in circle that indicates it.
-     */
-    function displayDayNumber() {
-        if (isToday(props.date)) {
-            return (
-                <Avatar
-                    style={{
-                        width: theme.spacing(3),
-                        height: theme.spacing(3),
-                        fontSize: '0.875rem',
-                        backgroundColor: theme.palette.primary.main,
-                    }}
-                >
-                    {dayNumber}
-                </Avatar>
-            );
-        }
-        return <div>{dayNumber}</div>;
-    }
-
-    const monthEvents = props.dayEvents.map((dayEvent) => <MonthEvent event={dayEvent} key={dayEvent.id} />);
 
     return (
         <div

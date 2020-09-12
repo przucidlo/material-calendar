@@ -9,7 +9,8 @@ export interface ScheduleGridProps {}
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.common.white,
-        height: 'calc(100vh - 64px)',
+        height: 'calc(100vh - 63px)',
+        maxWidth: '100vw',
     },
 }));
 
