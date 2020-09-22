@@ -12,7 +12,7 @@ export interface DayHeaderNumberProps {
      */
     size?: 'small' | 'large';
 
-    onViewChange?: () => void;
+    onClick?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.primary.dark,
         },
     },
+    test: {
+        lineHeight: 1.7,
+    },
 }));
 
 export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
@@ -62,16 +65,12 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
         return props.size && props.size === 'small' ? classes.smallVariant : classes.largeVariant;
     }
 
-    function triggerViewChange(): void {
-        if (props.onViewChange) {
-            props.onViewChange();
-        }
-    }
-
     // TODO: Swapping Typography component with plain div might increase the performance.
     return (
-        <div onClick={triggerViewChange} className={rootStyle}>
-            <Typography variant={getTextVariant()}>{props.highlightDate.getDate()}</Typography>
+        <div className={rootStyle}>
+            <Typography variant={getTextVariant()} className={classes.test}>
+                {props.highlightDate.getDate()}
+            </Typography>
         </div>
     );
 }
