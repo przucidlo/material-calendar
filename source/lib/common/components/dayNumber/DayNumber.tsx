@@ -1,8 +1,6 @@
-import { Avatar, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
-import DayView from '../../../views/day/DayView';
-import useViewChange from '../../hooks/viewController/useViewChange';
 
 export interface DayHeaderNumberProps {
     highlightDate: Date;
@@ -13,53 +11,67 @@ export interface DayHeaderNumberProps {
      * @default 'large'
      */
     size?: 'small' | 'large';
+
+    onViewChange?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
-    dayNumberCommon: {
-        width: (props: any) => (props.size && props.size === 'small' ? theme.spacing(3) : theme.spacing(6)),
-        height: (props: any) => (props.size && props.size === 'small' ? theme.spacing(3) : theme.spacing(6)),
+    common: {
+        textAlign: 'center',
+        borderRadius: '50%',
         color: theme.palette.text.primary,
     },
-    dayNumberPlain: {
+    largeVariant: {
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+    },
+    smallVariant: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+    },
+    hoverCommon: {
         backgroundColor: 'inherit',
 
         '&:hover': {
-            backgroundColor: (props: any) => (props.openDayView ? theme.palette.grey[200] : 'inherit'),
+            backgroundColor: theme.palette.grey[200],
         },
     },
-    dayNumberToday: {
+    hoverToday: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.getContrastText(theme.palette.primary.main),
 
         '&:hover': {
-            backgroundColor: (props: any) =>
-                props.openDayView ? theme.palette.primary.dark : theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.dark,
         },
     },
 }));
 
 export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
-    const classes = useStyles({ openDayView: props.openDayViewOnClick, size: props.size });
-    const viewChange = useViewChange();
+    const classes = useStyles();
+    const rootStyle = [classes.common, getRootVariant(), getBackgroundVariant()].join(' ');
 
-    function changeViewToDayView(): void {
-        if (props.openDayViewOnClick) {
-            viewChange.changeView(DayView, props.highlightDate);
-        }
-    }
-
-    function getDayNumberBackground(): string {
-        return isToday(props.highlightDate) ? classes.dayNumberToday : classes.dayNumberPlain;
+    function getBackgroundVariant(): string {
+        return isToday(props.highlightDate) ? classes.hoverToday : classes.hoverCommon;
     }
 
     function getTextVariant(): 'h6' | 'subtitle2' {
         return props.size && props.size === 'small' ? 'subtitle2' : 'h6';
     }
 
+    function getRootVariant(): string {
+        return props.size && props.size === 'small' ? classes.smallVariant : classes.largeVariant;
+    }
+
+    function triggerViewChange(): void {
+        if (props.onViewChange) {
+            props.onViewChange();
+        }
+    }
+
+    // TODO: Swapping Typography component with plain div might increase the performance.
     return (
-        <Avatar onClick={changeViewToDayView} className={[classes.dayNumberCommon, getDayNumberBackground()].join(' ')}>
+        <div onClick={triggerViewChange} className={rootStyle}>
             <Typography variant={getTextVariant()}>{props.highlightDate.getDate()}</Typography>
-        </Avatar>
+        </div>
     );
 }
