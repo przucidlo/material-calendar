@@ -5,8 +5,6 @@ import React, { ReactElement } from 'react';
 export interface DayHeaderNumberProps {
     date: Date;
 
-    openDayViewOnClick?: boolean;
-
     highlightOnHover?: boolean;
 
     /**
