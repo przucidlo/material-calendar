@@ -3,16 +3,16 @@ import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 
 export interface DayHeaderNumberProps {
-    highlightDate: Date;
+    date: Date;
 
     openDayViewOnClick?: boolean;
+
+    highlightOnHover?: boolean;
 
     /**
      * @default 'large'
      */
     size?: 'small' | 'large';
-
-    onClick?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -29,17 +29,19 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(3),
         height: theme.spacing(3),
     },
-    hoverCommon: {
+    backgroundCommon: {
         backgroundColor: 'inherit',
-
+    },
+    backgroundToday: {
+        color: theme.palette.getContrastText(theme.palette.primary.main),
+        backgroundColor: theme.palette.primary.main,
+    },
+    hoverCommon: {
         '&:hover': {
             backgroundColor: theme.palette.grey[200],
         },
     },
     hoverToday: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.getContrastText(theme.palette.primary.main),
-
         '&:hover': {
             backgroundColor: theme.palette.primary.dark,
         },
@@ -51,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles();
-    const rootStyle = [classes.common, getRootVariant(), getBackgroundVariant()].join(' ');
+    const rootStyle = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
 
     function getBackgroundVariant(): string {
-        return isToday(props.highlightDate) ? classes.hoverToday : classes.hoverCommon;
+        return isToday(props.date) ? classes.backgroundToday : classes.backgroundCommon;
     }
 
     function getTextVariant(): 'h6' | 'subtitle2' {
@@ -65,11 +67,19 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
         return props.size && props.size === 'small' ? classes.smallVariant : classes.largeVariant;
     }
 
+    function getHoverVariant(): string {
+        if (props.highlightOnHover) {
+            return isToday(props.date) ? classes.hoverToday : classes.hoverCommon;
+        }
+
+        return '';
+    }
+
     // TODO: Swapping Typography component with plain div might increase the performance.
     return (
         <div className={rootStyle}>
             <Typography variant={getTextVariant()} className={classes.test}>
-                {props.highlightDate.getDate()}
+                {props.date.getDate()}
             </Typography>
         </div>
     );
