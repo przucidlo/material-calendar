@@ -46,8 +46,11 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.primary.dark,
         },
     },
-    test: {
+    textSmall: {
         lineHeight: 1.7,
+    },
+    textLarge: {
+        lineHeight: 2.4,
     },
 }));
 
@@ -61,6 +64,10 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
 
     function getTextVariant(): 'h6' | 'subtitle2' {
         return props.size && props.size === 'small' ? 'subtitle2' : 'h6';
+    }
+
+    function getTextStyle(): string {
+        return props.size && props.size === 'small' ? classes.textSmall : classes.textLarge;
     }
 
     function getRootVariant(): string {
@@ -78,7 +85,7 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
     // TODO: Swapping Typography component with plain div might increase the performance.
     return (
         <div className={rootStyle}>
-            <Typography variant={getTextVariant()} className={classes.test}>
+            <Typography variant={getTextVariant()} className={getTextStyle()}>
                 {props.date.getDate()}
             </Typography>
         </div>
