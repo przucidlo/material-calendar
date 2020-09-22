@@ -1,9 +1,7 @@
-import React, { ReactElement, ReactNode, Fragment } from 'react';
-import CompactMonthGridHeader from './CompactMonthGridHeader';
-import { Grid, Typography } from '@material-ui/core';
+import React, { ReactElement, Fragment } from 'react';
+import { Grid, makeStyles } from '@material-ui/core';
 import DayNumber from '../../../dayNumber/DayNumber';
 import DateUtils from '../../../../tools/DateUtils';
-import useLocale from '../../../../hooks/locale/useLocale';
 
 export interface CompactMonthGridProps {
     /**
@@ -12,7 +10,16 @@ export interface CompactMonthGridProps {
     month: Date;
 }
 
+const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'grid',
+        gridTemplateColumns: 'auto auto auto auto auto auto auto',
+    },
+}));
+
 export default function CompactMonthGrid(props: CompactMonthGridProps): ReactElement {
+    const classes = useStyles();
+
     function createGrid(): ReactElement[] {
         const gridDays = DateUtils.getWeeksDaysOfMonth(props.month);
         let rows: ReactElement[] = [];
@@ -22,11 +29,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
             columns.push(createGridElement(day));
 
             if ((i + 1) % 7 === 0) {
-                rows.push(
-                    <Grid container spacing={1}>
-                        {columns}
-                    </Grid>,
-                );
+                rows.push(<div className={classes.container}>{columns}</div>);
 
                 columns = [];
             }
@@ -38,9 +41,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     function createGridElement(day: Date): ReactElement {
         return (
             <Fragment>
-                <Grid item>
-                    <DayNumber highlightDate={day} size="small" openDayViewOnClick />
-                </Grid>
+                <DayNumber date={day} size="small" highlightOnHover />
             </Fragment>
         );
     }
