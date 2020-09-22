@@ -11,8 +11,8 @@ export interface CompactMonthProps {
 const useStyles = makeStyles((theme) => ({
     content: {
         minWidth: 224,
-        minHeight: 250,
-        maxHeight: 250,
+        minHeight: 236,
+        maxHeight: 236,
         padding: 8,
     },
 }));
