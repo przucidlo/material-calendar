@@ -64,11 +64,7 @@ function DayHeader(props: DayHeaderProps): ReactElement {
             <div className={classes.headerContentWrapper} style={{ justifyContent: getContentJustification() }}>
                 <div className={classes.headerContent}>
                     <DayHeaderLabel highlightDate={props.highlightDate} />
-                    <DayNumber
-                        highlightDate={props.highlightDate}
-                        openDayViewOnClick={props.openChildView}
-                        size="large"
-                    />
+                    <DayNumber date={props.highlightDate} openDayViewOnClick={props.openChildView} size="large" />
                 </div>
             </div>
         </div>

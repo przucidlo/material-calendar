@@ -49,7 +49,7 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         return (
             <div className={classes.dayDate}>
                 {displayDayName()}
-                <DayNumber highlightDate={props.date} size="small" openDayViewOnClick />
+                <DayNumber date={props.date} size="small" openDayViewOnClick />
             </div>
         );
     }
