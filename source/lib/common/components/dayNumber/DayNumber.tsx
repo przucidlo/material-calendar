@@ -7,6 +7,8 @@ export interface DayHeaderNumberProps {
 
     highlightOnHover?: boolean;
 
+    grayOutText?: boolean;
+
     /**
      * @default 'large'
      */
@@ -50,11 +52,15 @@ const useStyles = makeStyles((theme) => ({
     textLarge: {
         lineHeight: 2.4,
     },
+    textColorGrey: {
+        color: theme.palette.grey[500],
+    },
 }));
 
 export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles();
-    const rootStyle = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
+    const rootClasses: string = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
+    const textClasses: string = [getTextSize(), getTextColor()].join(' ');
 
     function getBackgroundVariant(): string {
         return isToday(props.date) ? classes.backgroundToday : classes.backgroundCommon;
@@ -64,8 +70,15 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
         return props.size && props.size === 'small' ? 'subtitle2' : 'h6';
     }
 
-    function getTextStyle(): string {
+    function getTextSize(): string {
         return props.size && props.size === 'small' ? classes.textSmall : classes.textLarge;
+    }
+
+    function getTextColor(): string {
+        if (props.grayOutText) {
+            return classes.textColorGrey;
+        }
+        return '';
     }
 
     function getRootVariant(): string {
@@ -82,8 +95,8 @@ export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
 
     // TODO: Swapping Typography component with plain div might increase the performance.
     return (
-        <div className={rootStyle}>
-            <Typography variant={getTextVariant()} className={getTextStyle()}>
+        <div className={rootClasses}>
+            <Typography variant={getTextVariant()} className={textClasses}>
                 {props.date.getDate()}
             </Typography>
         </div>
