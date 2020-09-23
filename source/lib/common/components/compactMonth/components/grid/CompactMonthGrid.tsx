@@ -14,33 +14,27 @@ export interface CompactMonthGridProps {
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'grid',
-        gridTemplateColumns: 'auto auto auto auto auto auto auto',
+        gridTemplateColumns: 'repeat(7, auto)',
+        gridRowGap: '4px',
     },
 }));
 
 export default function CompactMonthGrid(props: CompactMonthGridProps): ReactElement {
     const classes = useStyles();
 
-    function createGrid(): ReactElement[] {
+    function createGrid(): ReactElement {
         const gridDays = DateUtils.getWeeksDaysOfMonth(props.month);
-        let rows: ReactElement[] = [];
         let columns: ReactElement[] = [];
 
-        gridDays.forEach((day, i) => {
+        gridDays.forEach((day) => {
             columns.push(createGridElement(day));
-
-            if ((i + 1) % 7 === 0) {
-                rows.push(
-                    <div className={classes.container} key={['compact-grid-row', day.getMonth(), i].join('-')}>
-                        {columns}
-                    </div>,
-                );
-
-                columns = [];
-            }
         });
 
-        return rows;
+        return (
+            <div className={classes.container} key={['compact-grid-container'].join('-')}>
+                {columns}
+            </div>
+        );
     }
 
     function createGridElement(day: Date): ReactElement {
