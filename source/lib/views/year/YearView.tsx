@@ -13,7 +13,7 @@ export default function YearView(): ReactElement {
             start: startOfYear(viewContext.highlightDate),
             end: endOfYear(viewContext.highlightDate),
         }).map((month) => (
-            <Fragment>
+            <Fragment key={'year-month-' + month.getMonth()}>
                 <Grid item xs={12} sm={5} md={3} lg={3} xl={3}>
                     <CompactMonth month={month} />
                 </Grid>

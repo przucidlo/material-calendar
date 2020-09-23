@@ -29,7 +29,11 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
             columns.push(createGridElement(day));
 
             if ((i + 1) % 7 === 0) {
-                rows.push(<div className={classes.container}>{columns}</div>);
+                rows.push(
+                    <div className={classes.container} key={['compact-grid-row', day.getMonth(), i].join('-')}>
+                        {columns}
+                    </div>,
+                );
 
                 columns = [];
             }
@@ -40,7 +44,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
 
     function createGridElement(day: Date): ReactElement {
         return (
-            <Fragment>
+            <Fragment key={['compact-grid-element', day.getMonth(), day.getDate()].join('-')}>
                 <DayNumber date={day} size="small" highlightOnHover />
             </Fragment>
         );

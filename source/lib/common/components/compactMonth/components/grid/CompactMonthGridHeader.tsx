@@ -1,6 +1,13 @@
-import React, { ReactElement, ReactNode } from 'react';
-import { makeStyles, Avatar, Typography, Grid } from '@material-ui/core';
+import React, { ReactElement } from 'react';
+import { makeStyles, Typography, Grid } from '@material-ui/core';
 import useLocale from '../../../../hooks/locale/useLocale';
+
+export interface CompactMonthGridHeaderProps {
+    /**
+     * Month is used as unique key for every element of the grid.
+     */
+    month: Date;
+}
 
 const useStyles = makeStyles((theme) => ({
     headerItem: {
@@ -11,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CompactMonthGridHeader(): ReactElement {
+export default function CompactMonthGridHeader(props: CompactMonthGridHeaderProps): ReactElement {
     const classes = useStyles();
     const locale = useLocale();
 
     return (
         <Grid container spacing={1}>
             {locale.days.map((day) => (
-                <Grid item>
+                <Grid item key={['header-element', day, props.month.getMonth()].join('-')}>
                     <div className={classes.headerItem}>
                         <Typography variant="caption">{day.charAt(0).toLocaleUpperCase()}</Typography>
                     </div>

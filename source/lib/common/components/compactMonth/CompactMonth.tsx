@@ -27,7 +27,7 @@ export default function CompactMonth(props: CompactMonthProps): ReactElement {
                 <Typography variant="subtitle1" gutterBottom>
                     {locale.months[props.month.getMonth()]}
                 </Typography>
-                <CompactMonthGridHeader />
+                <CompactMonthGridHeader month={props.month} />
                 <CompactMonthGrid month={props.month} />
             </div>
         </Box>
