@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 236,
         maxHeight: 236,
         padding: 8,
+        userSelect: 'none',
     },
     monthTextColor: {
         color: theme.palette.grey[600],

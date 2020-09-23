@@ -1,5 +1,5 @@
 import React, { ReactElement, Fragment } from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import DayNumber from '../../../dayNumber/DayNumber';
 import DateUtils from '../../../../tools/DateUtils';
 import { isSameMonth } from 'date-fns';
@@ -31,7 +31,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
         });
 
         return (
-            <div className={classes.container} key={['compact-grid-container'].join('-')}>
+            <div className={classes.container} key={'compact-grid-container'}>
                 {columns}
             </div>
         );
