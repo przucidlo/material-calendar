@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import useLocale from '../../hooks/locale/useLocale';
 import CompactMonthGrid from './components/grid/CompactMonthGrid';
 import CompactMonthGridHeader from './components/grid/CompactMonthGridHeader';
@@ -15,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: 236,
         padding: 8,
     },
+    monthTextColor: {
+        color: theme.palette.grey[600],
+        fontSize: '14px',
+        letterSpacing: '0.90px',
+        fontWeight: 'bold',
+        paddingLeft: 4,
+    },
 }));
 
 export default function CompactMonth(props: CompactMonthProps): ReactElement {
@@ -24,9 +31,10 @@ export default function CompactMonth(props: CompactMonthProps): ReactElement {
     return (
         <Box display="flex" justifyContent="center">
             <div className={classes.content}>
-                <Typography variant="subtitle1" gutterBottom>
+                <Typography variant="body1" className={classes.monthTextColor} gutterBottom>
                     {locale.months[props.month.getMonth()]}
                 </Typography>
+
                 <CompactMonthGridHeader month={props.month} />
                 <CompactMonthGrid month={props.month} />
             </div>
