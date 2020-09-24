@@ -57,6 +57,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+/**
+ * Component based on Avatar design of Material-UI.
+ *
+ * Created due default Avatar component being too heavy to render in YearView,
+ * which degraded the performance significantly.
+ *
+ * @privateRemarks
+ * Remember to keep this component as lightweight as you can.
+ */
 export default function DateAvatar(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles();
     const rootClasses: string = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
