@@ -1,7 +1,7 @@
 import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
-import DayNumber from '../../../common/components/dayNumber/DayNumber';
+import DateAvatar from '../../../common/components/dateAvatar/DateAvatar';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
 import useLocale from '../../../common/hooks/locale/useLocale';
 import MonthEvent from '../event/MonthEvent';
@@ -49,7 +49,7 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
         return (
             <div className={classes.dayDate}>
                 {displayDayName()}
-                <DayNumber date={props.date} size="small" />
+                <DateAvatar date={props.date} size="small" />
             </div>
         );
     }

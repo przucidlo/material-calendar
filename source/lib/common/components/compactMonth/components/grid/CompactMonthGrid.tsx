@@ -1,8 +1,8 @@
-import React, { ReactElement, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core';
-import DayNumber from '../../../dayNumber/DayNumber';
-import DateUtils from '../../../../tools/DateUtils';
 import { isSameMonth } from 'date-fns';
+import React, { Fragment, ReactElement } from 'react';
+import DateUtils from '../../../../tools/DateUtils';
+import DateAvatar from '../../../dateAvatar/DateAvatar';
 
 export interface CompactMonthGridProps {
     /**
@@ -40,7 +40,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     function createGridElement(day: Date): ReactElement {
         return (
             <Fragment key={['compact-grid-element', day.getMonth(), day.getDate()].join('-')}>
-                <DayNumber date={day} size="small" highlightOnHover grayOutText={!isSameMonth(props.month, day)} />
+                <DateAvatar date={day} size="small" highlightOnHover grayOutText={!isSameMonth(props.month, day)} />
             </Fragment>
         );
     }

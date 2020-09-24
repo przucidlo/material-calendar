@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DayNumber(props: DayHeaderNumberProps): ReactElement {
+export default function DateAvatar(props: DayHeaderNumberProps): ReactElement {
     const classes = useStyles();
     const rootClasses: string = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
     const textClasses: string = [getTextSize(), getTextColor()].join(' ');
