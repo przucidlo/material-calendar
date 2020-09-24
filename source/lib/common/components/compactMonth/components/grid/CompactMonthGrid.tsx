@@ -1,6 +1,9 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Popover } from '@material-ui/core';
 import { isSameMonth } from 'date-fns';
 import React, { Fragment, ReactElement } from 'react';
+import bindPopover from '../../../../hooks/popover/bindPopover';
+import togglePopover from '../../../../hooks/popover/togglePopover';
+import usePopover from '../../../../hooks/popover/usePopover';
 import DateUtils from '../../../../tools/DateUtils';
 import DateAvatar from '../../../dateAvatar/DateAvatar';
 
@@ -21,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompactMonthGrid(props: CompactMonthGridProps): ReactElement {
     const classes = useStyles();
+    const popoverState = usePopover();
 
     function createGrid(): ReactElement {
         const gridDays = DateUtils.getWeeksDaysOfMonth(props.month);
@@ -40,10 +44,31 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     function createGridElement(day: Date): ReactElement {
         return (
             <Fragment key={['compact-grid-element', day.getMonth(), day.getDate()].join('-')}>
-                <DateAvatar date={day} size="small" highlightOnHover grayOutText={!isSameMonth(props.month, day)} />
+                <DateAvatar
+                    date={day}
+                    size="small"
+                    highlightOnHover
+                    grayOutText={!isSameMonth(props.month, day)}
+                    {...togglePopover(popoverState)}
+                />
             </Fragment>
         );
     }
 
-    return <Fragment>{createGrid()}</Fragment>;
+    return (
+        <Fragment>
+            <Popover
+                {...bindPopover(popoverState)}
+                anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'center',
+                    horizontal: 'center',
+                }}
+            ></Popover>
+            {createGrid()}
+        </Fragment>
+    );
 }
