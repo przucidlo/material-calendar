@@ -5,6 +5,7 @@ import CalendarEvent from '../common/api/CalendarEvent';
 import CalendarEventStorage from '../common/api/CalendarEventStorage';
 import { CalendarView } from '../common/api/CalendarView';
 import useCalendarContext from '../common/hooks/context/useCalendarContext';
+import useEventStorageContext from '../common/hooks/context/useEventStorageContext';
 import useViewContext from '../common/hooks/context/useViewContext';
 import ContextWrapper from './components/contextWrapper/ContextWrapper';
 import useCalendarEventStorage from './components/eventStorage/useCalendarEventStorage';
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MaterialCalendar(props: MaterialCalendarProps): ReactElement {
+    const eventStorageContext = useEventStorageContext();
     const calendarContext = useCalendarContext();
     const viewContext = useViewContext();
     const classes = useStyles();
@@ -67,7 +69,7 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
     }, []);
 
     return (
-        <ContextWrapper calendarContext={calendarContext} viewContext={viewContext}>
+        <ContextWrapper calendarContext={calendarContext} viewContext={viewContext} eventStorage={eventStorageContext}>
             <div className={classes.root}>
                 <NavigationBar />
                 <ViewController />

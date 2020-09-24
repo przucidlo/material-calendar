@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { CalendarContext, CalendarContextStructure } from '../../../common/contexts/CalendarContext';
+import { EventStorageContext, EventStorageContextStructure } from '../../../common/contexts/EventStorageContext';
 import ViewContextStructure, { ViewContext } from '../../../common/contexts/ViewContext';
 
 export interface ContextWrapperProps {
@@ -17,6 +18,13 @@ export interface ContextWrapperProps {
      */
     viewContext: ViewContextStructure;
 
+    /**
+     * Instance of EventStorageContextStructure interface.
+     *
+     * @see useEventStorageContext hook for default implementation.
+     */
+    eventStorage: EventStorageContextStructure;
+
     children: ReactNode;
 }
 
@@ -29,7 +37,9 @@ export interface ContextWrapperProps {
 export default function ContextWrapper(props: ContextWrapperProps) {
     return (
         <CalendarContext.Provider value={props.calendarContext}>
-            <ViewContext.Provider value={props.viewContext}>{props.children}</ViewContext.Provider>
+            <ViewContext.Provider value={props.viewContext}>
+                <EventStorageContext.Provider value={props.eventStorage}>{props.children}</EventStorageContext.Provider>
+            </ViewContext.Provider>
         </CalendarContext.Provider>
     );
 }
