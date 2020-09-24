@@ -11,7 +11,7 @@ interface MonthGridElementProps {
     date: Date;
     displayDayOfWeekIndication: boolean;
     indicatePreviousMonth: boolean;
-    dayEvents: CalendarEvent[];
+    dayEvents: CalendarEvent[] | undefined;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MonthGridElement(props: MonthGridElementProps): ReactElement {
-    const monthEvents = props.dayEvents.map((dayEvent) => <MonthEvent event={dayEvent} key={dayEvent.id} />);
+    const monthEvents = getMonthEvents();
     const locale = useLocale();
     const theme = useTheme();
     const classes = useStyles();
@@ -63,6 +63,13 @@ function MonthGridElement(props: MonthGridElementProps): ReactElement {
             );
         }
         return null;
+    }
+
+    function getMonthEvents(): ReactElement[] {
+        if (props.dayEvents) {
+            return props.dayEvents.map((dayEvent) => <MonthEvent event={dayEvent} key={dayEvent.id} />);
+        }
+        return [];
     }
 
     return (
