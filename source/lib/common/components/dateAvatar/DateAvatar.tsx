@@ -13,6 +13,8 @@ export interface DateAvatarProps {
      * @default 'large'
      */
     size?: 'small' | 'large';
+
+    onClick?: (event: React.MouseEvent<any>) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -102,9 +104,15 @@ export default function DateAvatar(props: DateAvatarProps): ReactElement {
         return '';
     }
 
+    function forwardOnClick(event: React.MouseEvent<any>): void {
+        if (props.onClick) {
+            props.onClick(event);
+        }
+    }
+
     // TODO: Swapping Typography component with plain div might increase the performance.
     return (
-        <div className={rootClasses}>
+        <div className={rootClasses} onClick={forwardOnClick}>
             <Typography variant={getTextVariant()} className={textClasses}>
                 {props.date.getDate()}
             </Typography>
