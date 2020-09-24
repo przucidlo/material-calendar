@@ -11,7 +11,7 @@ export interface PopoverState {
 /**
  *  Hook created to manage the state of popover component.
  */
-export default function usePopover() {
+export default function usePopover(): PopoverState {
     const [popoverAnchorElement, setPopoverAnchorElement] = useState<React.MouseEvent<any> | null>(null);
 
     return new (class implements PopoverState {
