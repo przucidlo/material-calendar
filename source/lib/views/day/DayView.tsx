@@ -1,14 +1,15 @@
 import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../common/api/CalendarEvent';
-import { CalendarContext } from '../../common/contexts/CalendarContext';
+import { EventStorageContext } from '../../common/contexts/EventStorageContext';
 import { ViewContext } from '../../common/contexts/ViewContext';
+import CalendarEventUtils from '../../common/tools/CalendarEventUtils';
 import DayContent from './components/dayContent/DayContent';
 import DayHeader from './components/dayHeader/DayHeader';
 
 export interface DayViewProps {}
 
 export default function DayView(props: DayViewProps): ReactElement {
-    const calendarContext = useContext(CalendarContext);
+    const eventStorageContext = useContext(EventStorageContext);
     const viewContext = useContext(ViewContext);
 
     /**
@@ -18,9 +19,7 @@ export default function DayView(props: DayViewProps): ReactElement {
      * return empty array.
      */
     function getEvents(): CalendarEvent[] {
-        const dayDate: Date = viewContext.highlightDate;
-        const dayEvents =
-            calendarContext.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
+        const dayEvents = CalendarEventUtils.getDayEvents(eventStorageContext.eventStorage, viewContext.highlightDate);
 
         return dayEvents ? dayEvents : [];
     }

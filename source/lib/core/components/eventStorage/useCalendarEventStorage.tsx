@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
 import CalendarEventStorage from '../../../common/api/CalendarEventStorage';
 import { EventStorage } from '../../../common/api/EventStorage';
-import { CalendarContextStructure } from '../../../common/contexts/CalendarContext';
+import { EventStorageContextStructure } from '../../../common/contexts/EventStorageContext';
 import ViewContextStructure from '../../../common/contexts/ViewContext';
 import EventStorageFiller from './EventStorageFiller';
 import EventStoragePresenceHelper from './EventStoragePresenceHelper';
@@ -11,7 +11,7 @@ import EventStoragePresenceHelper from './EventStoragePresenceHelper';
 export interface UseCalendarEventStorageProps {
     onDataRequest: (from: Date, till: Date) => Promise<CalendarEvent[]>;
 
-    calendarContext: CalendarContextStructure;
+    eventStorageContext: EventStorageContextStructure;
     viewContext: ViewContextStructure;
 }
 
@@ -22,7 +22,7 @@ export interface UseCalendarEventStorageProps {
  * the storage.
  */
 export default function useCalendarEventStorage(props: UseCalendarEventStorageProps) {
-    const calendarContext: CalendarContextStructure = props.calendarContext;
+    const calendarContext: EventStorageContextStructure = props.eventStorageContext;
     const viewContext: ViewContextStructure = props.viewContext;
 
     /**

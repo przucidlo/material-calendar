@@ -1,12 +1,15 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { isPast, isThisMonth } from 'date-fns';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
+import { CalendarContext } from '../../contexts/CalendarContext';
 import useLocale from '../../hooks/locale/useLocale';
 import CompactMonthGrid from './components/grid/CompactMonthGrid';
 import CompactMonthGridHeader from './components/grid/CompactMonthGridHeader';
 
 export interface CompactMonthProps {
     month: Date;
+
+    onDateAvatarClick?: (event: React.MouseEvent<any>) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompactMonth(props: CompactMonthProps): ReactElement {
     const classes = useStyles();
-    const locale = useLocale();
+    const locale = useLocale(useContext(CalendarContext));
 
     const monthLabelClasses: string = [classes.monthLabel, getMonthLabelColor()].join(' ');
 
@@ -49,8 +52,10 @@ export default function CompactMonth(props: CompactMonthProps): ReactElement {
                 </Typography>
 
                 <CompactMonthGridHeader month={props.month} />
-                <CompactMonthGrid month={props.month} />
+                <CompactMonthGrid month={props.month} onDateAvatarClick={props.onDateAvatarClick} />
             </div>
         </Box>
     );
 }
+
+CompactMonth.whyDidYouRender = true;

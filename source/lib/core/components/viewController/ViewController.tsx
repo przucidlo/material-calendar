@@ -1,5 +1,4 @@
-import { Fade } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ViewContext } from '../../../common/contexts/ViewContext';
 
 export interface ViewControllerProps {}
@@ -14,31 +13,29 @@ export default function ViewController(props: ViewControllerProps) {
      *  Fade animation chain.
      */
 
-    useEffect(() => {
-        // Fade out currently displayed view.
-        // setViewTransition(false);
-    }, [viewContext.highlightDate]);
+    // useEffect(() => {
+    //     // Fade out currently displayed view.
+    //     // setViewTransition(false);
+    // }, [viewContext.highlightDate]);
 
-    useEffect(() => {
-        if (!viewTransition) {
-            // Fade in currently displayed view.
-            setTimeout(() => {
-                setViewTransition(true);
-            }, 0);
-        }
-    }, [viewTransition]);
+    // useEffect(() => {
+    //     if (!viewTransition) {
+    //         // Fade in currently displayed view.
+    //         setTimeout(() => {
+    //             setViewTransition(true);
+    //         }, 0);
+    //     }
+    // }, [viewTransition]);
 
     return (
-        <Fade in={viewTransition} timeout={{ exit: 250, enter: 250 }}>
-            <div>
-                {/*
+        <div>
+            {/*
                     Only display the SelectedView when viewTransition is equal to true.
                     Otherwise SelectedView will be re-rendered 3 times during the transition.
                     Which can cause some performance issues if views will get more "heavy".
                 */}
-                {viewTransition && viewContext.view ? React.createElement(viewContext.view.component) : <div></div>}
-            </div>
-        </Fade>
+            {viewContext.view ? React.createElement(viewContext.view.component) : <div></div>}
+        </div>
     );
 }
 

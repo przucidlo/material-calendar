@@ -1,6 +1,7 @@
 import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
-import { CalendarContext, CalendarContextStructure } from '../../../../common/contexts/CalendarContext';
+import { EventStorageContext, EventStorageContextStructure } from '../../../../common/contexts/EventStorageContext';
+import CalendarEventUtils from '../../../../common/tools/CalendarEventUtils';
 import TimeGrid from '../../../../core/components/timeGrid/TimeGrid';
 import DayGrid from '../../../day/components/dayGrid/DayGrid';
 
@@ -9,7 +10,7 @@ interface WeekGridProps {
 }
 
 export default function WeekGrid(props: WeekGridProps): ReactElement {
-    const calendarContext: CalendarContextStructure = useContext(CalendarContext);
+    const eventStorageContext: EventStorageContextStructure = useContext(EventStorageContext);
 
     function displayWeekGridSection() {
         return props.weekDays.map((day, index) => {
@@ -22,8 +23,7 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
     }
 
     function getDayEvents(dayDate: Date): CalendarEvent[] {
-        const dayEvents =
-            calendarContext.eventStorage?.[dayDate.getFullYear()]?.[dayDate.getMonth()]?.[dayDate.getDate()];
+        const dayEvents = CalendarEventUtils.getDayEvents(eventStorageContext.eventStorage, dayDate);
 
         return dayEvents ? dayEvents : [];
     }

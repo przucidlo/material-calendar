@@ -1,6 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React, { ReactNode, useContext } from 'react';
-import { CalendarContext, CalendarContextStructure } from '../../../common/contexts/CalendarContext';
+import { EventStorageContext, EventStorageContextStructure } from '../../../common/contexts/EventStorageContext';
 import ViewContextStructure, { ViewContext } from '../../../common/contexts/ViewContext';
 import ScheduleGridElement from './ScheduleGridElement';
 
@@ -16,13 +16,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScheduleGrid(props: ScheduleGridProps) {
-    const calendarContext: CalendarContextStructure = useContext(CalendarContext);
+    const eventStorageContext: EventStorageContextStructure = useContext(EventStorageContext);
     const viewContext: ViewContextStructure = useContext(ViewContext);
     const classes = useStyles();
 
     function displayScheduleElements(): ReactNode[] {
         const date = viewContext.highlightDate;
-        const monthEvents = calendarContext.eventStorage?.[date.getFullYear()]?.[date.getMonth()];
+        //TODO: Move this to helper function.
+        const monthEvents = eventStorageContext.eventStorage?.[date.getFullYear()]?.[date.getMonth()];
         let elements: ReactNode[] = [];
 
         if (monthEvents) {

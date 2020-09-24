@@ -1,9 +1,6 @@
-import { makeStyles, Popover } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { isSameMonth } from 'date-fns';
 import React, { Fragment, ReactElement } from 'react';
-import bindPopover from '../../../../hooks/popover/bindPopover';
-import togglePopover from '../../../../hooks/popover/togglePopover';
-import usePopover from '../../../../hooks/popover/usePopover';
 import DateUtils from '../../../../tools/DateUtils';
 import DateAvatar from '../../../dateAvatar/DateAvatar';
 
@@ -12,6 +9,8 @@ export interface CompactMonthGridProps {
      * Date set to any day inside of a month.
      */
     month: Date;
+
+    onDateAvatarClick?: (event: React.MouseEvent<any>) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompactMonthGrid(props: CompactMonthGridProps): ReactElement {
     const classes = useStyles();
-    const popoverState = usePopover();
 
     function createGrid(): ReactElement {
         const gridDays = DateUtils.getWeeksDaysOfMonth(props.month);
@@ -49,26 +47,11 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
                     size="small"
                     highlightOnHover
                     grayOutText={!isSameMonth(props.month, day)}
-                    {...togglePopover(popoverState)}
+                    onClick={props.onDateAvatarClick}
                 />
             </Fragment>
         );
     }
 
-    return (
-        <Fragment>
-            <Popover
-                {...bindPopover(popoverState)}
-                anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
-                }}
-            ></Popover>
-            {createGrid()}
-        </Fragment>
-    );
+    return <Fragment>{createGrid()}</Fragment>;
 }

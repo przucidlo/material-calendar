@@ -23,6 +23,8 @@ interface MaterialCalendarProps {
      * Returns instance of CalendarEventStorage
      *
      * TODO: Write explanation why this useful.
+     *
+     * NOT IMPLEMENTED YET
      */
     getCalendarEventStorage?: (calendarEventStorage: CalendarEventStorage) => void;
 
@@ -57,8 +59,8 @@ export default function MaterialCalendar(props: MaterialCalendarProps): ReactEle
 
     const calendarEventStorage = useCalendarEventStorage({
         onDataRequest: props.onDataRequest,
-        calendarContext,
-        viewContext,
+        eventStorageContext: eventStorageContext,
+        viewContext: viewContext,
     });
 
     useEffect(() => {

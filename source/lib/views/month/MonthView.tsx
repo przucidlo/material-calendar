@@ -1,17 +1,17 @@
 import React, { ReactElement, useContext } from 'react';
-import { CalendarContext } from '../../common/contexts/CalendarContext';
+import { EventStorageContext } from '../../common/contexts/EventStorageContext';
 import { ViewContext } from '../../common/contexts/ViewContext';
 import MonthGrid from './grid/MonthGrid';
 
 interface MonthViewProps {}
 
 function MonthView(props: MonthViewProps): ReactElement {
-    const calendarContext = useContext(CalendarContext);
+    const eventStorageContext = useContext(EventStorageContext);
     const viewContext = useContext(ViewContext);
 
     return (
         <div>
-            <MonthGrid date={viewContext.highlightDate} eventStorage={calendarContext.eventStorage} />
+            <MonthGrid date={viewContext.highlightDate} eventStorage={eventStorageContext.eventStorage} />
         </div>
     );
 }
