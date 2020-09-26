@@ -48,6 +48,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
                     highlightOnHover
                     grayOutText={!isSameMonth(props.month, day)}
                     onClick={props.onDateAvatarClick}
+                    plainText
                 />
             </Fragment>
         );
