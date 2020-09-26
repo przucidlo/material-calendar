@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { isToday } from 'date-fns';
-import React, { memo, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 export interface DateAvatarProps {
     /**
@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
  * @privateRemarks
  * Remember to keep this component as lightweight as you can.
  */
-function DateAvatar(props: DateAvatarProps): ReactElement {
+export default function DateAvatar(props: DateAvatarProps): ReactElement {
     const classes = useStyles();
 
     const rootClasses: string = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
@@ -176,5 +176,3 @@ function DateAvatar(props: DateAvatarProps): ReactElement {
         </div>
     );
 }
-
-export default memo(DateAvatar);
