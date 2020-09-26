@@ -44,10 +44,6 @@ export interface MaterialCalendarProps {
 }
 
 /**
- * Wraps context providers used by calendar to one
- * component and requires their values in props.
- *
- * @internal
  */
 export default function MaterialCalendar(props: MaterialCalendarProps) {
     const calendarContextStore = CalendarContextStore(props.views ? props.views : []);
