@@ -1,15 +1,13 @@
-import { Grid, makeStyles, Typography } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import { makeStyles, Typography } from '@material-ui/core';
+import React, { ReactElement, useMemo } from 'react';
 import useLocale from '../../../../hooks/locale/useLocale';
 
-export interface CompactMonthGridHeaderProps {
-    /**
-     * Month is used as unique key for every element of the grid.
-     */
-    month: Date;
-}
-
 const useStyles = makeStyles((theme) => ({
+    container: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(7, auto)',
+        gridRowGap: '4px',
+    },
     headerItem: {
         width: 24,
         height: 24,
@@ -18,19 +16,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CompactMonthGridHeader(props: CompactMonthGridHeaderProps): ReactElement {
+function CompactMonthGridHeader(): ReactElement {
     const locale = useLocale();
     const classes = useStyles();
 
-    return (
-        <Grid container spacing={1}>
-            {locale.days.map((day) => (
-                <Grid item key={['header-element', day, props.month.getMonth()].join('-')}>
-                    <div className={classes.headerItem}>
-                        <Typography variant="caption">{day.charAt(0).toLocaleUpperCase()}</Typography>
-                    </div>
-                </Grid>
-            ))}
-        </Grid>
-    );
+    function getDayLetters() {
+        return locale.days.map((day, i) => (
+            <div className={classes.headerItem} key={i}>
+                <Typography variant="caption">{day.charAt(0).toLocaleUpperCase()}</Typography>
+            </div>
+        ));
+    }
+
+    return <div className={classes.container}>{useMemo(() => getDayLetters(), [])}</div>;
 }
+
+export default CompactMonthGridHeader;
