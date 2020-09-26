@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import CalendarEvent from './lib/common/api/CalendarEvent';
 import { CalendarView } from './lib/common/api/CalendarView';
-import ContextWrapper from './lib/core/components/contextWrapper/ContextWrapper';
 import MaterialCalendar from './lib/core/MaterialCalendar';
 import YearView from './lib/views/year/YearView';
 import './wdyr';
@@ -112,11 +111,10 @@ function getCalendarEventsInRange(from: Date, till: Date, calendarEvents: Calend
 const mockEvents = genenerateMockEvents(new Date());
 
 ReactDOM.render(
-    <ContextWrapper views={createTestViews()}>
-        <MaterialCalendar
-            onDataRequest={(from, till) => Promise.resolve(getCalendarEventsInRange(from, till, mockEvents))}
-            lazyLoading={true}
-        />
-    </ContextWrapper>,
+    <MaterialCalendar
+        views={createTestViews()}
+        onDataRequest={(from, till) => Promise.resolve(getCalendarEventsInRange(from, till, mockEvents))}
+        lazyLoading={true}
+    />,
     document.getElementById('root'),
 );
