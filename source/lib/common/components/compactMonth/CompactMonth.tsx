@@ -1,8 +1,6 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { isPast, isThisMonth } from 'date-fns';
-import React, { ReactElement, useContext } from 'react';
-import { CalendarContext } from '../../contexts/CalendarContext';
-import useLocale from '../../hooks/locale/useLocale';
+import React, { ReactElement } from 'react';
 import CompactMonthGrid from './components/grid/CompactMonthGrid';
 import CompactMonthGridHeader from './components/grid/CompactMonthGridHeader';
 
@@ -36,7 +34,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CompactMonth(props: CompactMonthProps): ReactElement {
     const classes = useStyles();
-    const locale = useLocale(useContext(CalendarContext));
+    // const calendarContext = useContext(CalendarContext);
+    // const locale = useLocale(calendarContext);
+
+    // useEffect(() => {
+    //     console.log('update');
+    // }, [calendarContext.locale]);
 
     const monthLabelClasses: string = [classes.monthLabel, getMonthLabelColor()].join(' ');
 
@@ -48,7 +51,7 @@ export default function CompactMonth(props: CompactMonthProps): ReactElement {
         <Box display="flex" justifyContent="center">
             <div className={classes.content}>
                 <Typography variant="body1" className={monthLabelClasses} gutterBottom>
-                    {locale.months[props.month.getMonth()]}
+                    {/* {locale.months[props.month.getMonth()]} */}
                 </Typography>
 
                 <CompactMonthGridHeader month={props.month} />

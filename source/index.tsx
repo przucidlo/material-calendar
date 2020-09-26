@@ -1,26 +1,14 @@
-import {
-    addDays,
-    addWeeks,
-    endOfMonth,
-    endOfWeek,
-    endOfYear,
-    isWithinInterval,
-    startOfDay,
-    startOfMonth,
-    startOfWeek,
-    startOfYear,
-} from 'date-fns';
-import { addMinutes, addMonths, endOfDay } from 'date-fns/esm';
+import { addYears, endOfDay, endOfYear, isWithinInterval, startOfDay, startOfYear } from 'date-fns';
+import { addMinutes } from 'date-fns/esm';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import CalendarEvent from './lib/common/api/CalendarEvent';
 import { CalendarView } from './lib/common/api/CalendarView';
+import ContextWrapper from './lib/core/components/contextWrapper/ContextWrapper';
 import MaterialCalendar from './lib/core/MaterialCalendar';
-import DayView from './lib/views/day/DayView';
-import MonthView from './lib/views/month/MonthView';
-import ScheduleView from './lib/views/schedule/ScheduleView';
-import WeekView from './lib/views/week/WeekView';
+import YearView from './lib/views/year/YearView';
+import './wdyr';
 
 function randomDate(start: Date, end: Date) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -45,51 +33,64 @@ function genenerateMockEvents(relativeToDate: Date) {
 
 function createTestViews(): CalendarView[] {
     return [
+        // {
+        //     name: {
+        //         'pl-PL': 'Dzień',
+        //     },
+        //     component: DayView,
+        //     onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
+        //     getDateRange: (highlightDate) => {
+        //         return {
+        //             from: startOfDay(highlightDate),
+        //             till: endOfDay(highlightDate),
+        //         };
+        //     },
+        // },
+        // {
+        //     name: {
+        //         'pl-PL': 'Tydzień',
+        //     },
+        //     component: WeekView,
+        //     onDateChange: (dateChangeAction, highlightDate) => addWeeks(highlightDate, dateChangeAction),
+        //     getDateRange: (highlightDate) => {
+        //         return {
+        //             from: startOfWeek(highlightDate),
+        //             till: endOfWeek(highlightDate),
+        //         };
+        //     },
+        // },
+        // {
+        //     name: {
+        //         'pl-PL': 'Miesiąc',
+        //     },
+        //     component: MonthView,
+        //     onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
+        //     getDateRange: (highlightDate) => {
+        //         return {
+        //             from: startOfMonth(highlightDate),
+        //             till: endOfMonth(highlightDate),
+        //         };
+        //     },
+        // },
+        // {
+        //     name: {
+        //         'pl-PL': 'Harmonogram',
+        //     },
+        //     component: ScheduleView,
+        //     onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
+        //     getDateRange: (highlightDate) => {
+        //         return {
+        //             from: startOfDay(highlightDate),
+        //             till: endOfDay(highlightDate),
+        //         };
+        //     },
+        // },
         {
             name: {
-                pl: 'Dzień',
+                'pl-PL': 'Rok',
             },
-            component: DayView,
-            onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfDay(highlightDate),
-                    till: endOfDay(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                pl: 'Tydzień',
-            },
-            component: WeekView,
-            onDateChange: (dateChangeAction, highlightDate) => addWeeks(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfWeek(highlightDate),
-                    till: endOfWeek(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                pl: 'Miesiąc',
-            },
-            component: MonthView,
-            onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfMonth(highlightDate),
-                    till: endOfMonth(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                pl: 'Harmonogram',
-            },
-            component: ScheduleView,
-            onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
+            component: YearView,
+            onDateChange: (dateChangeAction, highlightDate) => addYears(highlightDate, dateChangeAction),
             getDateRange: (highlightDate) => {
                 return {
                     from: startOfDay(highlightDate),
@@ -111,10 +112,11 @@ function getCalendarEventsInRange(from: Date, till: Date, calendarEvents: Calend
 const mockEvents = genenerateMockEvents(new Date());
 
 ReactDOM.render(
-    <MaterialCalendar
-        onDataRequest={(from, till) => Promise.resolve(getCalendarEventsInRange(from, till, mockEvents))}
-        lazyLoading={true}
-        views={createTestViews()}
-    />,
+    <ContextWrapper views={createTestViews()}>
+        <MaterialCalendar
+            onDataRequest={(from, till) => Promise.resolve(getCalendarEventsInRange(from, till, mockEvents))}
+            lazyLoading={true}
+        />
+    </ContextWrapper>,
     document.getElementById('root'),
 );

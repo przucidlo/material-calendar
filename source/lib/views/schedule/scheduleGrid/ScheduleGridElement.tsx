@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ScheduleGridElement(props: ScheduleGridElementProps) {
-    const classes = useStyles();
     const locale = useLocale();
+    const classes = useStyles();
     let date = props.date;
 
     // Date provided by ScheduleGrid will have the incorrect day set,

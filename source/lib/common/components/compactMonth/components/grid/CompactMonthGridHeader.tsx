@@ -1,5 +1,5 @@
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import { makeStyles, Typography, Grid } from '@material-ui/core';
 import useLocale from '../../../../hooks/locale/useLocale';
 
 export interface CompactMonthGridHeaderProps {
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CompactMonthGridHeader(props: CompactMonthGridHeaderProps): ReactElement {
-    const classes = useStyles();
     const locale = useLocale();
+    const classes = useStyles();
 
     return (
         <Grid container spacing={1}>

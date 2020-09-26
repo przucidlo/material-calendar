@@ -55,3 +55,5 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
 
     return <Fragment>{createGrid()}</Fragment>;
 }
+
+// CompactMonthGrid.whyDidYouRender = true;

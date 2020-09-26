@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { ReactElement, useContext, useMemo } from 'react';
 import { ViewContext } from '../../../common/contexts/ViewContext';
 
 export interface ViewControllerProps {}
@@ -6,38 +6,17 @@ export interface ViewControllerProps {}
 export default function ViewController(props: ViewControllerProps) {
     const viewContext = useContext(ViewContext);
 
-    // State of Fade animation, if set to false then children component will Fade out
-    const [viewTransition, setViewTransition] = useState(false);
+    function getView(): ReactElement {
+        if (viewContext.view) {
+            return React.createElement(viewContext.view.component);
+        }
+        return <div></div>;
+    }
 
-    /**
-     *  Fade animation chain.
-     */
-
-    // useEffect(() => {
-    //     // Fade out currently displayed view.
-    //     // setViewTransition(false);
-    // }, [viewContext.highlightDate]);
-
-    // useEffect(() => {
-    //     if (!viewTransition) {
-    //         // Fade in currently displayed view.
-    //         setTimeout(() => {
-    //             setViewTransition(true);
-    //         }, 0);
-    //     }
-    // }, [viewTransition]);
-
-    return (
-        <div>
-            {/*
-                    Only display the SelectedView when viewTransition is equal to true.
-                    Otherwise SelectedView will be re-rendered 3 times during the transition.
-                    Which can cause some performance issues if views will get more "heavy".
-                */}
-            {viewContext.view ? React.createElement(viewContext.view.component) : <div></div>}
-        </div>
-    );
+    return <div>{useMemo(() => getView(), [viewContext.view])}</div>;
 }
+
+// ViewController.whyDidYouRender = true;
 
 // /**
 //  * When selectedView is set to month, we allow user to change

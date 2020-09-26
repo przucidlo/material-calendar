@@ -1,29 +1,18 @@
 import React, { ReactNode } from 'react';
-import { CalendarContext, CalendarContextStructure } from '../../../common/contexts/CalendarContext';
-import { EventStorageContext, EventStorageContextStructure } from '../../../common/contexts/EventStorageContext';
-import ViewContextStructure, { ViewContext } from '../../../common/contexts/ViewContext';
+import { CalendarView } from '../../../common/api/CalendarView';
+import { CalendarContext } from '../../../common/contexts/CalendarContext';
+import { EventStorageContext } from '../../../common/contexts/EventStorageContext';
+import { ViewContext } from '../../../common/contexts/ViewContext';
+import CalendarContextStore from '../../../common/hooks/context/CalendarContextStore';
+import EventStorageContextStore from '../../../common/hooks/context/EventStorageContextStore';
+import { ViewContextStore } from '../../../common/hooks/context/ViewContextStore';
 
 export interface ContextWrapperProps {
     /**
-     * Instance of CalendarContextStructure interface.
-     *
-     * @see useCalendarContext hook for default implementation.
+     * List of views that will be used by the calendar.
+     * If none are provided, It will use the default ones.
      */
-    calendarContext: CalendarContextStructure;
-
-    /**
-     * Instance of ViewContextStructure interface.
-     *
-     * @see useViewContext hook for default implementation.
-     */
-    viewContext: ViewContextStructure;
-
-    /**
-     * Instance of EventStorageContextStructure interface.
-     *
-     * @see useEventStorageContext hook for default implementation.
-     */
-    eventStorage: EventStorageContextStructure;
+    views?: CalendarView[];
 
     children: ReactNode;
 }
@@ -35,10 +24,19 @@ export interface ContextWrapperProps {
  * @internal
  */
 export default function ContextWrapper(props: ContextWrapperProps) {
+    function getDefaultView(): CalendarView | null {
+        if (props.views && props.views.length > 0) {
+            return props.views[0];
+        }
+        return null;
+    }
+
     return (
-        <CalendarContext.Provider value={props.calendarContext}>
-            <ViewContext.Provider value={props.viewContext}>
-                <EventStorageContext.Provider value={props.eventStorage}>{props.children}</EventStorageContext.Provider>
+        <CalendarContext.Provider value={CalendarContextStore(props.views ? props.views : [])}>
+            <ViewContext.Provider value={ViewContextStore(getDefaultView())}>
+                <EventStorageContext.Provider value={EventStorageContextStore()}>
+                    {props.children}
+                </EventStorageContext.Provider>
             </ViewContext.Provider>
         </CalendarContext.Provider>
     );

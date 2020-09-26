@@ -33,8 +33,6 @@ export default function YearView(): ReactElement {
     const [year, setYear] = useState(new Date());
 
     function createGridElements(): ReactFragment[] {
-        console.log('renderuje');
-
         return eachMonthOfInterval({
             start: startOfYear(viewContext.highlightDate),
             end: endOfYear(viewContext.highlightDate),
@@ -73,8 +71,10 @@ export default function YearView(): ReactElement {
                 </div>
             </Popover>
             <Grid container direction="row" justify="center" alignItems="center" className={classes.grid}>
-                {useMemo(() => createGridElements(), [year])}
+                {useMemo(() => createGridElements(), [viewContext.highlightDate])}
             </Grid>
         </div>
     );
 }
+
+// YearView.whyDidYouRender = true;

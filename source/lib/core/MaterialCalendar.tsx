@@ -1,14 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import 'fontsource-roboto';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import CalendarEvent from '../common/api/CalendarEvent';
 import CalendarEventStorage from '../common/api/CalendarEventStorage';
-import { CalendarView } from '../common/api/CalendarView';
-import useCalendarContext from '../common/hooks/context/useCalendarContext';
-import useEventStorageContext from '../common/hooks/context/useEventStorageContext';
-import useViewContext from '../common/hooks/context/useViewContext';
-import ContextWrapper from './components/contextWrapper/ContextWrapper';
-import useCalendarEventStorage from './components/eventStorage/useCalendarEventStorage';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
 
@@ -36,12 +30,6 @@ interface MaterialCalendarProps {
      * @default true
      */
     lazyLoading: boolean;
-
-    /**
-     * List of views that will be used by the calendar.
-     * If none are provided, It will use the default ones.
-     */
-    views?: CalendarView[];
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -52,30 +40,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MaterialCalendar(props: MaterialCalendarProps): ReactElement {
-    const eventStorageContext = useEventStorageContext();
-    const calendarContext = useCalendarContext();
-    const viewContext = useViewContext();
     const classes = useStyles();
 
-    const calendarEventStorage = useCalendarEventStorage({
-        onDataRequest: props.onDataRequest,
-        eventStorageContext: eventStorageContext,
-        viewContext: viewContext,
-    });
-
-    useEffect(() => {
-        if (props.views) {
-            calendarContext.setViews(props.views);
-            viewContext.setView(props.views[0]);
-        }
-    }, []);
-
     return (
-        <ContextWrapper calendarContext={calendarContext} viewContext={viewContext} eventStorage={eventStorageContext}>
-            <div className={classes.root}>
-                <NavigationBar />
-                <ViewController />
-            </div>
-        </ContextWrapper>
+        <div className={classes.root}>
+            <NavigationBar />
+            <ViewController />
+        </div>
     );
 }

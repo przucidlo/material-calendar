@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DateEventsLabel(props: DateEventsLabelProps): ReactElement {
-    const classes = useStyles();
     const locale = useLocale();
+    const classes = useStyles();
 
     return (
         <div className={classes.root}>
