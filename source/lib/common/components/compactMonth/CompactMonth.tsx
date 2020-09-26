@@ -1,8 +1,8 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
-import { isPast, isThisMonth } from 'date-fns';
+import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CompactMonthGrid from './components/grid/CompactMonthGrid';
 import CompactMonthGridHeader from './components/grid/CompactMonthGridHeader';
+import CompactMonthLabel from './components/label/CompactMonthLabel';
 
 export interface CompactMonthProps {
     month: Date;
@@ -11,6 +11,10 @@ export interface CompactMonthProps {
 }
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
     content: {
         minWidth: 224,
         minHeight: 236,
@@ -18,47 +22,18 @@ const useStyles = makeStyles((theme) => ({
         padding: 8,
         userSelect: 'none',
     },
-    monthLabel: {
-        fontSize: '14px',
-        letterSpacing: '0.90px',
-        fontWeight: 'bold',
-        paddingLeft: 4,
-    },
-    monthLabelPast: {
-        color: theme.palette.grey[600],
-    },
-    monthLabelFuture: {
-        color: theme.palette.grey[900],
-    },
 }));
 
 export default function CompactMonth(props: CompactMonthProps): ReactElement {
     const classes = useStyles();
-    // const calendarContext = useContext(CalendarContext);
-    // const locale = useLocale(calendarContext);
-
-    // useEffect(() => {
-    //     console.log('update');
-    // }, [calendarContext.locale]);
-
-    const monthLabelClasses: string = [classes.monthLabel, getMonthLabelColor()].join(' ');
-
-    function getMonthLabelColor(): string {
-        return isPast(props.month) && !isThisMonth(props.month) ? classes.monthLabelPast : classes.monthLabelFuture;
-    }
 
     return (
-        <Box display="flex" justifyContent="center">
+        <div className={classes.root}>
             <div className={classes.content}>
-                <Typography variant="body1" className={monthLabelClasses} gutterBottom>
-                    {/* {locale.months[props.month.getMonth()]} */}
-                </Typography>
-
-                <CompactMonthGridHeader month={props.month} />
+                <CompactMonthLabel month={props.month} />
+                <CompactMonthGridHeader />
                 <CompactMonthGrid month={props.month} onDateAvatarClick={props.onDateAvatarClick} />
             </div>
-        </Box>
+        </div>
     );
 }
-
-CompactMonth.whyDidYouRender = true;
