@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { EventStorage } from '../../api/EventStorage';
-import { DEFAULT_EVENT_STORAGE_CONTEXT, EventStorageContextStructure } from '../../contexts/EventStorageContext';
+import { DEFAULT_EVENT_STORAGE_CONTEXT } from '../../contexts/EventStorageContext';
 
-export default function useEventStorageContext(): EventStorageContextStructure {
+export const EventStorageContextStore = () => {
     const [eventStorage, setEventStorage] = useState<EventStorage>(DEFAULT_EVENT_STORAGE_CONTEXT.eventStorage);
 
     return { eventStorage, setEventStorage };
-}
+};
+
+export default EventStorageContextStore;

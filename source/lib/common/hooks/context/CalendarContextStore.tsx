@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { LocaleSource } from '../../../locale/Localization';
 import { CalendarView } from '../../api/CalendarView';
-import { CalendarContextStructure, DEFAULT_CALENDAR_CONTEXT } from '../../contexts/CalendarContext';
+import { DEFAULT_CALENDAR_CONTEXT } from '../../contexts/CalendarContext';
 
-export default function useCalendarContext(): CalendarContextStructure {
+export const CalendarContextStore = (userViews: CalendarView[]) => {
     const [locale, setLocale] = useState<string>(DEFAULT_CALENDAR_CONTEXT.locale);
     const [localeSource, setLocaleSource] = useState<LocaleSource>(DEFAULT_CALENDAR_CONTEXT.localeSource);
-    const [views, setViews] = useState<CalendarView[]>(DEFAULT_CALENDAR_CONTEXT.views);
+    const [views, setViews] = useState<CalendarView[]>(userViews);
 
     return {
         locale,
@@ -17,4 +17,6 @@ export default function useCalendarContext(): CalendarContextStructure {
         setLocaleSource,
         setViews,
     };
-}
+};
+
+export default CalendarContextStore;

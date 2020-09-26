@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { CalendarView } from '../../api/CalendarView';
-import ViewContextStructure from '../../contexts/ViewContext';
 
-export default function useViewContext(): ViewContextStructure {
+export const ViewContextStore = (defaultView: CalendarView | null) => {
     const [highlightDate, setHighlightDate] = useState<Date>(new Date());
-    const [view, setView] = useState<CalendarView | null>(null);
+    const [view, setView] = useState<CalendarView | null>(defaultView);
 
     return {
         highlightDate,
@@ -13,4 +12,4 @@ export default function useViewContext(): ViewContextStructure {
         setHighlightDate,
         setView,
     };
-}
+};
