@@ -1,19 +1,47 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { isToday } from 'date-fns';
-import React, { ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 export interface DateAvatarProps {
+    /**
+     * Number of the day that will be rendered inside of the avatar.
+     *
+     * //TODO: Add support for number type.
+     */
     date: Date;
 
+    /**
+     * Highlights component when mouse hovers over it.
+     *
+     * @default false
+     */
     highlightOnHover?: boolean;
 
+    /**
+     * If set to true, text color will be set to gray.
+     *
+     * @default false
+     */
     grayOutText?: boolean;
 
     /**
+     * If set to true, text will be rendered using
+     * div instead of typography component.
+     *
+     * @default false
+     */
+    plainText?: boolean;
+
+    /**
+     * Size variant.
+     *
      * @default 'large'
      */
     size?: 'small' | 'large';
 
+    /**
+     * Triggered whenever user clicks on the component.
+     */
     onClick?: (event: React.MouseEvent<any>) => void;
 }
 
@@ -68,14 +96,15 @@ const useStyles = makeStyles((theme) => ({
  * @privateRemarks
  * Remember to keep this component as lightweight as you can.
  */
-export default function DateAvatar(props: DateAvatarProps): ReactElement {
+function DateAvatar(props: DateAvatarProps): ReactElement {
     const classes = useStyles();
+
     const rootClasses: string = [classes.common, getRootVariant(), getBackgroundVariant(), getHoverVariant()].join(' ');
     const textClasses: string = [getTextSize(), getTextColor()].join(' ');
 
-    function getBackgroundVariant(): string {
-        return isToday(props.date) ? classes.backgroundToday : classes.backgroundCommon;
-    }
+    /*
+     * Text styling functions
+     */
 
     function getTextVariant(): 'h6' | 'subtitle2' {
         return props.size && props.size === 'small' ? 'subtitle2' : 'h6';
@@ -92,6 +121,29 @@ export default function DateAvatar(props: DateAvatarProps): ReactElement {
         return '';
     }
 
+    function getTypographyText(): ReactElement {
+        return (
+            <Typography variant={getTextVariant()} className={textClasses}>
+                {props.date.getDate()}
+            </Typography>
+        );
+    }
+
+    function getPlainText(): ReactElement {
+        return <span className={textClasses + ' MuiTypography-' + getTextVariant()}>{props.date.getDate()}</span>;
+    }
+
+    function getText(): ReactElement {
+        if (props.plainText) {
+            return getPlainText();
+        }
+        return getTypographyText();
+    }
+
+    /*
+     * Component styling functions.
+     */
+
     function getRootVariant(): string {
         return props.size && props.size === 'small' ? classes.smallVariant : classes.largeVariant;
     }
@@ -104,18 +156,25 @@ export default function DateAvatar(props: DateAvatarProps): ReactElement {
         return '';
     }
 
+    function getBackgroundVariant(): string {
+        return isToday(props.date) ? classes.backgroundToday : classes.backgroundCommon;
+    }
+
+    /*
+     *  Events handling functions.
+     */
+
     function forwardOnClick(event: React.MouseEvent<any>): void {
         if (props.onClick) {
             props.onClick(event);
         }
     }
 
-    // TODO: Swapping Typography component with plain div might increase the performance.
     return (
         <div className={rootClasses} onClick={forwardOnClick}>
-            <Typography variant={getTextVariant()} className={textClasses}>
-                {props.date.getDate()}
-            </Typography>
+            {getText()}
         </div>
     );
 }
+
+export default memo(DateAvatar);
