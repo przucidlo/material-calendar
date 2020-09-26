@@ -1,9 +1,7 @@
 import React, { ReactElement, useContext, useMemo } from 'react';
 import { ViewContext } from '../../../common/contexts/ViewContext';
 
-export interface ViewControllerProps {}
-
-export default function ViewController(props: ViewControllerProps) {
+export default function ViewController() {
     const viewContext = useContext(ViewContext);
 
     function getView(): ReactElement {
@@ -13,6 +11,7 @@ export default function ViewController(props: ViewControllerProps) {
         return <div></div>;
     }
 
+    // Re-render only if another view was selected by user.
     return <div>{useMemo(() => getView(), [viewContext.view])}</div>;
 }
 
