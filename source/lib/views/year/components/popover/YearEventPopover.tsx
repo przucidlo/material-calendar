@@ -21,6 +21,16 @@ export default function YearEventPopover(props: YearEventPopoverProps): ReactEle
     const viewContext = useContext(ViewContext);
     const classes = useStyles();
 
+    function getPopoverContent(): ReactElement {
+        return (
+            <DateEvents
+                date={viewContext.highlightDate}
+                onClose={props.popoverState.closePopover}
+                eventStorage={eventStorageContext.eventStorage}
+            />
+        );
+    }
+
     return (
         <Popover
             {...bindPopover(props.popoverState)}
@@ -33,13 +43,7 @@ export default function YearEventPopover(props: YearEventPopoverProps): ReactEle
                 horizontal: 'left',
             }}
         >
-            <div className={classes.popover}>
-                <DateEvents
-                    date={viewContext.highlightDate}
-                    onClose={props.popoverState.closePopover}
-                    eventStorage={eventStorageContext.eventStorage}
-                />
-            </div>
+            <div className={classes.popover}>{getPopoverContent()}</div>
         </Popover>
     );
 }
