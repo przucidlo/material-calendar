@@ -14,6 +14,7 @@ export interface DateEventsContent {
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(1),
+        paddingTop: 0,
     },
     emptyResultFont: {
         fontSize: '12px',
