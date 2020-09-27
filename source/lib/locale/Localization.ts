@@ -23,6 +23,7 @@ const localization: LocaleSource = {
         ],
         monthsShort: ['sty', 'lut', 'mar', 'kwi', 'maj', 'cze', 'lip', 'sie', 'wrz', 'paź', 'lis', 'gru'],
         today: 'Dzisiaj',
+        noEventsForThisDay: 'Na ten dzien nie ma zaplanowanych wydarzeń.',
     },
 };
 

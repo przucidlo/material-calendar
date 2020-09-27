@@ -4,4 +4,5 @@ export interface LocalizationElements {
     months: string[];
     monthsShort: string[];
     today: string;
+    noEventsForThisDay: string;
 }
