@@ -49,7 +49,7 @@ export interface DateAvatarProps {
     /**
      * Triggered whenever user clicks on the component.
      */
-    onClick?: (event: React.MouseEvent<any>) => void;
+    onClick?: (event: React.MouseEvent<any>, date: Date) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -181,7 +181,7 @@ export default function DateAvatar(props: DateAvatarProps): ReactElement {
 
     function forwardOnClick(event: React.MouseEvent<any>): void {
         if (props.onClick) {
-            props.onClick(event);
+            props.onClick(event, props.date);
         }
     }
 

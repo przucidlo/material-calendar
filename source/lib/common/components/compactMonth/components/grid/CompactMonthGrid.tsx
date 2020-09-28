@@ -10,7 +10,7 @@ export interface CompactMonthGridProps {
      */
     day: Date;
 
-    onDateAvatarClick?: (event: React.MouseEvent<any>) => void;
+    onDateAvatarClick?: (event: React.MouseEvent<any>, day: Date) => void;
 }
 
 const useStyles = makeStyles((theme) => ({

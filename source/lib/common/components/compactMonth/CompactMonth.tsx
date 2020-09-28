@@ -7,7 +7,7 @@ import CompactMonthLabel from './components/label/CompactMonthLabel';
 export interface CompactMonthProps {
     month: Date;
 
-    onDateAvatarClick?: (event: React.MouseEvent<any>) => void;
+    onDateAvatarClick?: (event: React.MouseEvent<any>, day: Date) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +32,7 @@ export default function CompactMonth(props: CompactMonthProps): ReactElement {
             <div className={classes.content}>
                 <CompactMonthLabel month={props.month} />
                 <CompactMonthGridHeader />
-                <CompactMonthGrid month={props.month} onDateAvatarClick={props.onDateAvatarClick} />
+                <CompactMonthGrid day={props.month} onDateAvatarClick={props.onDateAvatarClick} />
             </div>
         </div>
     );
