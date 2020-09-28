@@ -47,7 +47,7 @@ export default class EventStoragePresenceHelper {
      *
      * @returns true if data is present.
      */
-    public static isDataPresent(from: Date, till: Date, eventStorage: EventStorage) {
+    public static isDataPresent(from: Date, till: Date, eventStorage: EventStorage): boolean {
         let dateRange: DateRange = this.determineRange(from, till);
 
         switch (dateRange) {
@@ -89,7 +89,7 @@ export default class EventStoragePresenceHelper {
      */
 
     private static isDayPresent(date: Date, eventStorage: EventStorage): boolean {
-        return eventStorage[date.getFullYear()]?.[date.getMonth()]?.[date.getDay()] !== undefined;
+        return eventStorage[date.getFullYear()]?.[date.getMonth()]?.[date.getDate()] !== undefined;
     }
 
     private static isWeekPresent(weekDay: Date, eventStorage: EventStorage): boolean {
