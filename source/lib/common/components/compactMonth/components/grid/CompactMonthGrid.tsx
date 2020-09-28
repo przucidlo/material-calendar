@@ -6,9 +6,9 @@ import DateAvatar from '../../../dateAvatar/DateAvatar';
 
 export interface CompactMonthGridProps {
     /**
-     * Date set to any day inside of a month.
+     * Date set to any day inside of a day.
      */
-    month: Date;
+    day: Date;
 
     onDateAvatarClick?: (event: React.MouseEvent<any>) => void;
 }
@@ -25,7 +25,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     const classes = useStyles();
 
     function createGrid(): ReactElement {
-        const gridDays = DateUtils.getWeeksDaysOfMonth(props.month);
+        const gridDays = DateUtils.getWeeksDaysOfMonth(props.day);
         let columns: ReactElement[] = [];
 
         gridDays.forEach((day) => {
@@ -40,7 +40,7 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     }
 
     function createGridElement(day: Date): ReactElement {
-        const isDateSameMonth = !isSameMonth(props.month, day);
+        const isDateSameMonth = !isSameMonth(props.day, day);
 
         return (
             <Fragment key={['compact-grid-element', day.getMonth(), day.getDate()].join('-')}>
