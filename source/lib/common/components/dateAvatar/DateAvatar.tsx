@@ -40,6 +40,13 @@ export interface DateAvatarProps {
     size?: 'small' | 'large';
 
     /**
+     * Disables today background variant.
+     *
+     * @default false
+     */
+    disableTodayBackground?: boolean;
+
+    /**
      * Triggered whenever user clicks on the component.
      */
     onClick?: (event: React.MouseEvent<any>) => void;
@@ -150,14 +157,22 @@ export default function DateAvatar(props: DateAvatarProps): ReactElement {
 
     function getHoverVariant(): string {
         if (props.highlightOnHover) {
-            return isToday(props.date) ? classes.hoverToday : classes.hoverCommon;
+            return isTodayVariant() ? classes.hoverToday : classes.hoverCommon;
         }
 
         return '';
     }
 
     function getBackgroundVariant(): string {
-        return isToday(props.date) ? classes.backgroundToday : classes.backgroundCommon;
+        return isTodayVariant() ? classes.backgroundToday : classes.backgroundCommon;
+    }
+
+    /*
+     *  Common styling functions.
+     */
+
+    function isTodayVariant(): boolean {
+        return isToday(props.date) && !props.disableTodayBackground;
     }
 
     /*
