@@ -40,15 +40,18 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
     }
 
     function createGridElement(day: Date): ReactElement {
+        const isDateSameMonth = !isSameMonth(props.month, day);
+
         return (
             <Fragment key={['compact-grid-element', day.getMonth(), day.getDate()].join('-')}>
                 <DateAvatar
                     date={day}
                     size="small"
                     highlightOnHover
-                    grayOutText={!isSameMonth(props.month, day)}
+                    grayOutText={isDateSameMonth}
                     onClick={props.onDateAvatarClick}
                     plainText
+                    disableTodayBackground={isDateSameMonth}
                 />
             </Fragment>
         );
@@ -56,5 +59,3 @@ export default function CompactMonthGrid(props: CompactMonthGridProps): ReactEle
 
     return <Fragment>{createGrid()}</Fragment>;
 }
-
-// CompactMonthGrid.whyDidYouRender = true;
