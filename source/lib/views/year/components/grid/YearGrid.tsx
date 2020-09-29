@@ -1,6 +1,6 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import { eachMonthOfInterval, endOfYear, isSameYear, startOfYear } from 'date-fns';
-import React, { Fragment, ReactElement, ReactFragment, useContext, useMemo, useState } from 'react';
+import React, { Fragment, ReactElement, ReactFragment, useContext, useEffect, useMemo, useState } from 'react';
 import CompactMonth from '../../../../common/components/compactMonth/CompactMonth';
 import { ViewContext } from '../../../../common/contexts/ViewContext';
 
@@ -24,6 +24,13 @@ export default function YearGrid(props: YearGridProps): ReactElement {
      * in viewContext.
      */
     const [year, setYear] = useState<Date>();
+
+    useEffect(() => {
+        /**
+         * Re-render grid If necessary.
+         */
+        changeGridYear();
+    }, [viewContext.highlightDate]);
 
     /**
      * Creates CompactMonth component for every month in year.
@@ -52,8 +59,6 @@ export default function YearGrid(props: YearGridProps): ReactElement {
     function onDateAvatarClickMiddleware(event: React.MouseEvent<any>, day: Date): void {
         viewContext.setHighlightDate(day);
 
-        changeGridYear(day);
-
         // Forward event to parent.
         props.onDateAvatarClick(event);
     }
@@ -62,9 +67,9 @@ export default function YearGrid(props: YearGridProps): ReactElement {
      * Changes currently displayed year only
      * If It's different than previous one.
      */
-    function changeGridYear(highlightDate: Date): void {
-        if (!isSameYear(year, highlightDate)) {
-            setYear(highlightDate);
+    function changeGridYear(): void {
+        if (!isSameYear(year, viewContext.highlightDate)) {
+            setYear(viewContext.highlightDate);
         }
     }
 
