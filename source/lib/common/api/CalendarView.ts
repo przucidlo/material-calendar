@@ -15,6 +15,13 @@ export interface CalendarView {
     component: FunctionComponent<any> | ComponentClass<any, any>;
 
     /**
+     *  Content of the popout displayed after event selection.
+     *
+     *  If set to undefined, will fallback to global eventPopoutContent.
+     */
+    eventPopoutContent?: FunctionComponent<any> | ComponentClass<any, any>;
+
+    /**
      *  Date range required by the view.
      *
      *  eg. MonthView requires "from" to be start of the month and "till" to be end of the month
