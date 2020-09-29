@@ -27,7 +27,8 @@ export default function YearGrid(props: YearGridProps): ReactElement {
 
     useEffect(() => {
         /**
-         * Re-render grid If necessary.
+         * Re-render grid if highlightDate changed
+         * to different year than previously.
          */
         changeGridYear();
     }, [viewContext.highlightDate]);
