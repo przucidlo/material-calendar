@@ -12,9 +12,8 @@ export const CalendarContextStore = (props: CalendarContextStoreProps) => {
     const [locale, setLocale] = useState<string>(DEFAULT_CALENDAR_CONTEXT.locale);
     const [localeSource, setLocaleSource] = useState<LocaleSource>(DEFAULT_CALENDAR_CONTEXT.localeSource);
     const [views, setViews] = useState<CalendarView[]>(props.userViews);
-    const [globalEventPopoutContent, setGlobalEventPopoutContent] = useState<
-        FunctionComponent<any> | ComponentClass<any, any> | undefined
-    >(props.globalEventPopoutContent);
+
+    const globalEventPopoutContent = props.globalEventPopoutContent;
 
     return {
         locale,
@@ -24,7 +23,6 @@ export const CalendarContextStore = (props: CalendarContextStoreProps) => {
 
         setLocale,
         setLocaleSource,
-        setGlobalEventPopoutContent,
         setViews,
     };
 };
