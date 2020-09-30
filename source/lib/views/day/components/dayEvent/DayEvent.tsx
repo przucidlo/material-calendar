@@ -1,9 +1,10 @@
 import { Box, Paper, Popover, useTheme } from '@material-ui/core';
 import { format } from 'date-fns';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
+import toggleEventPopover from '../../../../common/hooks/eventPopover/toggleEventPopover';
+import useEventPopover from '../../../../common/hooks/eventPopover/useEventPopover';
 import bindPopover from '../../../../common/hooks/popover/bindPopover';
-import togglePopover from '../../../../common/hooks/popover/togglePopover';
 import usePopover from '../../../../common/hooks/popover/usePopover';
 
 export interface DayEvent {
@@ -14,7 +15,15 @@ export interface DayEvent {
 
 export default function DayEvent(props: DayEvent) {
     const theme = useTheme();
+    const eventPopover = useEventPopover();
     const popoverState = usePopover();
+
+    function getPopoverContent(): ReactElement | null {
+        if (eventPopover) {
+            return React.createElement(eventPopover, { popoverState: popoverState });
+        }
+        return null;
+    }
 
     return (
         <div
@@ -35,7 +44,7 @@ export default function DayEvent(props: DayEvent) {
                         color: 'white',
                     }}
                     elevation={0}
-                    {...togglePopover(popoverState)}
+                    {...toggleEventPopover(popoverState, eventPopover)}
                 >
                     {props.calendarEvent.title}, {format(props.calendarEvent.startedAt, 'HH:mm')} -{' '}
                     {format(props.calendarEvent.finishedAt, 'HH:mm')}
@@ -51,7 +60,7 @@ export default function DayEvent(props: DayEvent) {
                         horizontal: 'center',
                     }}
                 >
-                    {/* <EventPopover event={props.calendarEvent} popoverState={popoverState} /> */}
+                    {getPopoverContent()}
                 </Popover>
             </Box>
         </div>

@@ -1,9 +1,10 @@
 import { Box, makeStyles, Popover, Typography } from '@material-ui/core';
 import { format } from 'date-fns';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import toggleEventPopover from '../../../common/hooks/eventPopover/toggleEventPopover';
+import useEventPopover from '../../../common/hooks/eventPopover/useEventPopover';
 import bindPopover from '../../../common/hooks/popover/bindPopover';
-import togglePopover from '../../../common/hooks/popover/togglePopover';
 import usePopover from '../../../common/hooks/popover/usePopover';
 import MonthEventDot from '../../month/event/MonthEventDot';
 
@@ -28,11 +29,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleViewEvent(props: ScheduleViewEventProps) {
     const popoverState = usePopover();
+    const eventPopover = useEventPopover();
     const classes = useStyles();
+
+    function getPopoverContent(): ReactElement | null {
+        if (eventPopover) {
+            return React.createElement(eventPopover, { popoverState: popoverState });
+        }
+        return null;
+    }
 
     return (
         <Box className={classes.root}>
-            <Box {...togglePopover(popoverState)} display="flex" alignItems="center" height="100%" width="100%">
+            <Box
+                {...toggleEventPopover(popoverState, eventPopover)}
+                display="flex"
+                alignItems="center"
+                height="100%"
+                width="100%"
+            >
                 {/* TIME SECTION */}
                 <Box display="flex" width={160} alignItems="center" justifyContent="flex-start">
                     <div className={classes.timeSectionSpacer} />
@@ -60,7 +75,7 @@ export default function ScheduleViewEvent(props: ScheduleViewEventProps) {
                     horizontal: 'center',
                 }}
             >
-                {/* <EventPopover event={props.event} popoverState={popoverState} /> */}
+                {getPopoverContent()}
             </Popover>
         </Box>
     );
