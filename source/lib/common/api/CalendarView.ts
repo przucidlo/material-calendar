@@ -22,6 +22,11 @@ export interface CalendarView {
     eventPopoutContent?: FunctionComponent<any> | ComponentClass<any, any>;
 
     /**
+     * Text that represents highlightDate in NavigationBar component.
+     */
+    highlightDateDescription?: (highlightDate: Date) => string;
+
+    /**
      *  Date range required by the view.
      *
      *  eg. MonthView requires "from" to be start of the month and "till" to be end of the month
