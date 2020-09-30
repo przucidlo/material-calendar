@@ -24,7 +24,7 @@ export interface CalendarView {
     /**
      * Text that represents highlightDate in NavigationBar component.
      */
-    highlightDateDescription?: (highlightDate: Date) => string;
+    getHighlightDateDescription?: (highlightDate: Date) => string;
 
     /**
      *  Date range required by the view.
