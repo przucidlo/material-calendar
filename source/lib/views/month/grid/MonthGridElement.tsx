@@ -4,6 +4,8 @@ import CalendarEvent from '../../../common/api/CalendarEvent';
 import DateAvatar from '../../../common/components/dateAvatar/DateAvatar';
 import ExpandableContainer from '../../../common/components/expandableContainer/ExpandableContainer';
 import useLocale from '../../../common/hooks/locale/useLocale';
+import useViewChange from '../../../common/hooks/viewController/useViewChange';
+import DayView from '../../day/DayView';
 import MonthEvent from '../event/MonthEvent';
 import MonthEventListPopover from '../eventListPopover/MonthEventListPopover';
 
@@ -41,15 +43,20 @@ const useStyles = makeStyles((theme) => ({
 
 function MonthGridElement(props: MonthGridElementProps): ReactElement {
     const monthEvents = getMonthEvents();
+    const viewChange = useViewChange();
     const locale = useLocale();
     const theme = useTheme();
     const classes = useStyles();
+
+    function changeView() {
+        viewChange.changeView(DayView, props.date);
+    }
 
     function displayDayDate() {
         return (
             <div className={classes.dayDate}>
                 {displayDayName()}
-                <DateAvatar date={props.date} size="small" />
+                <DateAvatar date={props.date} size="small" highlightOnHover onClick={changeView} />
             </div>
         );
     }

@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import DateAvatar from '../../../../common/components/dateAvatar/DateAvatar';
+import useViewChange from '../../../../common/hooks/viewController/useViewChange';
+import DayView from '../../DayView';
 import DayHeaderLabel from './DayHeaderLabel';
 
 interface DayHeaderProps {
@@ -54,9 +56,16 @@ const useStyle = makeStyles((theme) => ({
 
 function DayHeader(props: DayHeaderProps): ReactElement {
     const classes = useStyle({ marginLeftOffset: props.headerContentLeftOffset ? props.headerContentLeftOffset : 0 });
+    const viewChange = useViewChange();
 
     function getContentJustification(): string {
         return props.center ? 'center' : 'normal';
+    }
+
+    function changeView(): void {
+        if (props.openChildView) {
+            viewChange.changeView(DayView);
+        }
     }
 
     return (
@@ -64,7 +73,12 @@ function DayHeader(props: DayHeaderProps): ReactElement {
             <div className={classes.headerContentWrapper} style={{ justifyContent: getContentJustification() }}>
                 <div className={classes.headerContent}>
                     <DayHeaderLabel highlightDate={props.highlightDate} />
-                    <DateAvatar date={props.highlightDate} size="large" />
+                    <DateAvatar
+                        date={props.highlightDate}
+                        size="large"
+                        onClick={changeView}
+                        highlightOnHover={props.openChildView}
+                    />
                 </div>
             </div>
         </div>
