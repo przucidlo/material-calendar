@@ -107,6 +107,9 @@ function createTestViews(): CalendarView[] {
                 'pl-PL': 'Rok',
             },
             component: YearView,
+            getHighlightDateDescription: (date: Date) => {
+                return String(date.getFullYear());
+            },
             onDateChange: (dateChangeAction, highlightDate) => addYears(highlightDate, dateChangeAction),
             getDateRange: (highlightDate) => {
                 return {
@@ -127,8 +130,6 @@ function getCalendarEventsInRange(from: Date, till: Date, calendarEvents: Calend
 }
 
 const mockEvents = genenerateMockEvents(new Date());
-
-console.log(ExamplePopover);
 
 ReactDOM.render(
     <MaterialCalendar
