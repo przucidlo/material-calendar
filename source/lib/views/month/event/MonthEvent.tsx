@@ -36,8 +36,6 @@ export default function MonthEvent(props: MonthEventProps) {
     const classes = useStyles();
 
     function getPopoverContent(): ReactElement | null {
-        console.log(eventPopover);
-
         if (eventPopover) {
             return React.createElement(eventPopover, { popoverState: popoverState });
         }
