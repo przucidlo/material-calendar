@@ -3,11 +3,13 @@ import { isSameDay } from 'date-fns';
 import React, { useContext } from 'react';
 import { DateChangeAction } from '../../../common/api/DateChangeAction';
 import { ViewContext } from '../../../common/contexts/ViewContext';
+import useLocale from '../../../common/hooks/locale/useLocale';
 import NavigationBarControlArrows from './NavigationBarControlArrows';
 import NavigationBarDateText from './NavigationBarDateText';
 
 export default function NavigationBarControls() {
     const viewContext = useContext(ViewContext);
+    const locale = useLocale();
 
     /**
      * Changes the currently focused date of the calendar based on provided DataChangeAction parameter.
@@ -40,10 +42,13 @@ export default function NavigationBarControls() {
                             handleDateChange(DateChangeAction.TODAY);
                         }}
                     >
-                        Dzisiaj
+                        {locale.today}
                     </Button>
                     <NavigationBarControlArrows onChangeDate={handleDateChange} />
-                    <NavigationBarDateText highlightDate={viewContext.highlightDate} />
+                    <NavigationBarDateText
+                        highlightDate={viewContext.highlightDate}
+                        highlightDateDescription={viewContext.view.getHighlightDateDescription}
+                    />
                 </Grid>
             </Grid>
         </React.Fragment>
