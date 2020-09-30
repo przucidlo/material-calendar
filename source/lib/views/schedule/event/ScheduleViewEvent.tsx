@@ -34,7 +34,7 @@ export default function ScheduleViewEvent(props: ScheduleViewEventProps) {
 
     function getPopoverContent(): ReactElement | null {
         if (eventPopover) {
-            return React.createElement(eventPopover, { popoverState: popoverState });
+            return React.createElement(eventPopover, { popoverState: popoverState, calendarEvent: props.event });
         }
         return null;
     }

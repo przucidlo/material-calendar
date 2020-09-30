@@ -37,7 +37,7 @@ export default function MonthEvent(props: MonthEventProps) {
 
     function getPopoverContent(): ReactElement | null {
         if (eventPopover) {
-            return React.createElement(eventPopover, { popoverState: popoverState });
+            return React.createElement(eventPopover, { popoverState: popoverState, calendarEvent: props.event });
         }
         return null;
     }

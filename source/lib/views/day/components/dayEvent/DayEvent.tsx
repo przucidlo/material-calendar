@@ -20,7 +20,10 @@ export default function DayEvent(props: DayEvent) {
 
     function getPopoverContent(): ReactElement | null {
         if (eventPopover) {
-            return React.createElement(eventPopover, { popoverState: popoverState });
+            return React.createElement(eventPopover, {
+                popoverState: popoverState,
+                calendarEvent: props.calendarEvent,
+            });
         }
         return null;
     }
