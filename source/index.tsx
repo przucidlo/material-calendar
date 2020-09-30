@@ -94,11 +94,11 @@ function createTestViews(): CalendarView[] {
                 'pl-PL': 'Harmonogram',
             },
             component: ScheduleView,
-            onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
+            onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
             getDateRange: (highlightDate) => {
                 return {
-                    from: startOfDay(highlightDate),
-                    till: endOfDay(highlightDate),
+                    from: startOfMonth(highlightDate),
+                    till: endOfMonth(highlightDate),
                 };
             },
         },
