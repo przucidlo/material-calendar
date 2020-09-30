@@ -11,7 +11,6 @@ export interface CalendarContextStructure {
 
     setLocale: (locale: string) => void;
     setLocaleSource: (localeSource: LocaleSource) => void;
-    setGlobalEventPopoutContent: (eventPopoutContent: FunctionComponent<any> | ComponentClass<any, any>) => void;
     setViews: (views: CalendarView[]) => void;
 }
 
@@ -23,7 +22,6 @@ export const DEFAULT_CALENDAR_CONTEXT: CalendarContextStructure = {
 
     setLocale: () => {},
     setLocaleSource: () => {},
-    setGlobalEventPopoutContent: () => {},
     setViews: () => {},
 };
 
