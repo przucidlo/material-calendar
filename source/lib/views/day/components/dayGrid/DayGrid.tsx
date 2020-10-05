@@ -15,7 +15,7 @@ function DayGrid(props: DayGridProps): ReactElement {
         for (let i = 0; i < 24; i++) {
             elements.push(
                 <Grid item key={i}>
-                    <Day {...props} hideBorder={i === 0 ? true : false} hour={i} />
+                    <Day {...props} hideBorder={i === 0} hour={i} />
                 </Grid>,
             );
         }
@@ -28,7 +28,7 @@ function DayGrid(props: DayGridProps): ReactElement {
             <Grid container direction="column">
                 {renderGridElements()}
             </Grid>
-            <DayEventGrid dayEvents={props.dayEvents} />
+            <DayEventGrid calendarEvents={props.dayEvents} />
         </div>
     );
 }

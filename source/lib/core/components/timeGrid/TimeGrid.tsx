@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         // gridElementHeight - halfOfFontSize.
         // This value is used to align time grid to day grid.
-        marginTop: (props: any) => props.gridElementHeight - 17 / 2,
+        marginTop: (props: any) => props.gridElementHeight - 21 / 2,
 
         backgroundColor: theme.palette.background.paper,
         minWidth: (props: any) => props.width,

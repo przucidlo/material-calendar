@@ -14,7 +14,7 @@ function Day(props: Props): ReactElement {
         <div style={{ flexDirection: 'row', display: 'flex', backgroundColor: theme.palette.common.white }}>
             <div
                 style={{
-                    height: '48px',
+                    height: props.hideBorder ? 48 : 47,
                     borderTop: props.hideBorder ? '0px solid' : '1px solid',
                     borderTopColor: theme.palette.grey[300],
                     borderLeft: '1px solid',
