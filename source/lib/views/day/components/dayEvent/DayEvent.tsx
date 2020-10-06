@@ -1,4 +1,4 @@
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { differenceInMinutes, format } from 'date-fns';
 import React from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
@@ -18,14 +18,22 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         position: 'absolute',
     },
-    paper: {
+    card: {
         backgroundColor: theme.palette.primary.main,
         color: 'white',
+        height: 'calc(100%)',
+        borderRadius: '4px',
+    },
+    cardBorder: {
+        border: '1px solid',
+        borderRight: 0,
+        borderColor: 'white',
     },
 }));
 
 export default function DayEvent(props: DayEvent) {
     const classes = useStyles();
+    const cardClasses = [classes.card, getCardBorder()].join(' ');
 
     /**
      * Divides length of the event into the sections
@@ -90,10 +98,21 @@ export default function DayEvent(props: DayEvent) {
         return 0;
     }
 
+    /*
+     *  Card related functions.
+     */
+
     function forwardOnClick(mouseEvent: React.MouseEvent<any, any>): void {
         if (props.onClick) {
             props.onClick(mouseEvent, props.calendarEvent);
         }
+    }
+
+    function getCardBorder(): string {
+        if (props.orderInChain > 1) {
+            return classes.cardBorder;
+        }
+        return '';
     }
 
     return (
@@ -106,18 +125,10 @@ export default function DayEvent(props: DayEvent) {
             }}
             className={classes.root}
         >
-            <Paper
-                variant="outlined"
-                style={{
-                    minHeight: getHeight(),
-                }}
-                elevation={0}
-                className={classes.paper}
-                onClick={forwardOnClick}
-            >
+            <div className={cardClasses} onClick={forwardOnClick}>
                 {props.calendarEvent.title}, {format(props.calendarEvent.startedAt, 'HH:mm')} -{' '}
                 {format(props.calendarEvent.finishedAt, 'HH:mm')}
-            </Paper>
+            </div>
         </div>
     );
 }
