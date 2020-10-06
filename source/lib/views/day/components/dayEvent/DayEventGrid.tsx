@@ -16,7 +16,7 @@ export interface DayEventGridProps {
 const useStyles = makeStyles((theme) => ({
     root: {
         position: 'absolute',
-        width: '100%',
+        width: 'calc(100% - ' + theme.spacing(2) + 'px)',
         left: 0,
         top: 0,
         right: 0,
