@@ -15,7 +15,7 @@ function WeekView(props: WeekViewProps): ReactElement {
     });
 
     return (
-        <div>
+        <div style={{ overflowX: 'auto', minWidth: 768 }}>
             <WeekHeader weekDays={weekDays} />
             <WeekGrid weekDays={weekDays} />
         </div>
