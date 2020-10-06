@@ -1,5 +1,5 @@
 import { Popover } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import CalendarEvent from '../../api/CalendarEvent';
 import useEventPopover from '../../hooks/eventPopover/useEventPopover';
 import bindPopover from '../../hooks/popover/bindPopover';
@@ -12,6 +12,15 @@ export interface EventPopoverProps {
 
 export default function EventPopover(props: EventPopoverProps): ReactElement {
     const eventPopover = useEventPopover();
+
+    /*
+     *  Prevent opening of popover if eventPopover is missing.
+     */
+    useEffect(() => {
+        if (!eventPopover) {
+            props.popoverState.closePopover();
+        }
+    }, [props.popoverState.isOpen]);
 
     function getPopoverContent(): ReactElement | null {
         if (eventPopover) {

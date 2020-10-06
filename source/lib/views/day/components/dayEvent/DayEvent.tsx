@@ -1,11 +1,7 @@
-import { makeStyles, Paper, Popover } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
 import { differenceInMinutes, format } from 'date-fns';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
-import toggleEventPopover from '../../../../common/hooks/eventPopover/toggleEventPopover';
-import useEventPopover from '../../../../common/hooks/eventPopover/useEventPopover';
-import bindPopover from '../../../../common/hooks/popover/bindPopover';
-import usePopover from '../../../../common/hooks/popover/usePopover';
 
 export interface DayEvent {
     calendarEvent: CalendarEvent;
@@ -13,6 +9,8 @@ export interface DayEvent {
 
     orderInChain: number;
     chainCount: { count: number };
+
+    onClick?: (event: React.MouseEvent<any, any>, calendarEvent?: CalendarEvent) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -27,19 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DayEvent(props: DayEvent) {
-    const eventPopover = useEventPopover();
-    const popoverState = usePopover();
     const classes = useStyles();
-
-    function getPopoverContent(): ReactElement | null {
-        if (eventPopover) {
-            return React.createElement(eventPopover, {
-                popoverState: popoverState,
-                calendarEvent: props.calendarEvent,
-            });
-        }
-        return null;
-    }
 
     /**
      * Divides length of the event into the sections
@@ -104,6 +90,12 @@ export default function DayEvent(props: DayEvent) {
         return 0;
     }
 
+    function forwardOnClick(mouseEvent: React.MouseEvent<any, any>): void {
+        if (props.onClick) {
+            props.onClick(mouseEvent, props.calendarEvent);
+        }
+    }
+
     return (
         <div
             style={{
@@ -121,24 +113,11 @@ export default function DayEvent(props: DayEvent) {
                 }}
                 elevation={0}
                 className={classes.paper}
-                {...toggleEventPopover(popoverState, eventPopover)}
+                onClick={forwardOnClick}
             >
                 {props.calendarEvent.title}, {format(props.calendarEvent.startedAt, 'HH:mm')} -{' '}
                 {format(props.calendarEvent.finishedAt, 'HH:mm')}
             </Paper>
-            <Popover
-                {...bindPopover(popoverState)}
-                anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
-                }}
-                transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
-                }}
-            >
-                {getPopoverContent()}
-            </Popover>
         </div>
     );
 }

@@ -6,9 +6,7 @@ import CalendarEventUtils from '../../common/tools/CalendarEventUtils';
 import DayContent from './components/dayContent/DayContent';
 import DayHeader from './components/dayHeader/DayHeader';
 
-export interface DayViewProps {}
-
-export default function DayView(props: DayViewProps): ReactElement {
+export default function DayView(): ReactElement {
     const eventStorageContext = useContext(EventStorageContext);
     const viewContext = useContext(ViewContext);
 

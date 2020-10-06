@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 import { areIntervalsOverlapping } from 'date-fns';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo, useState } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
+import EventPopover from '../../../../common/components/eventPopover/EventPopover';
+import usePopover from '../../../../common/hooks/popover/usePopover';
 import DayEvent from './DayEvent';
 
 export interface DayEventGridProps {
@@ -28,16 +30,25 @@ const useStyles = makeStyles((theme) => ({
  */
 const cellHeight = 48;
 
+/**
+ * Grid that displays all provided calendarEvents over DayGrid.
+ * To make grid more readable events are "chained" together to share available space.
+ */
 export default function DayEventGrid(props: DayEventGridProps): ReactElement {
-    const classes = useStyles();
+    // Keeps track on which CalendarEvent
+    const [calendarEvent, setCalendarEvent] = useState<CalendarEvent>();
+    // State of the popover used to display details about focused event.
+    const popoverState = usePopover();
 
-    /*
-     *  Render methods.
-     */
+    const classes = useStyles();
 
     function renderGrid(): ReactElement[] {
         let elements: ReactElement[] = [];
 
+        /*
+         *  By creating an object we allocate memory that can be shared between multiple components.
+         *  Which allows them to adjust their position in a chain.
+         */
         let chainCount = {
             count: 1,
         };
@@ -46,6 +57,8 @@ export default function DayEventGrid(props: DayEventGridProps): ReactElement {
             const previousElement: CalendarEvent | undefined = props.calendarEvents[i - 1];
             const currentElement = props.calendarEvents[i];
 
+            // If events are overlapping we increase the count property inside of chainCount object.
+            // Otherwise we "reset" the object.
             if (areElementsOverlapping(previousElement, currentElement)) {
                 chainCount.count += 1;
             } else {
@@ -55,10 +68,13 @@ export default function DayEventGrid(props: DayEventGridProps): ReactElement {
             elements.push(
                 <div key={currentElement.id}>
                     <DayEvent
+                        onClick={handleDayEventSelection}
                         calendarEvent={currentElement}
                         cellHeight={cellHeight}
-                        orderInChain={Object.assign({}, chainCount).count}
                         chainCount={chainCount}
+                        // Allocating memory for the count property, since it will
+                        // become "undefined" once the loop finishes it's work.
+                        orderInChain={Object.assign({}, chainCount).count}
                     />
                 </div>,
             );
@@ -77,9 +93,15 @@ export default function DayEventGrid(props: DayEventGridProps): ReactElement {
         return false;
     }
 
+    function handleDayEventSelection(mouseEvent: React.MouseEvent<any, any>, calendarEvent: CalendarEvent): void {
+        setCalendarEvent(calendarEvent);
+        popoverState.openPopover(mouseEvent);
+    }
+
     return (
         <div className={classes.root}>
-            <div style={{}}>{renderGrid()}</div>
+            <EventPopover popoverState={popoverState} calendarEvent={calendarEvent} />
+            {useMemo(() => renderGrid(), [props.calendarEvents])}
         </div>
     );
 }
