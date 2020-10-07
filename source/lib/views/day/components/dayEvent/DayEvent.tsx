@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: '13px',
         fontSize: '13px',
         display: 'inline-block',
-        verticalAlign: 'center',
+        verticalAlign: 'middle',
     },
     fontRegular: {
         lineHeight: '14px',
