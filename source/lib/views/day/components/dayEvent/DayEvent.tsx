@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     textContainerCommon: {
         paddingLeft: 4,
         height: '100%',
+        overflow: 'hidden',
     },
     textContainerLarge: {
         paddingTop: 4,
