@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { differenceInMinutes, format } from 'date-fns';
 import React from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
@@ -23,26 +23,59 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         height: 'calc(100%)',
         borderRadius: '4px',
+        borderTop: '1px solid white',
     },
     cardBorder: {
-        border: '1px solid',
+        border: '1px solid white',
         borderRight: 0,
-        borderColor: 'white',
+    },
+    textContainerCommon: {
+        paddingLeft: 4,
+    },
+    textContainerLarge: {
+        paddingTop: 4,
+    },
+    fontSmall: {
+        lineHeight: '12px',
+        fontSize: '12px',
+        display: 'inline-block',
+        verticalAlign: 'top',
+    },
+    fontMedium: {
+        lineHeight: '13px',
+        fontSize: '13px',
+        display: 'inline-block',
+        verticalAlign: 'center',
+    },
+    fontRegular: {
+        lineHeight: '14px',
+        fontSize: '13px',
     },
 }));
 
 export default function DayEvent(props: DayEvent) {
     const classes = useStyles();
+
+    const numberOfSections = getNumberOfSections();
+    const isSmallVariantActive: boolean = numberOfSections <= 2;
+
     const cardClasses = [classes.card, getCardBorder()].join(' ');
+    const containerClassses = [classes.textContainerCommon, getContainerVariant()].join(' ');
+    const fontClasses = getFontVariant();
+
+    function getNumberOfSections(): number {
+        const durationInMinutes = differenceInMinutes(props.calendarEvent.finishedAt, props.calendarEvent.startedAt);
+        const result = Math.round(durationInMinutes / 15);
+
+        // Always display at least one section.
+        return result >= 1 ? result : 1;
+    }
 
     /**
      * Divides length of the event into the sections
      * and multiplies it by size of the cell.
      */
     function getHeight(): number {
-        const durationInMinutes = differenceInMinutes(props.calendarEvent.finishedAt, props.calendarEvent.startedAt);
-        const numberOfSections = Math.round(durationInMinutes / 15);
-
         return numberOfSections * (props.cellHeight / 4);
     }
 
@@ -108,11 +141,41 @@ export default function DayEvent(props: DayEvent) {
         }
     }
 
+    function getEventTitle(): string {
+        if (isSmallVariantActive) {
+            return String(props.calendarEvent.title + ',');
+        }
+        return props.calendarEvent.title;
+    }
+
+    function getEventDuration(): string {
+        return String(formatHour(props.calendarEvent.startedAt) + ' - ' + formatHour(props.calendarEvent.finishedAt));
+    }
+
     function getCardBorder(): string {
         if (props.orderInChain > 1) {
             return classes.cardBorder;
         }
         return '';
+    }
+
+    function getFontVariant(): string {
+        switch (numberOfSections) {
+            case 1:
+                return classes.fontSmall;
+            case 2:
+                return classes.fontMedium;
+            default:
+                return classes.fontRegular;
+        }
+    }
+
+    function formatHour(hour: Date): string {
+        return format(hour, 'HH:mm');
+    }
+
+    function getContainerVariant(): string {
+        return isSmallVariantActive ? '' : classes.textContainerLarge;
     }
 
     return (
@@ -126,8 +189,14 @@ export default function DayEvent(props: DayEvent) {
             className={classes.root}
         >
             <div className={cardClasses} onClick={forwardOnClick}>
-                {props.calendarEvent.title}, {format(props.calendarEvent.startedAt, 'HH:mm')} -{' '}
-                {format(props.calendarEvent.finishedAt, 'HH:mm')}
+                <div className={containerClassses}>
+                    <Typography variant="subtitle2" className={fontClasses} noWrap>
+                        {getEventTitle()}
+                    </Typography>{' '}
+                    <Typography variant="subtitle2" className={fontClasses} noWrap>
+                        {getEventDuration()}
+                    </Typography>
+                </div>
             </div>
         </div>
     );
