@@ -1,13 +1,20 @@
+import { makeStyles } from '@material-ui/core';
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import React, { ReactElement, useContext } from 'react';
 import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import WeekGrid from './components/weekGrid/WeekGrid';
 import WeekHeader from './components/weekHeader/WeekHeader';
 
-interface WeekViewProps {}
+const useStyles = makeStyles(() => ({
+    root: {
+        overflowX: 'auto',
+        minWidth: 768,
+    },
+}));
 
-function WeekView(props: WeekViewProps): ReactElement {
+function WeekView(): ReactElement {
     const viewContext: ViewContextStructure = useContext(ViewContext);
+    const classes = useStyles();
 
     const weekDays = eachDayOfInterval({
         start: startOfWeek(viewContext.highlightDate),
@@ -15,7 +22,7 @@ function WeekView(props: WeekViewProps): ReactElement {
     });
 
     return (
-        <div style={{ overflowX: 'auto', minWidth: 768 }}>
+        <div className={classes.root}>
             <WeekHeader weekDays={weekDays} />
             <WeekGrid weekDays={weekDays} />
         </div>
