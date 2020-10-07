@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { differenceInMinutes, format } from 'date-fns';
-import React from 'react';
+import React, { Fragment, ReactElement } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
 
 export interface DayEvent {
@@ -180,6 +180,26 @@ export default function DayEvent(props: DayEvent) {
         return isSmallVariantActive ? '' : classes.textContainerLarge;
     }
 
+    function getText(): ReactElement {
+        if (numberOfSections <= 2) {
+            return (
+                <Typography variant="subtitle2" className={fontClasses} noWrap>
+                    {getEventTitle()} {getEventDuration()}
+                </Typography>
+            );
+        }
+        return (
+            <Fragment>
+                <Typography variant="subtitle2" className={fontClasses} noWrap>
+                    {getEventTitle()}
+                </Typography>{' '}
+                <Typography variant="subtitle2" className={fontClasses} noWrap>
+                    {getEventDuration()}
+                </Typography>
+            </Fragment>
+        );
+    }
+
     return (
         <div
             style={{
@@ -191,14 +211,7 @@ export default function DayEvent(props: DayEvent) {
             className={classes.root}
         >
             <div className={cardClasses} onClick={forwardOnClick}>
-                <div className={containerClassses}>
-                    <Typography variant="subtitle2" className={fontClasses} noWrap>
-                        {getEventTitle()}
-                    </Typography>{' '}
-                    <Typography variant="subtitle2" className={fontClasses} noWrap>
-                        {getEventDuration()}
-                    </Typography>
-                </div>
+                <div className={containerClassses}>{getText()}</div>
             </div>
         </div>
     );
