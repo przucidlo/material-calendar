@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textContainerCommon: {
         paddingLeft: 4,
+        height: '100%',
     },
     textContainerLarge: {
         paddingTop: 4,
