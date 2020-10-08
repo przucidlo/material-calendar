@@ -6,12 +6,10 @@ import {
     endOfDay,
     endOfMonth,
     endOfWeek,
-    endOfYear,
     isWithinInterval,
     startOfDay,
     startOfMonth,
     startOfWeek,
-    startOfYear,
 } from 'date-fns';
 import { addMinutes } from 'date-fns/esm';
 import React from 'react';
@@ -35,16 +33,16 @@ function genenerateMockEvents(relativeToDate: Date) {
     let events: CalendarEvent[] = [];
 
     for (let i = 0; i < 150; i++) {
-        const date = randomDate(startOfYear(relativeToDate), endOfYear(relativeToDate));
+        const date = randomDate(startOfMonth(relativeToDate), endOfMonth(relativeToDate));
 
         events.push({
             id: i,
             title: 'Mock Event',
             startedAt: date,
-            finishedAt: addMinutes(date, 60),
+            finishedAt: addMinutes(date, Math.random() * (120 - 30) + 30),
         });
     }
-
+    //
     return events;
 }
 
