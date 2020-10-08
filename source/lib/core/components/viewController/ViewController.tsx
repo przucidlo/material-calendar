@@ -12,7 +12,7 @@ export default function ViewController() {
     }
 
     // Re-render only if another view was selected by user.
-    return <div>{useMemo(() => getView(), [viewContext.view])}</div>;
+    return useMemo(() => getView(), [viewContext.view]);
 }
 
 // ViewController.whyDidYouRender = true;
