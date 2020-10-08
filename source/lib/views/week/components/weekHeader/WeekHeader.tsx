@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import DayHeader from '../../../day/components/dayHeader/DayHeader';
 
 export interface WeekHeaderProps {
@@ -9,21 +9,22 @@ export interface WeekHeaderProps {
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        flexDirection: 'row',
-        paddingRight: 16,
+        overflowX: 'hidden',
     },
     weekHeaderElement: {
         flexGrow: 1,
-        flexBasis: 0,
+        flexBasis: '107px',
+        minWidth: '107.5px',
     },
-    timeGridSpacer: {
-        width: 56,
+    scrollbarSpacer: {
+        width: 16,
+        backgroundColor: 'white',
         borderBottom: '1px solid',
         borderBottomColor: theme.palette.grey[300],
     },
 }));
 
-export default function WeekHeader(props: WeekHeaderProps): ReactElement {
+const WeekHeader = React.forwardRef<HTMLDivElement, WeekHeaderProps>((props: WeekHeaderProps, ref) => {
     const classes = useStyles();
 
     function createDayHeaders() {
@@ -37,10 +38,11 @@ export default function WeekHeader(props: WeekHeaderProps): ReactElement {
     }
 
     return (
-        <div className={classes.root}>
-            <div className={classes.timeGridSpacer} />
-
+        <div className={classes.root} ref={ref}>
             {[...createDayHeaders()]}
+            <div className={classes.scrollbarSpacer} />
         </div>
     );
-}
+});
+
+export default WeekHeader;

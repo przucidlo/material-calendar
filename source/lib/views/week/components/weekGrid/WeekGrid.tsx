@@ -2,11 +2,12 @@ import React, { ReactElement, useContext } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
 import { EventStorageContext, EventStorageContextStructure } from '../../../../common/contexts/EventStorageContext';
 import CalendarEventUtils from '../../../../common/tools/CalendarEventUtils';
-import TimeGrid from '../../../../core/components/timeGrid/TimeGrid';
 import DayGrid from '../../../day/components/dayGrid/DayGrid';
 
 interface WeekGridProps {
     weekDays: Date[];
+
+    onScroll: (event: React.UIEvent<HTMLDivElement, UIEvent>) => void;
 }
 
 export default function WeekGrid(props: WeekGridProps): ReactElement {
@@ -15,7 +16,7 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
     function displayWeekGridSection() {
         return props.weekDays.map((day, index) => {
             return (
-                <div key={'1-' + index} style={{ flexGrow: 1, flexBasis: 0 }}>
+                <div key={'1-' + index} style={{ flexGrow: 1, minWidth: '107px' }}>
                     <DayGrid dayEvents={getDayEvents(day)} />
                 </div>
             );
@@ -29,11 +30,8 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
     }
 
     return (
-        <div style={{ overflowY: 'scroll', height: `calc(100vh - 64px - 89px)` }}>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <TimeGrid gridElementHeight={49} width={56} />
-                {displayWeekGridSection()}
-            </div>
+        <div style={{ overflow: 'auto', height: `calc(100vh - 64px - 89px)` }} onScroll={props.onScroll}>
+            <div style={{ display: 'flex', flexDirection: 'row' }}>{displayWeekGridSection()}</div>
         </div>
     );
 }

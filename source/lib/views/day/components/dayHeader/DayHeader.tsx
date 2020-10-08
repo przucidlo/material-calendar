@@ -47,7 +47,6 @@ const useStyle = makeStyles((theme) => ({
     headerContent: {
         marginLeft: (props: any) => props.marginLeftOffset,
 
-        width: 96,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
