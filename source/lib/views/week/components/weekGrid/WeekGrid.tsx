@@ -1,37 +1,48 @@
+import { makeStyles } from '@material-ui/core';
 import React, { ReactElement, useContext } from 'react';
-import CalendarEvent from '../../../../common/api/CalendarEvent';
 import { EventStorageContext, EventStorageContextStructure } from '../../../../common/contexts/EventStorageContext';
 import CalendarEventUtils from '../../../../common/tools/CalendarEventUtils';
 import DayGrid from '../../../day/components/dayGrid/DayGrid';
 
 interface WeekGridProps {
     weekDays: Date[];
-
+    
     onScroll: (event: React.UIEvent<HTMLDivElement, UIEvent>) => void;
 }
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        overflow: 'auto',
+    },
+    grid: {
+        display: 'flex', 
+        flexDirection: 'row'
+    },
+    gridElement: {
+        flexGrow: 1, 
+        minWidth: '107px'
+    }
+}))
+
 export default function WeekGrid(props: WeekGridProps): ReactElement {
     const eventStorageContext: EventStorageContextStructure = useContext(EventStorageContext);
+    const classes = useStyles();
 
-    function displayWeekGridSection() {
-        return props.weekDays.map((day, index) => {
+    function renderGrid() {
+        return props.weekDays.map((day) => {
+            const events = CalendarEventUtils.getDayEvents(eventStorageContext.eventStorage, day);
+
             return (
-                <div key={'1-' + index} style={{ flexGrow: 1, minWidth: '107px' }}>
-                    <DayGrid dayEvents={getDayEvents(day)} />
+                <div className={classes.gridElement} key={'dayGrid-' + day.getDate()}>
+                    <DayGrid dayEvents={events ? events : []} />
                 </div>
             );
         });
     }
 
-    function getDayEvents(dayDate: Date): CalendarEvent[] {
-        const dayEvents = CalendarEventUtils.getDayEvents(eventStorageContext.eventStorage, dayDate);
-
-        return dayEvents ? dayEvents : [];
-    }
-
     return (
-        <div style={{ overflow: 'auto', height: `calc(100vh - 64px - 89px)` }} onScroll={props.onScroll}>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>{displayWeekGridSection()}</div>
+        <div className={classes.root} onScroll={props.onScroll} style={{ height: `calc(100vh - 64px - 89px)` }} >
+            <div className={classes.grid}>{renderGrid()}</div>
         </div>
     );
 }
