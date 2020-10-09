@@ -16,12 +16,13 @@ const useStyles = makeStyles(() => ({
 function WeekView(): ReactElement {
     const viewContext: ViewContextStructure = useContext(ViewContext);
     const classes = useStyles();
-    let weekHeaderRef = useRef<HTMLDivElement>(null);
-
     const weekDays = eachDayOfInterval({
         start: startOfWeek(viewContext.highlightDate),
         end: endOfWeek(viewContext.highlightDate),
     });
+
+    let weekHeaderRef = useRef<HTMLDivElement>(null);
+
 
     function scrollWeekHeader(event: React.UIEvent<HTMLDivElement, UIEvent>): void {
         if(weekHeaderRef){

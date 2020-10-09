@@ -26,7 +26,7 @@ export default function DayContent(props: DayContentProps): ReactElement {
 
     return (
         <div className={classes.root}>
-            <TimeGrid gridElementHeight={48} width={56} />
+            <TimeGrid cellHeight={48} width={56} />
             <div className={classes.dayGrid}>
                 <DayGrid dayEvents={props.events} />
             </div>

@@ -1,19 +1,14 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useRef } from 'react';
 
 export interface TimeGridProps {
-    gridElementHeight: number;
+    cellHeight: number;
     width: number;
 }
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // gridElementHeight - halfOfFontSize.
-        // This value is used to align time grid to day grid.
-        marginTop: (props: any) => props.gridElementHeight - 21 / 2,
-
         backgroundColor: theme.palette.background.paper,
-        minWidth: (props: any) => props.width,
         textAlign: 'center',
     },
     timeText: {
@@ -22,24 +17,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TimeGrid(props: TimeGridProps) {
-    const classes = useStyles({ width: props.width, gridElementHeight: props.gridElementHeight });
-    const elementsAmount = 24;
+    const classes = useStyles();
+    const numberOfHours = 24;
+
+    let typographyRef = useRef<HTMLDivElement>(null);
 
     function createGrid() {
-        let array = [];
+        let elements = [];
 
-        for (let i = 1; i < elementsAmount; i++) {
-            array.push(
-                <div key={i} style={{ height: props.gridElementHeight }}>
-                    <Typography variant="subtitle2" className={classes.timeText}>
+        for (let i = 1; i < numberOfHours; i++) {
+            elements.push(
+                <div key={i} style={{ height: props.cellHeight }}>
+                    <Typography variant="subtitle2" className={classes.timeText} innerRef={typographyRef}>
                         {i}:00
                     </Typography>
                 </div>,
             );
         }
 
-        return array;
+        return elements;
     }
 
-    return <div className={classes.root}>{createGrid()}</div>;
+    /**
+     * Calculates offset that helps with aligning of grids
+     */
+    function getOffsetTop(): number {
+        if(typographyRef.current) {
+            const fontHeight: number = typographyRef.current.clientHeight;
+            
+            // gridElementHeight - halfOfFontSize.
+            return props.cellHeight - (fontHeight / 2);
+        }
+
+        return 0;
+    }
+
+    return <div style={{marginTop: getOffsetTop(), width: props.width}} className={classes.root}>{createGrid()}</div>;
 }
