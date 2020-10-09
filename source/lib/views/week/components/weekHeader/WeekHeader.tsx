@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
     weekHeaderElement: {
         flexGrow: 1,
         flexBasis: '107px',
-        minWidth: '107.5px',
+        minWidth: '107px',
     },
     scrollbarSpacer: {
-        width: 16,
+        minWidth: '16px',
         backgroundColor: 'white',
         borderBottom: '1px solid',
         borderBottomColor: theme.palette.grey[300],
@@ -31,6 +31,9 @@ const WeekHeader = React.forwardRef<HTMLDivElement, WeekHeaderProps>((props: Wee
         return props.weekDays.map((day, index) => {
             return (
                 <div key={index} className={classes.weekHeaderElement}>
+
+
+
                     <DayHeader center openChildView highlightDate={day} />
                 </div>
             );
