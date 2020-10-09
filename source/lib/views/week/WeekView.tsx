@@ -24,18 +24,29 @@ function WeekView(): ReactElement {
     });
 
     function scrollWeekHeader(event: React.UIEvent<HTMLDivElement, UIEvent>): void {
-        const scrollX = event.currentTarget.scrollLeft;
+        if(weekHeaderRef){
+            const scrollX = event.currentTarget.scrollLeft;
 
-        weekHeaderRef.current.scroll(scrollX, 0);
+            weekHeaderRef.current.scroll(scrollX, 0);
+        }
+    }
+
+    function getWeekHeaderHeight(): number {
+        if(weekHeaderRef.current){  
+            const height = weekHeaderRef.current.clientHeight;
+
+            if(height){
+                return height;
+            }
+        }
+
+        return 0;
     }
 
     return (
         <div className={classes.root}>
             <WeekHeader weekDays={weekDays} ref={weekHeaderRef} />
-
-            <div>
-                <WeekGrid weekDays={weekDays} onScroll={scrollWeekHeader} />
-            </div>
+            <WeekGrid weekDays={weekDays} weekHeaderHeight={getWeekHeaderHeight()} onScroll={scrollWeekHeader} />
         </div>
     );
 }
