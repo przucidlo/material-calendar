@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
-import TimeGrid from '../../../../core/components/timeGrid/TimeGrid';
+import TimeGrid from '../../../../common/components/timeGrid/TimeGrid';
 import DayGrid from '../dayGrid/DayGrid';
 
 export interface DayContentProps {
