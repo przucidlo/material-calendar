@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, useMemo } from 'react';
 import { EventStorageContext, EventStorageContextStructure } from '../../../../common/contexts/EventStorageContext';
 import CalendarEventUtils from '../../../../common/tools/CalendarEventUtils';
 import { NAVIGATION_BAR_HEIGHT } from '../../../../core/components/navigationBar/NavigationBar';
@@ -48,7 +48,7 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
 
     return (
         <div className={classes.root} onScroll={props.onScroll} style={{ height: getHeight() }} >
-            <div className={classes.grid}>{renderGrid()}</div>
+            <div className={classes.grid}>{useMemo(() => renderGrid(), [eventStorageContext.eventStorage])}</div>
         </div>
     );
 }
