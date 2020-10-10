@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
     },
     gridStyle: {
         height: NAVIGATION_BAR_HEIGHT,
-        top: 0,
-        position: 'sticky',
     },
 }));
 
