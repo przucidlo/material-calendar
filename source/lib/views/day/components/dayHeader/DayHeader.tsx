@@ -63,7 +63,7 @@ function DayHeader(props: DayHeaderProps): ReactElement {
 
     function changeView(): void {
         if (props.openChildView) {
-            viewChange.changeView(DayView);
+            viewChange.changeView(DayView, props.highlightDate);
         }
     }
 
