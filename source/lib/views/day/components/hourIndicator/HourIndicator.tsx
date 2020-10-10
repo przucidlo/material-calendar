@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme) => ({
             content: '""',
             
             position: 'absolute',
-            marginTop: -5,
-            marginLeft: -5.5,
+            marginTop: -4,
+            marginLeft: -4.5,
 
-            width: 12,
-            height: 12,
+            width: 10,
+            height: 10,
             borderRadius: '50%',
             backgroundColor: '#ea4335',
         },
