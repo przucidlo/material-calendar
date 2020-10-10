@@ -36,7 +36,7 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
 
             return (
                 <div className={classes.gridElement} key={'dayGrid-' + day.getDate()}>
-                    <DayGrid dayEvents={events ? events : []} />
+                    <DayGrid dayEvents={events ? events : []} date={day}/>
                 </div>
             );
         });

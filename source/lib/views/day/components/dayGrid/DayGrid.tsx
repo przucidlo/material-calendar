@@ -1,10 +1,14 @@
 import { Grid } from '@material-ui/core';
+import { isToday } from 'date-fns';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
 import DayEventGrid from '../dayEvent/DayEventGrid';
+import HourIndicator from '../hourIndicator/HourIndicator';
 import Day from './Day';
 
 interface DayGridProps {
+    date: Date;
+
     dayEvents: CalendarEvent[];
 }
 
@@ -23,12 +27,22 @@ function DayGrid(props: DayGridProps): ReactElement {
         return elements;
     }
 
+    function renderHourIndicator(): ReactElement<typeof HourIndicator> | null {
+        if(isToday(props.date)){
+            return <HourIndicator cellHeight={48}/>;
+        }
+        return null;
+    }
+
     return (
         <div style={{ position: 'relative' }}>
             <Grid container direction="column">
                 {renderGridElements()}
             </Grid>
+
             <DayEventGrid calendarEvents={props.dayEvents} />
+            
+            {renderHourIndicator()}
         </div>
     );
 }

@@ -25,7 +25,7 @@ export default function DayView(): ReactElement {
     return (
         <div>
             <DayHeader highlightDate={viewContext.highlightDate} headerContentLeftOffset={56} />
-            <DayContent events={getEvents()} />
+            <DayContent events={getEvents()} highlightDate={viewContext.highlightDate}/>
         </div>
     );
 }

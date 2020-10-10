@@ -5,6 +5,8 @@ import TimeGrid from '../../../../common/components/timeGrid/TimeGrid';
 import DayGrid from '../dayGrid/DayGrid';
 
 export interface DayContentProps {
+    highlightDate: Date;
+
     events: CalendarEvent[];
 }
 
@@ -28,7 +30,7 @@ export default function DayContent(props: DayContentProps): ReactElement {
         <div className={classes.root}>
             <TimeGrid cellHeight={48} width={56} />
             <div className={classes.dayGrid}>
-                <DayGrid dayEvents={props.events} />
+                <DayGrid dayEvents={props.events} date={props.highlightDate}/>
             </div>
         </div>
     );
