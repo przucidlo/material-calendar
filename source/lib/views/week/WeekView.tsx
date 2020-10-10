@@ -20,9 +20,11 @@ function WeekView(): ReactElement {
 
     useLayoutEffect(() => {
         if(weekHeaderRef.current){
-            const height = weekHeaderRef.current.clientHeight;
+            const height: number = weekHeaderRef.current.getBoundingClientRect().height;
 
-            setHeaderHeight(height);
+
+            // Adding one extra pixel due to clientHeight 
+            setHeaderHeight(Math.round(height));
         }
     }, [])
 
