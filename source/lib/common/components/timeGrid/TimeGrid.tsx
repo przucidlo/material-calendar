@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useRef } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 export interface TimeGridProps {
     cellHeight: number;
@@ -17,10 +17,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TimeGrid(props: TimeGridProps) {
-    const classes = useStyles();
+    const [fontHeight, setFontHeight] = useState<number>(0);    
     const numberOfHours = 24;
+    const classes = useStyles();
 
     let typographyRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        if(typographyRef){
+            const typographyHeight: number = typographyRef.current.clientHeight;
+
+            setFontHeight(typographyHeight);
+        }
+    }, [])
 
     function createGrid() {
         let elements = [];
@@ -43,8 +52,6 @@ export default function TimeGrid(props: TimeGridProps) {
      */
     function getOffsetTop(): number {
         if(typographyRef.current) {
-            const fontHeight: number = typographyRef.current.clientHeight;
-            
             // gridElementHeight - halfOfFontSize.
             return props.cellHeight - (fontHeight / 2);
         }
@@ -52,5 +59,5 @@ export default function TimeGrid(props: TimeGridProps) {
         return 0;
     }
 
-    return <div style={{marginTop: getOffsetTop(), width: props.width}} className={classes.root}>{createGrid()}</div>;
+    return <div style={{marginTop: getOffsetTop(), width: props.width}} className={classes.root}>{useMemo(() => createGrid(), [numberOfHours])}</div>;
 }
