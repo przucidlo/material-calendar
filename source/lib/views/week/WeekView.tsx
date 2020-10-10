@@ -1,53 +1,50 @@
 import { makeStyles } from '@material-ui/core';
 import { eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
-import React, { ReactElement, useContext, useRef } from 'react';
+import React, { ReactElement, useContext, useLayoutEffect, useRef, useState } from 'react';
 import ViewContextStructure, { ViewContext } from '../../common/contexts/ViewContext';
 import WeekGrid from './components/weekGrid/WeekGrid';
 import WeekHeader from './components/weekHeader/WeekHeader';
 
 const useStyles = makeStyles(() => ({
     root: {
-        height: '100%',
-        maxWidth: '100vw',
-        width: '100vw',
     },
 }));
 
 function WeekView(): ReactElement {
     const viewContext: ViewContextStructure = useContext(ViewContext);
+    const [headerHeight, setHeaderHeight] = useState<number>(0);
+    const weekDays = getWeekDays();
     const classes = useStyles();
-    const weekDays = eachDayOfInterval({
-        start: startOfWeek(viewContext.highlightDate),
-        end: endOfWeek(viewContext.highlightDate),
-    });
 
     let weekHeaderRef = useRef<HTMLDivElement>(null);
 
+    useLayoutEffect(() => {
+        if(weekHeaderRef.current){
+            const height = weekHeaderRef.current.clientHeight;
+
+            setHeaderHeight(height);
+        }
+    }, [])
 
     function scrollWeekHeader(event: React.UIEvent<HTMLDivElement, UIEvent>): void {
-        if(weekHeaderRef){
+        if (weekHeaderRef) {
             const scrollX = event.currentTarget.scrollLeft;
 
             weekHeaderRef.current.scroll(scrollX, 0);
         }
     }
 
-    function getWeekHeaderHeight(): number {
-        if(weekHeaderRef.current){  
-            const height = weekHeaderRef.current.clientHeight;
-
-            if(height){
-                return height;
-            }
-        }
-
-        return 0;
+    function getWeekDays(): Date[] {
+        return eachDayOfInterval({
+            start: startOfWeek(viewContext.highlightDate),
+            end: endOfWeek(viewContext.highlightDate),
+        });
     }
 
     return (
         <div className={classes.root}>
             <WeekHeader weekDays={weekDays} ref={weekHeaderRef} />
-            <WeekGrid weekDays={weekDays} weekHeaderHeight={getWeekHeaderHeight()} onScroll={scrollWeekHeader} />
+            <WeekGrid weekDays={weekDays} weekHeaderHeight={headerHeight} onScroll={scrollWeekHeader}/>
         </div>
     );
 }
