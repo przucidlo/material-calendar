@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
     },
     grid: {
-        display: 'flex', 
-        flexDirection: 'row'
+        display: 'flex',
+        flexDirection: 'row',
     },
     gridElement: {
-        flexGrow: 1, 
-        minWidth: '107px'
-    }
-}))
+        flexGrow: 1,
+        minWidth: '107px',
+    },
+}));
 
 export default function WeekGrid(props: WeekGridProps): ReactElement {
     const eventStorageContext: EventStorageContextStructure = useContext(EventStorageContext);
@@ -36,18 +36,18 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
 
             return (
                 <div className={classes.gridElement} key={'dayGrid-' + day.getDate()}>
-                    <DayGrid dayEvents={events ? events : []} date={day}/>
+                    <DayGrid dayEvents={events ? events : []} date={day} />
                 </div>
             );
         });
     }
 
     function getHeight(): string {
-        return `calc(100vh - ${NAVIGATION_BAR_HEIGHT}px - ${props.weekHeaderHeight}px)`
+        return `calc(100vh - ${NAVIGATION_BAR_HEIGHT}px - ${props.weekHeaderHeight}px)`;
     }
 
     return (
-        <div className={classes.root} onScroll={props.onScroll} style={{ height: getHeight() }} >
+        <div className={classes.root} onScroll={props.onScroll} style={{ height: getHeight() }}>
             <div className={classes.grid}>{useMemo(() => renderGrid(), [eventStorageContext.eventStorage])}</div>
         </div>
     );
