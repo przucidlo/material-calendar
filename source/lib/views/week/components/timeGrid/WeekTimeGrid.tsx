@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import TimeGrid from '../../../../common/components/timeGrid/TimeGrid';
+import TimeGridLines from '../../../../common/components/timeGrid/TimeGridLines';
 import { NAVIGATION_BAR_HEIGHT } from '../../../../core/components/navigationBar/NavigationBar';
 
 interface WeekTimeGridProps {
@@ -10,8 +11,7 @@ interface WeekTimeGridProps {
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: 56,
-        overflowY: 'hidden',
-        overflowX: 'hidden',
+        overflow: 'hidden',
     },
     headerSpacer: {
         backgroundColor: 'rgba(0, 0, 0, 0.0);',
@@ -38,8 +38,9 @@ const WeekTimeGrid = React.forwardRef<HTMLDivElement, WeekTimeGridProps>((props,
         <div style={{ flexBasis: '56px' }}>
             <div className={classes.headerSpacer} style={{ minHeight: getHeaderSpacerHeight() }} />
 
-            <div className={classes.root} ref={ref} style={{ maxHeight: getHeight() }}>
-                <TimeGrid width={56} cellHeight={48} />
+            <div className={classes.root} ref={ref} style={{ maxHeight: getHeight(), display: 'flex' }}>
+                <TimeGrid width={48} cellHeight={48} />
+                <TimeGridLines cellHeight={48} />
             </div>
         </div>
     );

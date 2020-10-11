@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../../common/api/CalendarEvent';
 import TimeGrid from '../../../../common/components/timeGrid/TimeGrid';
+import TimeGridLines from '../../../../common/components/timeGrid/TimeGridLines';
 import DayGrid from '../dayGrid/DayGrid';
 
 export interface DayContentProps {
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         position: 'relative',
     },
+    timeGrid: {
+        display: 'flex',
+    },
     dayGrid: {
         height: '100%',
         flexGrow: 1,
@@ -28,9 +32,12 @@ export default function DayContent(props: DayContentProps): ReactElement {
 
     return (
         <div className={classes.root}>
-            <TimeGrid cellHeight={48} width={56} />
+            <div className={classes.timeGrid}>
+                <TimeGrid cellHeight={48} width={48} />
+                <TimeGridLines cellHeight={48} />
+            </div>
             <div className={classes.dayGrid}>
-                <DayGrid dayEvents={props.events} date={props.highlightDate}/>
+                <DayGrid dayEvents={props.events} date={props.highlightDate} />
             </div>
         </div>
     );
