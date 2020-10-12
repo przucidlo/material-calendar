@@ -4,6 +4,7 @@
     "description": "Calendar component build with React and Material-UI",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "repository": "https://github.com/abbl/material-calendar",
     "scripts": {
         "start": "webpack-dev-server --open",
         "build": "tsc -b .",
