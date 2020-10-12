@@ -18,6 +18,10 @@
         "Component",
         "MaterialCalendar"
     ],
+    "files": [
+        "dist",
+        "README.md"
+    ],
     "author": "abbl (Patryk Rzucidło)",
     "license": "ISC",
     "dependencies": {
