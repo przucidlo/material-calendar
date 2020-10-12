@@ -3,3 +3,5 @@ export enum DateChangeAction {
     TODAY = 0,
     FORWARD = 1,
 }
+
+export default DateChangeAction;
