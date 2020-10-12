@@ -46,7 +46,6 @@ const mockEvents = genenerateMockEvents(new Date());
 
 ReactDOM.render(
     <MaterialCalendar
-        views={createTestViews()}
         onDataRequest={(from, till) => Promise.resolve(getCalendarEventsInRange(from, till, mockEvents))}
         lazyLoading={true}
         globalEventPopoutContent={ExamplePopover}

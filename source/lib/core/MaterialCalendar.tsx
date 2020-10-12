@@ -1,4 +1,5 @@
 import React, { ComponentClass, FunctionComponent } from 'react';
+import defaultViews  from '../views/DefaultViews';
 import CalendarEvent from '../common/api/CalendarEvent';
 import CalendarEventStorage from '../common/api/CalendarEventStorage';
 import { CalendarView } from '../common/api/CalendarView';
@@ -63,18 +64,18 @@ export default function MaterialCalendar(props: MaterialCalendarProps) {
         eventStorageContext: eventStorageContextStore,
     });
 
-    function getCalendarContextProps(): CalendarContextStoreProps {
+    function getCalendarContextProps(): CalendarContextStoreProps {        
         return {
-            userViews: props.views ? props.views : [],
+            userViews: props.views !== undefined ? props.views : defaultViews,
             globalEventPopoutContent: props.globalEventPopoutContent,
         };
     }
 
-    function getDefaultView(): CalendarView | null {
+    function getDefaultView(): CalendarView {
         if (props.views && props.views.length > 0) {
             return props.views[0];
         }
-        return null;
+        return defaultViews[0];
     }
 
     return (
