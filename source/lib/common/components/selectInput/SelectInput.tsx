@@ -1,5 +1,5 @@
 import { FormControl, MenuItem, Select } from '@material-ui/core';
-import { find } from 'lodash';
+import find from 'lodash/find';
 import React, { ReactElement, useEffect, useState } from 'react';
 
 export type SelectInputValue = string | number | string[];

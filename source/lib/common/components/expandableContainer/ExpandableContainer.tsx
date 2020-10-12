@@ -1,4 +1,4 @@
-import { floor } from 'lodash';
+import floor from 'lodash/floor';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 export interface ExpandableContainerProps {

@@ -1,4 +1,4 @@
-import { findIndex } from 'lodash';
+import findIndex from 'lodash/findIndex';
 import { useEffect } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
 import CalendarEventStorage from '../../../common/api/CalendarEventStorage';
