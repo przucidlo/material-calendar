@@ -7,3 +7,5 @@ export interface EventStorage {
         };
     };
 }
+
+export default EventStorage;
