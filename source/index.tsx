@@ -1,16 +1,4 @@
-import {
-    addDays,
-    addMonths,
-    addWeeks,
-    addYears,
-    endOfDay,
-    endOfMonth,
-    endOfWeek,
-    isWithinInterval,
-    startOfDay,
-    startOfMonth,
-    startOfWeek,
-} from 'date-fns';
+import { endOfMonth, isWithinInterval, startOfMonth } from 'date-fns';
 import { addMinutes } from 'date-fns/esm';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -19,11 +7,7 @@ import CalendarEvent from './lib/common/api/CalendarEvent';
 import { CalendarView } from './lib/common/api/CalendarView';
 import ExamplePopover from './lib/common/components/examplePopover/ExamplePopover';
 import MaterialCalendar from './lib/core/MaterialCalendar';
-import DayView from './lib/views/day/DayView';
-import MonthView from './lib/views/month/MonthView';
-import ScheduleView from './lib/views/schedule/ScheduleView';
-import WeekView from './lib/views/week/WeekView';
-import YearView from './lib/views/year/YearView';
+import defaultViews from './lib/views/DefaultViews';
 
 function randomDate(start: Date, end: Date) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -47,76 +31,7 @@ function genenerateMockEvents(relativeToDate: Date) {
 }
 
 function createTestViews(): CalendarView[] {
-    return [
-        {
-            name: {
-                'pl-PL': 'Dzień',
-            },
-            component: DayView,
-            onDateChange: (dateChangeAction, highlightDate) => addDays(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfDay(highlightDate),
-                    till: endOfDay(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                'pl-PL': 'Tydzień',
-            },
-            component: WeekView,
-            onDateChange: (dateChangeAction, highlightDate) => addWeeks(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfWeek(highlightDate),
-                    till: endOfWeek(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                'pl-PL': 'Miesiąc',
-            },
-            component: MonthView,
-            onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfMonth(highlightDate),
-                    till: endOfMonth(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                'pl-PL': 'Harmonogram',
-            },
-            component: ScheduleView,
-            onDateChange: (dateChangeAction, highlightDate) => addMonths(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfMonth(highlightDate),
-                    till: endOfMonth(highlightDate),
-                };
-            },
-        },
-        {
-            name: {
-                'pl-PL': 'Rok',
-            },
-            component: YearView,
-            getHighlightDateDescription: (date: Date) => {
-                return String(date.getFullYear());
-            },
-            onDateChange: (dateChangeAction, highlightDate) => addYears(highlightDate, dateChangeAction),
-            getDateRange: (highlightDate) => {
-                return {
-                    from: startOfDay(highlightDate),
-                    till: endOfDay(highlightDate),
-                };
-            },
-        },
-    ];
+    return defaultViews;
 }
 
 function getCalendarEventsInRange(from: Date, till: Date, calendarEvents: CalendarEvent[]): CalendarEvent[] {
