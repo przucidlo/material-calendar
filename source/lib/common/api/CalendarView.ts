@@ -41,3 +41,5 @@ export interface CalendarView {
         highlightDate: Date,
     ) => Date;
 }
+
+export default CalendarView;
