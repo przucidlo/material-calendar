@@ -48,7 +48,9 @@ export default function WeekGrid(props: WeekGridProps): ReactElement {
 
     return (
         <div className={classes.root} onScroll={props.onScroll} style={{ height: getHeight() }}>
-            <div className={classes.grid}>{useMemo(() => renderGrid(), [eventStorageContext.eventStorage])}</div>
+            <div className={classes.grid}>
+                {useMemo(() => renderGrid(), [props.weekDays, eventStorageContext.eventStorage])}
+            </div>
         </div>
     );
 }
