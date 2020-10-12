@@ -6,3 +6,5 @@ export interface LocalizationElements {
     today: string;
     noEventsForThisDay: string;
 }
+
+export default LocalizationElements;
