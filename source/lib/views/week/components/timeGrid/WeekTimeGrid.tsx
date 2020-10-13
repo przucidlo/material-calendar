@@ -31,7 +31,7 @@ const WeekTimeGrid = React.forwardRef<HTMLDivElement, WeekTimeGridProps>((props,
 
     function getHeaderSpacerHeight(): number {
         // Minus one pixel cause border adds one extra pixel.
-        return props.headerHeight - 1;
+        return props.headerHeight;
     }
 
     return (

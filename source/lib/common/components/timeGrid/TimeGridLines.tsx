@@ -7,8 +7,8 @@ interface TimeGridLines {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: 1,
         width: 8,
+        marginTop: 1
     },
     line: {
         width: '100%',
@@ -25,7 +25,7 @@ export default function TimeGridLines(props: TimeGridLines): ReactElement {
         let elements = [];
 
         for (let i = 1; i < numberOfHours; i++) {
-            elements.push(<div className={classes.line} style={{ height: props.cellHeight - 1 }} />);
+            elements.push(<div className={classes.line} style={{ height: props.cellHeight }} />);
         }
 
         return elements;

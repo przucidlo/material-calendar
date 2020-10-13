@@ -5,17 +5,9 @@ import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
 
 const useStyles = makeStyles((theme) => ({
-    '@global': {
-        '*, *::before, *::after': {
-            boxSizing: 'content-box!important' as any,
-        }
-    },
     root: {
         backgroundColor: theme.palette.common.white,
         fontFamily: 'Roboto',
-        boxSizing: 'content-box!important' as any,
-
-
     },
 }));
 
