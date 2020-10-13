@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
         height: 'calc(100%)',
         borderRadius: '4px',
         borderTop: '1px solid white',
+        '&:hover': {
+            cursor: 'pointer'
+        }
     },
     cardBorder: {
         border: '1px solid white',

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: theme.palette.grey[300],
             transition: 'background-color 0.15s linear',
+            cursor: 'pointer'
         },
     },
     disableTextSelection: {

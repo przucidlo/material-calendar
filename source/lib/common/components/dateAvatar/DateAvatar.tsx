@@ -76,11 +76,13 @@ const useStyles = makeStyles((theme) => ({
     hoverCommon: {
         '&:hover': {
             backgroundColor: theme.palette.grey[200],
+            cursor: 'pointer'
         },
     },
     hoverToday: {
         '&:hover': {
             backgroundColor: theme.palette.primary.dark,
+            cursor: 'pointer'
         },
     },
     textSmall: {
