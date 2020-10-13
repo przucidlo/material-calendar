@@ -9,8 +9,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.common.white,
         fontFamily: 'Roboto',
         boxSizing: 'content-box!important' as any,
-        
-        '&, &::before, &::after': {
+
+        '*, *::before, *::after': {
             boxSizing: 'content-box!important' as any,
         }
     },
