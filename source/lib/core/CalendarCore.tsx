@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.common.white,
         fontFamily: 'Roboto',
-        boxSizing: 'content-box'
+        boxSizing: 'content-box!important' as any,
     },
 }));
 
