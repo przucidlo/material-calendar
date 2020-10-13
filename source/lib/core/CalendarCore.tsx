@@ -1,18 +1,21 @@
-import { makeStyles } from '@material-ui/core';
+import { CssBaseline, makeStyles } from '@material-ui/core';
 import 'fontsource-roboto';
 import React, { memo, ReactElement } from 'react';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
 
 const useStyles = makeStyles((theme) => ({
+    '@global': {
+        '*, *::before, *::after': {
+            boxSizing: 'content-box!important' as any,
+        }
+    },
     root: {
         backgroundColor: theme.palette.common.white,
         fontFamily: 'Roboto',
         boxSizing: 'content-box!important' as any,
 
-        '*, *::before, *::after': {
-            boxSizing: 'content-box!important' as any,
-        }
+
     },
 }));
 
@@ -21,6 +24,8 @@ function CalendarCore(): ReactElement {
 
     return (
         <div className={classes.root}>
+            <CssBaseline />
+
             <NavigationBar />
             <ViewController />
         </div>
