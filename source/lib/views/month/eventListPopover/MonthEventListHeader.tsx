@@ -1,22 +1,30 @@
-import { Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import DateAvatar from '../../../common/components/dateAvatar/DateAvatar';
 import useLocale from '../../../common/hooks/locale/useLocale';
 
 export interface MonthEventListHeaderProps {
     date: Date;
 }
 
-export default function MonthEventListHeader(props: MonthEventListHeaderProps) {
-    const locale = useLocale();
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    }
+}));
 
+export default function MonthEventListHeader(props: MonthEventListHeaderProps) {
+    const classes = useStyles();
+    const locale = useLocale();
+    
     return (
-        <div>
+        <div className={classes.root}>
             <Typography align="center" variant="subtitle2" gutterBottom>
                 {locale.daysShort[props.date.getDay()]}
             </Typography>
-            <Typography align="center" variant="h6">
-                {props.date.getDate()}
-            </Typography>
+            <DateAvatar date={props.date} highlightOnHover/>
         </div>
     );
 }
