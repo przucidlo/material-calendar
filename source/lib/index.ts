@@ -26,8 +26,8 @@ export * from './common/api/LocalizationElements';
 export { default as ExamplePopover } from './common/components/examplePopover/ExamplePopover';
 export * from './common/components/examplePopover/ExamplePopover';
 
-export { default as ScheduleViewEvent } from './views/schedule/event/ScheduleViewEvent';
-export * from './views/schedule/event/ScheduleViewEvent';
+export { default as ScheduleGridElement } from './views/schedule/scheduleGrid/ScheduleGridElement';
+export * from './views/schedule/scheduleGrid/ScheduleGridElement';
 
 // COMMON/CONTEXTS
 
