@@ -3,6 +3,7 @@ import 'fontsource-roboto';
 import React, { memo, ReactElement } from 'react';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';
+import './core.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
