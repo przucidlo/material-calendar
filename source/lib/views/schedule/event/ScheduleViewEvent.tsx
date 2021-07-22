@@ -2,6 +2,7 @@ import { Box, makeStyles, Popover, Typography } from '@material-ui/core';
 import { format } from 'date-fns';
 import React, { ReactElement } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import EventPopoverContent from '../../../common/api/EventPopoverContent';
 import toggleEventPopover from '../../../common/hooks/eventPopover/toggleEventPopover';
 import useEventPopover from '../../../common/hooks/eventPopover/useEventPopover';
 import bindPopover from '../../../common/hooks/popover/bindPopover';
@@ -10,6 +11,7 @@ import MonthEventDot from '../../month/event/MonthEventDot';
 
 export interface ScheduleViewEventProps {
     event: CalendarEvent;
+    popover?: EventPopoverContent;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScheduleViewEvent(props: ScheduleViewEventProps) {
     const popoverState = usePopover();
-    const eventPopover = useEventPopover();
+    const eventPopover = useEventPopover(props.popover);
     const classes = useStyles();
 
     function getPopoverContent(): ReactElement | null {

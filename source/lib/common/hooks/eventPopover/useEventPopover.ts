@@ -3,8 +3,12 @@ import { EventPopoverContent } from '../../api/EventPopoverContent';
 import { CalendarContext } from '../../contexts/CalendarContext';
 import { ViewContext } from '../../contexts/ViewContext';
 
-export default function useEventPopover(): EventPopoverContent {
+export default function useEventPopover(popover?: EventPopoverContent): EventPopoverContent {
     const viewContext = useContext(ViewContext);
+
+    if (popover) {
+        return popover;
+    }
 
     if (!viewContext.view.eventPopoutContent) {
         const calendarContext = useContext(CalendarContext);

@@ -31,7 +31,7 @@ export default function ScheduleGridElement(props: ScheduleGridElementProps) {
 
     // Date provided by ScheduleGrid will have the incorrect day set,
     // So we fix it here.
-    date.setDate((props.day as unknown) as number);
+    date.setDate(props.day as unknown as number);
 
     function displayEventsElements(): ReactNode[] {
         return props.calendarEvents.map((calendarEvent) => (
