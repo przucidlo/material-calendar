@@ -1,6 +1,7 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React, { ReactNode } from 'react';
 import CalendarEvent from '../../../common/api/CalendarEvent';
+import EventPopoverContent from '../../../common/api/EventPopoverContent';
 import useLocale from '../../../common/hooks/locale/useLocale';
 import ScheduleViewEvent from '../event/ScheduleViewEvent';
 
@@ -9,6 +10,7 @@ export interface ScheduleGridElementProps {
     day: number | string;
 
     calendarEvents: CalendarEvent[];
+    popover?: EventPopoverContent;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +37,7 @@ export default function ScheduleGridElement(props: ScheduleGridElementProps) {
 
     function displayEventsElements(): ReactNode[] {
         return props.calendarEvents.map((calendarEvent) => (
-            <ScheduleViewEvent event={calendarEvent} key={calendarEvent.id} />
+            <ScheduleViewEvent event={calendarEvent} key={calendarEvent.id} popover={props.popover} />
         ));
     }
 
