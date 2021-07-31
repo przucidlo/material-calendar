@@ -11,6 +11,7 @@ export interface ScheduleGridElementProps {
 
     calendarEvents: CalendarEvent[];
     popover?: EventPopoverContent;
+    hideLabel?: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ export default function ScheduleGridElement(props: ScheduleGridElementProps) {
 
     return (
         <div className={classes.root}>
-            <Box width={120}>
+            <Box width={120} hidden={props.hideLabel}>
                 <Typography variant="h6" display="inline">
                     {props.day}
                 </Typography>
