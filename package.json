@@ -1,6 +1,6 @@
 {
     "name": "@abbl/material-calendar",
-    "version": "0.9.16",
+    "version": "0.9.17",
     "description": "Calendar component build with React and Material-UI",
     "main": "dist/index.js",
     "module": "dist/index.js",
