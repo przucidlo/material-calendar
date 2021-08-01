@@ -70,6 +70,9 @@ export * from './core/MaterialCalendar';
 export { default as LocaleList } from './locale/LocaleList';
 export * from './locale/LocaleList';
 
+export { default as Localization } from './locale/Localization';
+export * from './locale/Localization';
+
 // VIEWS
 
 export { default as DayView } from './views/day/DayView';
