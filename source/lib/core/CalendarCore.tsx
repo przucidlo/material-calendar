@@ -1,5 +1,4 @@
 import { CssBaseline, makeStyles } from '@material-ui/core';
-import 'fontsource-roboto';
 import React, { memo, ReactElement } from 'react';
 import NavigationBar from './components/navigationBar/NavigationBar';
 import ViewController from './components/viewController/ViewController';

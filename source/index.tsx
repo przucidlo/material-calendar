@@ -8,6 +8,7 @@ import { CalendarView } from './lib/common/api/CalendarView';
 import ExamplePopover from './lib/common/components/examplePopover/ExamplePopover';
 import MaterialCalendar from './lib/core/MaterialCalendar';
 import defaultViews from './lib/views/DefaultViews';
+import 'fontsource-roboto';
 
 function randomDate(start: Date, end: Date) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
